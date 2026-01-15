@@ -61,6 +61,10 @@
   .content-wrapper {
     @apply max-w-4xl mx-auto px-6 sm:px-8 lg:px-12;
   }
+  
+  .home-wrapper {
+    @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
 
   /* 按钮样式 */
   .btn {

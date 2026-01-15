@@ -118,9 +118,9 @@ export function reloadServerConfig(): SiteConfig {
 // 默认配置 - 与静态配置文件保持一致以避免水合错误
 function getDefaultConfig(): SiteConfig {
   return {
-    title: "Lynn's Blog",
-    description: "😜Yes, I broke it. No, I didn't mean to. Yes, I learned something.",
-    introduction: '"Do not go gentle into that good night. Old age should burn and rave at close of day. Rage, rage against the dying of the light."',
+    title: "Soki Blog",
+    description: "✨ Yes, the MP is low. No, the healing hasn't stopped. Yes, we will see the dawn.",
+    introduction: 'The stars in the heavens are but a reflection of the light within us. Walk on, and the path will find you.',
     author: {
       name: 'Lynn',
       email: 'blog@example.com',

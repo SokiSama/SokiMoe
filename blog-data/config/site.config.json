@@ -1,7 +1,7 @@
 {
-  "title": "Soki Blog",
-  "description": "✨ Yes, the MP is low. No, the healing hasn't stopped. Yes, we will see the dawn.",
-  "introduction": "The stars in the heavens are but a reflection of the light within us. Walk on, and the path will find you.",
+  "title": "愿此行，终抵群星",
+  "description": "😜Yes, I broke it. No, I didn't mean to. Yes, I learned something.",
+  "introduction": "\"Do not go gentle into that good night. Old age should burn and rave at close of day. Rage, rage against the dying of the light.\"",
   "author": {
     "name": "Unknown",
     "email": "blog@example.com",
@@ -36,5 +36,5 @@
   ],
   "postsPerPage": 6,
   "excerptLength": 200,
-  "secureEntrance": "e1tLk2iS"
+  "secureEntrance": "3R6bcTmb"
 }
