@@ -158,9 +158,9 @@ export default function HomePage() {
               className="group relative w-56 h-56 md:w-80 md:h-80 fade-in-up opacity-0"
               style={{ animationDelay: '0.45s' }}
             >
-              <div className="absolute -inset-10 rounded-full bg-gradient-to-r from-pink-300 via-purple-200 to-blue-200 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-80 dark:from-pink-500/30 dark:via-purple-500/30 dark:to-blue-500/30" />
-              <div className="absolute -inset-3 rounded-full bg-white/70 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60 dark:bg-white/10" />
-              <div className="relative w-full h-full rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800 transition-transform duration-500 group-hover:scale-[1.03]">
+              <div className="pointer-events-none absolute -inset-1 rounded-full bg-gradient-to-r from-pink-300 via-purple-200 to-blue-200 opacity-0 blur-xl transition-all duration-300 group-hover:opacity-80 dark:from-pink-500/30 dark:via-purple-500/30 dark:to-blue-500/30 z-0" />
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-white/70 opacity-0 blur-md transition-all duration-300 group-hover:opacity-60 dark:bg-white/10 z-0" />
+              <div className="relative z-10 w-full h-full rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800 transition-transform duration-300 group-hover:scale-[1.03]">
                 <Image
                   src={avatarSrc}
                   alt="Avatar"

@@ -30,6 +30,10 @@
       "href": "/tags"
     },
     {
+      "name": "Friends",
+      "href": "/friends"
+    },
+    {
       "name": "About",
       "href": "/about"
     }

@@ -1,6 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Hash, ArrowLeft } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
@@ -8,11 +7,26 @@ import { useTagPosts } from '@/hooks/useTags';
 import { useParams } from 'next/navigation';
 import { LoadingTransition } from '@/components/LoadingComponents';
 
+function YearDivider({ year }: { year: number }) {
+  return (
+    <div className="mt-[15px] mb-[15px]">
+      <div className="flex justify-end mb-[5px]">
+        <span className="font-semibold leading-snug text-base sm:text-lg md:text-xl text-[#999999]">
+          {year}
+        </span>
+      </div>
+      <div className="border-t border-dashed border-[#CCCCCC]" />
+    </div>
+  );
+}
+
 export default function TagPostsPage() {
   const params = useParams();
   const tag = decodeURIComponent(params.tag as string);
 
   const { posts, count, loading, error } = useTagPosts(tag);
+
+  let lastYear: number | null = null;
 
   if (error) {
     return (
@@ -88,12 +102,19 @@ export default function TagPostsPage() {
         </div>
       </div>
 
-      {/* 文章列表 */}
       {posts.length > 0 ? (
         <div className="space-y-6 stagger-children">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
+          {posts.map((post) => {
+            const year = new Date(post.date).getFullYear();
+            const showDivider = year !== lastYear;
+            lastYear = year;
+            return (
+              <div key={post.slug}>
+                {showDivider && <YearDivider year={year} />}
+                <PostCard post={post} />
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="text-center py-16 fade-in-delayed">

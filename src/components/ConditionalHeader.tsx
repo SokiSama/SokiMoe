@@ -1,39 +1,46 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { useConfig } from '@/hooks/useConfig';
 
-/**
- * 条件性Header组件
- * 根据当前路径决定是否显示Header
- * 在管理员登录页面（secureEntrance路径）时隐藏Header
- */
 export function ConditionalHeader() {
   const pathname = usePathname();
   const { data: config, loading } = useConfig();
 
-  // 如果配置正在加载，先不显示Header
   if (loading || !config) {
     return null;
   }
 
-  // 检查当前路径是否为安全入口码路径或管理页面
   const isAdminLoginPage = pathname === `/${config.secureEntrance}`;
   const isAdminPage = pathname.startsWith('/admin');
 
-  // 如果是管理员登录页面或管理页面，不显示Header
   if (isAdminLoginPage || isAdminPage) {
     return null;
   }
 
-  // 其他页面正常显示Header
   return <Header />;
 }
 
 export function ConditionalFooter() {
   const pathname = usePathname();
   const { data: config, loading } = useConfig();
+  const [runningDays, setRunningDays] = useState<number | null>(null);
+
+  useEffect(() => {
+    const startUtc = Date.UTC(2025, 9, 8);
+    const now = new Date();
+    const nowUtc = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate()
+    );
+    const diffDays = Math.floor(
+      (nowUtc - startUtc) / (1000 * 60 * 60 * 24)
+    );
+    setRunningDays(diffDays > 0 ? diffDays : 0);
+  }, []);
 
   if (loading || !config) {
     return null;
@@ -51,8 +58,23 @@ export function ConditionalFooter() {
   return (
     <footer className="py-6">
       <div className="content-wrapper">
+        <div className="mb-2 space-y-1 text-center text-sm text-neutral-500 dark:text-neutral-500">
+          <p>
+            网站已运行：
+            {runningDays !== null
+              ? `${runningDays}天｜Stay hungry. Stay foolish.`
+              : '计算中...'}
+          </p>
+        </div>
         <p className="text-center text-sm text-neutral-500 dark:text-neutral-500">
-          © {currentYear} Soki. All Rights Reserved.
+          © {currentYear} Soki. All Rights Reserved.｜
+          <a
+            href="https://icp.gov.moe/?keyword=20263015"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            萌ICP备20263015号
+          </a>
         </p>
       </div>
     </footer>

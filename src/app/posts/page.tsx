@@ -8,6 +8,19 @@ import { useConfig } from '@/hooks/useConfig';
 import { useSearchParams } from 'next/navigation';
 import { LoadingTransition } from '@/components/LoadingComponents';
 
+function YearDivider({ year }: { year: number }) {
+  return (
+    <div className="mt-[15px] mb-[15px]">
+      <div className="flex justify-end mb-[5px]">
+        <span className="font-semibold leading-snug text-base sm:text-lg md:text-xl text-[#999999]">
+          {year}
+        </span>
+      </div>
+      <div className="border-t border-dashed border-[#CCCCCC]" />
+    </div>
+  );
+}
+
 function PostsPageContent() {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
@@ -20,6 +33,8 @@ function PostsPageContent() {
     limit: postsPerPage,
     paginated: true
   });
+
+  let lastYear: number | null = null;
 
   if (error) {
     return (
@@ -71,9 +86,17 @@ function PostsPageContent() {
       {posts.length > 0 ? (
         <>
           <div className="space-y-6 stagger-children">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
+            {posts.map((post) => {
+              const year = new Date(post.date).getFullYear();
+              const showDivider = year !== lastYear;
+              lastYear = year;
+              return (
+                <div key={post.slug}>
+                  {showDivider && <YearDivider year={year} />}
+                  <PostCard post={post} />
+                </div>
+              );
+            })}
           </div>
           
           {pagination && pagination.totalPages > 1 && (

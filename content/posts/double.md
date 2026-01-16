@@ -32,11 +32,6 @@ iPad Pro M4
 
 Chromebook by Asus （你就说它是不是大号 Android 平板吧）
 
-双持域名
-
-matsusatou.top
-
-soki.moe
 
 如果说好事成双，那我是否该相信美好的事情即将发生（？）。
 
