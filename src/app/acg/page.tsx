@@ -150,7 +150,7 @@ function Anime() {
 
   const filterBtnClass = (active: boolean) => {
     const base =
-      'px-3 py-1.5 rounded-full text-xs sm:text-sm border transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40';
+      'h-11 px-4 rounded-full text-sm border transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40';
     const secondary =
       'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300';
     const primary =
@@ -192,7 +192,7 @@ function Anime() {
             type="button"
             onClick={() => fetchList()}
             className={[
-              'text-xs sm:text-sm px-3 py-1.5 rounded-full border transition-smooth',
+              'h-11 text-sm px-4 rounded-full border transition-smooth',
               'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700',
               'dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300',
               isRefreshing ? 'opacity-60 pointer-events-none' : '',
@@ -655,7 +655,7 @@ function Game() {
               void fetchRecentTitles();
             }}
             className={[
-              'text-xs sm:text-sm px-3 py-1.5 rounded-full border transition-smooth',
+              'h-11 text-sm px-4 rounded-full border transition-smooth',
               'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700',
               'dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300',
               isRefreshing ? 'opacity-60 pointer-events-none' : '',
@@ -750,14 +750,14 @@ function Game() {
               })}
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="flex justify-between items-center gap-2">
                 <span className="text-neutral-500 dark:text-neutral-400">Tier</span>
                 <span className="text-neutral-700 dark:text-neutral-200 tabular-nums">{summary.tier}</span>
               </div>
-              <div className="flex justify-between items-center gap-2">
+              <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                 <span className="text-neutral-500 dark:text-neutral-400">更新时间</span>
-                <span className="text-neutral-700 dark:text-neutral-200 tabular-nums">
+                <span className="text-neutral-700 dark:text-neutral-200 tabular-nums break-words sm:text-right">
                   {new Date(summary.updatedAt).toLocaleString()}
                 </span>
               </div>
@@ -775,7 +775,7 @@ function Game() {
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
                   className={[
-                    'text-xs px-2.5 py-1 rounded-full border transition-smooth',
+                    'h-11 text-sm px-4 rounded-full border transition-smooth',
                     'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700',
                     'dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300',
                     page <= 1 ? 'opacity-60 pointer-events-none' : '',
@@ -788,7 +788,7 @@ function Game() {
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
                   className={[
-                    'text-xs px-2.5 py-1 rounded-full border transition-smooth',
+                    'h-11 text-sm px-4 rounded-full border transition-smooth',
                     'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700',
                     'dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-300',
                     page >= totalPages ? 'opacity-60 pointer-events-none' : '',
@@ -870,8 +870,8 @@ function Game() {
                             </div>
                           </div>
 
-                          <div className="w-32 sm:w-40 md:w-48 shrink-0">
-                            <div className="mb-1 flex items-center justify-end gap-1 text-[10px] tabular-nums text-neutral-600 dark:text-neutral-400">
+                          <div className="w-28 sm:w-40 md:w-48 shrink-0">
+                            <div className="mb-1 flex flex-wrap items-center justify-end gap-1 text-[10px] tabular-nums text-neutral-600 dark:text-neutral-400">
                               {t.earnedTrophies ? (
                                 <>
                                   <span
@@ -999,7 +999,7 @@ export default function ACGPage() {
                 aria-controls="acg-panel"
                 onClick={() => setTab(tab.key)}
                 className={[
-                  'rounded-full px-4 py-2 text-sm sm:text-base font-medium transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40',
+                  'rounded-full px-4 py-2.5 text-sm sm:text-base font-medium transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40',
                   isActive
                     ? 'bg-white text-neutral-900 shadow-sm dark:bg-neutral-800 dark:text-neutral-100'
                     : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100',
@@ -1015,11 +1015,11 @@ export default function ACGPage() {
       <div
         id="acg-panel"
         role="tabpanel"
-        className="mt-5 flex items-center justify-center min-h-[320px] sm:min-h-[380px] card px-6 py-12 sm:px-10 transition-smooth"
+        className="mt-5 flex items-center justify-center min-h-[320px] sm:min-h-[380px] card px-4 py-7 sm:px-10 sm:py-12 transition-smooth"
       >
         <div
           className={[
-            'transition-opacity duration-200 ease-out will-change-opacity',
+            'w-full min-w-0 transition-opacity duration-200 ease-out will-change-opacity',
             isFading ? 'opacity-0' : 'opacity-100',
           ].join(' ')}
         >
