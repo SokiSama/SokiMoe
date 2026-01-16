@@ -99,6 +99,7 @@ export function Header() {
                   href={item.href as any}
                   className={cn(
                     "text-sm font-medium transition-smooth",
+                    item.href === '/tags' && "hidden",
                     pathname === item.href
                       ? "text-neutral-900 dark:text-neutral-100"
                       : "text-neutral-600 dark:text-neutral-400"
@@ -154,6 +155,7 @@ export function Header() {
                   href={item.href as any}
                   className={cn(
                     "px-6 py-4 text-base font-medium border-b border-neutral-100 dark:border-neutral-800 transition-colors",
+                    item.href === '/tags' && "hidden",
                     isClosing 
                       ? "animate-fade-out" 
                       : "animate-fade-in",

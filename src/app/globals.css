@@ -1,3 +1,5 @@
+@import "leaflet/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,6 +66,81 @@
   
   .home-wrapper {
     @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
+
+  .trip-photos-layout {
+    --group-gap: 14px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--group-gap);
+    align-items: start;
+  }
+  
+  .trip-section-compact {
+    width: 100%;
+    max-width: clamp(860px, 78vw, 1160px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .trip-photos-left {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(212, 212, 216, 0.7);
+    padding: 10px;
+  }
+  
+  .dark .trip-photos-left {
+    border-color: rgba(63, 63, 70, 0.7);
+  }
+
+  .trip-photo-tile {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    background: rgb(244 244 245);
+    border-radius: 0.5rem;
+    padding: 8px;
+  }
+
+  .dark .trip-photo-tile {
+    background: rgb(38 38 38);
+  }
+  
+  .trip-photo-tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .trip-photo-right-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(212, 212, 216, 0.7);
+    background: rgb(244 244 245);
+  }
+
+  .dark .trip-photo-right-wrap {
+    border-color: rgba(63, 63, 70, 0.7);
+    background: rgb(38 38 38);
+  }
+
+  @media (min-width: 768px) {
+    .trip-photos-layout {
+      grid-template-columns: 1fr minmax(300px, 0.78fr);
+      align-items: start;
+    }
   }
 
   /* 按钮样式 */

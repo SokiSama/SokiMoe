@@ -40,6 +40,7 @@ function PostsPageContent() {
   const { tags } = useTags();
   const [openYear, setOpenYear] = useState<number | null>(null);
   const [mobileArchiveOpen, setMobileArchiveOpen] = useState(false);
+  const [openTag, setOpenTag] = useState<string | null>(null);
 
   const archives = useMemo(() => {
     const byYear = new Map<number, typeof allPosts>();
@@ -57,6 +58,21 @@ function PostsPageContent() {
         return { year, posts: sorted, count: sorted.length };
       })
       .sort((a, b) => b.year - a.year);
+  }, [allPosts]);
+
+  const tagPostsMap = useMemo(() => {
+    const map = new Map<string, typeof allPosts>();
+    for (const post of allPosts) {
+      for (const t of post.tags || []) {
+        const key = t.toLowerCase();
+        if (!map.has(key)) map.set(key, []);
+        map.get(key)!.push(post);
+      }
+    }
+    map.forEach((list, key) => {
+      map.set(key, [...list].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+    });
+    return map;
   }, [allPosts]);
 
   const mobileArchiveMaxHeight = useMemo(() => {
@@ -191,23 +207,57 @@ function PostsPageContent() {
                 </div>
               </div>
               <div className="mt-6 space-y-2">
-                {tags.map(({ tag, count }) => (
-                  <Link
-                    key={tag}
-                    href={`/tags/${encodeURIComponent(tag)}`}
-                    className={[
-                      'group flex items-center justify-between gap-4 rounded-lg px-2.5 py-2 transition-colors',
-                      'hover:bg-neutral-50 dark:hover:bg-neutral-800',
-                    ].join(' ')}
-                  >
-                    <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary truncate">
-                      {tag}
-                    </span>
-                    <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
-                      {count}
-                    </span>
-                  </Link>
-                ))}
+                {tags.map(({ tag, count }) => {
+                  const key = tag.toLowerCase();
+                  const expanded = openTag === key;
+                  const list = tagPostsMap.get(key) || [];
+                  const maxHeight = expanded ? `${list.length * 44 + 8}px` : '0px';
+                  return (
+                    <div key={tag} className="rounded-lg">
+                      <button
+                        type="button"
+                        onClick={() => setOpenTag((t) => (t === key ? null : key))}
+                        className={[
+                          'w-full group flex items-center justify-between gap-4 rounded-lg px-2.5 py-2 transition-colors text-left',
+                          'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                        ].join(' ')}
+                        aria-expanded={expanded}
+                      >
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary truncate">
+                          {tag}
+                        </span>
+                        <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                          {count}
+                        </span>
+                      </button>
+
+                      <div
+                        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
+                        style={{ maxHeight, opacity: expanded ? 1 : 0 }}
+                      >
+                        <div className="mt-1 space-y-1 pb-2">
+                          {list.map((p) => (
+                            <Link
+                              key={p.slug}
+                              href={`/posts/${encodeURIComponent(p.slug)}`}
+                              className={[
+                                'flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 transition-colors',
+                                'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                              ].join(' ')}
+                            >
+                              <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                {p.title}
+                              </span>
+                              <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
+                                {formatMonthDay(p.date)}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -304,23 +354,57 @@ function PostsPageContent() {
                     </div>
 
                     <div className="mt-6 space-y-2">
-                      {tags.map(({ tag, count }) => (
-                        <Link
-                          key={tag}
-                          href={`/tags/${encodeURIComponent(tag)}`}
-                          className={[
-                            'group flex items-center justify-between gap-4 rounded-lg px-2.5 py-2 transition-colors',
-                            'hover:bg-neutral-50 dark:hover:bg-neutral-800',
-                          ].join(' ')}
-                        >
-                          <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary truncate">
-                            {tag}
-                          </span>
-                          <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
-                            {count}
-                          </span>
-                        </Link>
-                      ))}
+                      {tags.map(({ tag, count }) => {
+                        const key = tag.toLowerCase();
+                        const expanded = openTag === key;
+                        const list = tagPostsMap.get(key) || [];
+                        const maxHeight = expanded ? `${list.length * 44 + 8}px` : '0px';
+                        return (
+                          <div key={tag} className="rounded-lg">
+                            <button
+                              type="button"
+                              onClick={() => setOpenTag((t) => (t === key ? null : key))}
+                              className={[
+                                'w-full group flex items-center justify-between gap-4 rounded-lg px-2.5 py-2 transition-colors text-left',
+                                'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                              ].join(' ')}
+                              aria-expanded={expanded}
+                            >
+                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary truncate">
+                                {tag}
+                              </span>
+                              <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                                {count}
+                              </span>
+                            </button>
+
+                            <div
+                              className="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
+                              style={{ maxHeight, opacity: expanded ? 1 : 0 }}
+                            >
+                              <div className="mt-1 space-y-1 pb-2">
+                                {list.map((p) => (
+                                  <Link
+                                    key={p.slug}
+                                    href={`/posts/${encodeURIComponent(p.slug)}`}
+                                    className={[
+                                      'flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 transition-colors',
+                                      'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                                    ].join(' ')}
+                                  >
+                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                      {p.title}
+                                    </span>
+                                    <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
+                                      {formatMonthDay(p.date)}
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
