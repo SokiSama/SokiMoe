@@ -30,6 +30,18 @@
       "href": "/tags"
     },
     {
+      "name": "ACG",
+      "href": "/acg"
+    },
+    {
+      "name": "Trip",
+      "href": "/trip"
+    },
+    {
+      "name": "Arcade",
+      "href": "/arcade"
+    },
+    {
       "name": "Friends",
       "href": "/friends"
     },

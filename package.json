@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
@@ -22,6 +23,7 @@
     "lucide-react": "^0.400.0",
     "next": "^14.2.0",
     "prismjs": "^1.30.0",
+    "psn-api": "^2.17.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "rehype": "^13.0.1",
@@ -46,6 +48,7 @@
     "eslint-config-next": "^14.2.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vitest": "^4.0.17"
   }
 }

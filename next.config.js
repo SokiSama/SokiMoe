@@ -21,6 +21,44 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cdn.jsdelivr.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'lain.bgm.tv',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.api.playstation.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.api.np.km.playstation.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatar.api.playstation.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static-resource.np.community.playstation.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'store.playstation.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'psnobj.prod.dl.playstation.net',
+      },
+      {
+        protocol: 'http',
+        hostname: 'psn-rsc.prod.dl.playstation.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'psn-rsc.prod.dl.playstation.net',
+        pathname: '/**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
   },
