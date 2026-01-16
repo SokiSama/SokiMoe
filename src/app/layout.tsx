@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Fira_Code } from 'next/font/google';
-import { ConditionalHeader } from '@/components/ConditionalHeader';
+import { ConditionalFooter, ConditionalHeader } from '@/components/ConditionalHeader';
 import { getSiteConfigServer } from '@/lib/config';
 import './globals.css';
 
@@ -76,11 +76,12 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${jetbrainsMono.variable} ${firaCode.variable} font-mono antialiased`}>
-        <div className="min-h-screen">
+        <div className="min-h-screen flex flex-col">
           <ConditionalHeader />
-          <main>
+          <main className="flex-1">
             {children}
           </main>
+          <ConditionalFooter />
         </div>
       </body>
     </html>

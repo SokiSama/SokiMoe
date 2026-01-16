@@ -62,8 +62,8 @@ export default function HomePage() {
     <div className="home-wrapper py-16 pb-24">
       {/* Hero + Introduction Section */}
       <section className="pt-12 pb-20 md:pt-20 md:pb-32 fade-in-up">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+          <div className="text-left order-2 md:order-1">
             <h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-neutral-100 mb-6 text-left fade-in-up opacity-0 whitespace-normal md:whitespace-nowrap"
               style={{ animationDelay: '0.1s' }}
@@ -79,7 +79,7 @@ export default function HomePage() {
             </p>
 
             <p
-              className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-base max-w-2xl fade-in-delayed"
+              className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg max-w-2xl whitespace-pre-line fade-in-delayed"
               style={{ animationDelay: '0.35s' }}
             >
               {config?.introduction || ''}
@@ -123,7 +123,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Website"
-                className="h-14 w-14 rounded-full bg-emerald-600 text-white flex items-center justify-center transition-colors hover:bg-emerald-500 fade-in-up opacity-0"
+                className="h-14 w-14 rounded-full bg-purple-600 text-white flex items-center justify-center transition-colors hover:bg-purple-500 fade-in-up opacity-0"
                 style={{ animationDelay: '0.75s' }}
               >
                 <Home className="h-6 w-6" />
@@ -153,7 +153,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex justify-center md:justify-end">
+          <div className="flex justify-center md:justify-end order-1 md:order-2">
             <div
               className="group relative w-56 h-56 md:w-80 md:h-80 fade-in-up opacity-0"
               style={{ animationDelay: '0.45s' }}
@@ -240,7 +240,7 @@ export default function HomePage() {
               { name: 'AirPods Pro', Icon: Headphones },
               { name: 'Apple Watch S10', Icon: Watch },
               { name: 'Meta Quest 3', Icon: Sparkles },
-              { name: '和不计其数的洋垃圾...', Icon: MoreHorizontal },
+              { name: '不计其数的洋垃圾...', Icon: MoreHorizontal },
             ].map(({ name, Icon }) => (
               <div
                 key={name}

@@ -30,3 +30,31 @@ export function ConditionalHeader() {
   // 其他页面正常显示Header
   return <Header />;
 }
+
+export function ConditionalFooter() {
+  const pathname = usePathname();
+  const { data: config, loading } = useConfig();
+
+  if (loading || !config) {
+    return null;
+  }
+
+  const isAdminLoginPage = pathname === `/${config.secureEntrance}`;
+  const isAdminPage = pathname.startsWith('/admin');
+
+  if (isAdminLoginPage || isAdminPage) {
+    return null;
+  }
+
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="py-6">
+      <div className="content-wrapper">
+        <p className="text-center text-sm text-neutral-500 dark:text-neutral-500">
+          © {currentYear} Soki. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}

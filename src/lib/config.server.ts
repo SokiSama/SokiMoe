@@ -192,9 +192,9 @@ export function validateSiteConfig(config: Partial<SiteConfig>): string[] {
 
 function getDefaultConfig(): SiteConfig {
   return {
-    title: "Soki Blog",
+    title: "Soki Life",
     description: "✨ Yes, the MP is low. No, the healing hasn't stopped. Yes, we will see the dawn.",
-    introduction: 'The stars in the heavens are but a reflection of the light within us. Walk on, and the path will find you.',
+    introduction: '愿母水晶能指引大家走向正确的道路。\n可通过下方链接与我取得联系，亦或者访问我的个人博客。',
     author: {
       name: 'Lynn',
       email: 'blog@example.com',

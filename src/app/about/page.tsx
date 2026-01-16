@@ -64,40 +64,6 @@ export default function AboutPage() {
               className="prose prose-gray dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: aboutMePage?.htmlContent || '' }}
             />
-            
-            <div className="mt-8 pt-6 border-t">
-              <h3 className="text-xl font-semibold mb-4">联系方式</h3>
-              <div className="flex flex-wrap gap-4">
-                {config?.social?.email && (
-                  <a
-                    href={config.social.email}
-                    className="btn-secondary transition-bounce"
-                  >
-                    邮箱
-                  </a>
-                )}
-                {config?.social?.github && (
-                  <a
-                    href={config.social.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary transition-bounce"
-                  >
-                    GitHub
-                  </a>
-                )}
-                {config?.social?.twitter && (
-                  <a
-                    href={config.social.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary transition-bounce"
-                  >
-                    Twitter
-                  </a>
-                )}
-              </div>
-            </div>
           </div>
           
           <div className="card p-8">

@@ -82,11 +82,10 @@ export function Footer() {
           </div>
           
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600 dark:text-gray-400">
-              <p>© {currentYear} {siteConfig.author.name}. 保留所有权利。</p>
-              <p className="mt-2 md:mt-0">
-                基于 Next.js 构建
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-center md:text-left">© {currentYear} {siteConfig.author.name}. 保留所有权利。</p>
+              <p className="text-center">© {currentYear} Soki. All Rights Reserved.</p>
+              <p className="text-center md:text-right">基于 Next.js 构建</p>
             </div>
           </div>
         </div>
