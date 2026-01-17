@@ -67,7 +67,7 @@ export default function HomePage() {
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-neutral-900 dark:text-neutral-100 mb-6 text-left fade-in-up opacity-0 whitespace-normal md:whitespace-nowrap"
               style={{ animationDelay: '0.1s' }}
             >
-              Hi, I&apos;m Soki❤
+              Hi, I&apos;m Soki
             </h1>
 
             <p

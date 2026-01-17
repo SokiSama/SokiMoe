@@ -32,7 +32,7 @@ const cities: {
     id: 'kl',
     name: '马来西亚 * 吉隆坡',
     country: '马来西亚',
-    image: '/images/KL.jpeg',
+    image: '/images/square.jpeg',
     distanceKm: 2600,
   },
   {
@@ -53,7 +53,7 @@ const cities: {
     id: 'chongqing',
     name: '中国重庆',
     country: '中国',
-    image: '/images/apple.jpeg',
+    image: '/images/lfs.jpeg',
     distanceKm: 700,
   },
   {
@@ -468,11 +468,11 @@ export function TravelFootprint() {
                       onClick={() => setSelectedNext(option.id)}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-sm font-semibold text-neutral-900">
+                        <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-50">
                           {option.label}
                         </span>
                       </div>
-                      <div className="mt-1 text-[11px] text-neutral-700">
+                      <div className="mt-1 text-[11px] text-neutral-700 dark:text-neutral-300">
                         {option.subtitle}
                       </div>
                     </button>

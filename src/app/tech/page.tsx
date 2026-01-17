@@ -7,9 +7,9 @@ export default async function TechPage() {
   return (
     <div className="content-wrapper py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-8 fade-in-up">
           <h1 className="text-3xl md:text-4xl font-bold mb-3 leading-tight">
-            Tech
+            文章
           </h1>
           <p className="text-neutral-600 dark:text-neutral-400">
             这里记录一些教程。

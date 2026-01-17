@@ -65,6 +65,11 @@ export async function generateMetadata(): Promise<Metadata> {
         'application/feed+json': '/api/rss?format=json',
       },
     },
+    icons: {
+      icon: '/api/images/avatar.png',
+      shortcut: '/api/images/avatar.png',
+      apple: '/api/images/avatar.png',
+    },
   };
 }
 

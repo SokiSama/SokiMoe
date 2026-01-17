@@ -1,20 +1,240 @@
+'use client';
+
+import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import Script from 'next/script';
+
+type TwikooGlobal = {
+  init: (options: {
+    envId: string;
+    el: string | HTMLElement;
+    path?: string;
+    lang?: string;
+    onCommentLoaded?: () => void;
+  }) => Promise<void>;
+  getCommentsCount?: (options: {
+    envId: string;
+    urls: string[];
+    includeReply?: boolean;
+  }) => Promise<Array<{ url: string; count: number }>>;
+};
+
+const TwikooContainer = memo(
+  forwardRef<HTMLDivElement, { id: string; className?: string }>(function TwikooContainer(
+    { id, className },
+    ref
+  ) {
+    return (
+      <div
+        id={id}
+        ref={ref}
+        className={className}
+      />
+    );
+  }),
+  () => true
+);
 
 export default function FriendsPage() {
-  const friends = [
-    {
-      title: 'ATao-Blog',
-      avatar: 'https://cdn.atao.cyou/Web/Avatar.png',
-      description: '做自己喜欢的事',
-      url: 'https://blog.atao.cyou',
-    },
-    {
-      title: 'SatouのBlog',
-      avatar: 'https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg',
-      description: '彼女の愛は、甘くて痛い',
-      url: 'https://www.matsusatou.top',
-    },
-  ];
+  const friends = useMemo(
+    () => [
+      {
+        title: 'ATao-Blog',
+        avatar: 'https://cdn.atao.cyou/Web/Avatar.png',
+        description: '做自己喜欢的事',
+        url: 'https://blog.atao.cyou',
+      },
+      {
+        title: 'SatouのBlog',
+        avatar: 'https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg',
+        description: '彼女の愛は、甘くて痛い',
+        url: 'https://www.matsusatou.top',
+      },
+    ],
+    []
+  );
+
+  const envId = 'https://sweet-moonbeam-d0178d.netlify.app/.netlify/functions/twikoo';
+  const twikooPath = '/friends';
+  const twikooElId = 'twikoo-comments';
+  const twikooElRef = useRef<HTMLDivElement | null>(null);
+  const initRunningRef = useRef(false);
+  const initializedRef = useRef(false);
+  const [scriptReady, setScriptReady] = useState(false);
+  const [initStatus, setInitStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [safetyWarning, setSafetyWarning] = useState<string | null>(null);
+  const [hasNewComments, setHasNewComments] = useState(false);
+
+  const getTwikoo = useCallback(
+    () => (window as unknown as { twikoo?: TwikooGlobal }).twikoo ?? null,
+    []
+  );
+
+  const initTwikoo = useCallback(async (options?: { force?: boolean }) => {
+    const el = twikooElRef.current;
+    const twikoo = getTwikoo();
+    if (!el) {
+      return;
+    }
+    if (!twikoo?.init) {
+      setInitStatus('error');
+      setErrorMessage('Twikoo 未加载完成，请刷新重试。');
+      return;
+    }
+
+    if (initRunningRef.current) {
+      return;
+    }
+
+    if (initializedRef.current && !options?.force) {
+      return;
+    }
+
+    const maxAttempts = 3;
+    initRunningRef.current = true;
+
+    try {
+      setInitStatus('loading');
+      setLoadingComments(true);
+      setErrorMessage(null);
+
+      if (options?.force) {
+        el.replaceChildren();
+        initializedRef.current = false;
+      }
+
+      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        try {
+          await twikoo.init({
+            envId,
+            el,
+            path: twikooPath,
+            lang: 'zh-CN',
+            onCommentLoaded: () => {
+              setLoadingComments(false);
+            },
+          });
+          initializedRef.current = true;
+          setHasNewComments(false);
+          setInitStatus('ready');
+          return;
+        } catch (err) {
+          if (attempt < maxAttempts) {
+            await new Promise<void>((resolve) => {
+              window.setTimeout(resolve, 700 * attempt);
+            });
+            continue;
+          }
+          setLoadingComments(false);
+          setInitStatus('error');
+          setErrorMessage(err instanceof Error ? err.message : String(err));
+        }
+      }
+    } finally {
+      initRunningRef.current = false;
+    }
+  }, [envId, getTwikoo, twikooPath]);
+
+  useEffect(() => {
+    if (!scriptReady) return;
+    void initTwikoo();
+  }, [initTwikoo, scriptReady]);
+
+  useEffect(() => {
+    if (!scriptReady || initStatus !== 'ready') return;
+    const el = twikooElRef.current;
+    if (!el) return;
+
+    const shouldBlock = (value: string) => {
+      const trimmed = value.trim();
+      if (trimmed.length === 0) return null;
+      if (trimmed.length > 2000) return '评论内容过长，请控制在 2000 字以内。';
+      const lowered = trimmed.toLowerCase();
+      const risky = ['<script', 'javascript:', 'data:text/html', 'onerror=', 'onload='];
+      if (risky.some((k) => lowered.includes(k))) return '检测到可能不安全的内容，请移除可疑代码后再发布。';
+      return null;
+    };
+
+    const applyGuardToSendButton = (blocked: boolean) => {
+      const candidates = Array.from(el.querySelectorAll('button')) as HTMLButtonElement[];
+      const sendButton =
+        candidates.find((b) => b.className.includes('tk-send')) ??
+        candidates.find((b) => /发送|提交|send/i.test(b.textContent ?? '')) ??
+        null;
+      if (!sendButton) return;
+      sendButton.disabled = blocked;
+    };
+
+    let currentTextarea: HTMLTextAreaElement | null = null;
+    let detach = () => {};
+
+    const attach = () => {
+      const textarea = el.querySelector('textarea') as HTMLTextAreaElement | null;
+      if (!textarea || textarea === currentTextarea) return;
+
+      detach();
+      currentTextarea = textarea;
+
+      const onInput = () => {
+        const warning = shouldBlock(textarea.value);
+        setSafetyWarning(warning);
+        applyGuardToSendButton(Boolean(warning));
+      };
+
+      textarea.addEventListener('input', onInput);
+      onInput();
+      detach = () => textarea.removeEventListener('input', onInput);
+    };
+
+    attach();
+    const observer = new MutationObserver(() => attach());
+    observer.observe(el, { childList: true, subtree: true });
+
+    return () => {
+      detach();
+      observer.disconnect();
+    };
+  }, [initStatus, scriptReady]);
+
+  useEffect(() => {
+    if (!scriptReady || initStatus !== 'ready') return;
+    const twikoo = getTwikoo();
+    if (!twikoo?.getCommentsCount) return;
+
+    let stopped = false;
+    let lastCount: number | null = null;
+
+    const tick = async () => {
+      try {
+        const res = await twikoo.getCommentsCount?.({
+          envId,
+          urls: [twikooPath],
+          includeReply: true,
+        });
+        if (stopped) return;
+        const nextCount = res?.[0]?.count;
+        if (typeof nextCount !== 'number') return;
+        if (lastCount !== null && nextCount > lastCount) setHasNewComments(true);
+        lastCount = nextCount;
+      } catch {
+      }
+    };
+
+    const id = window.setInterval(() => {
+      if (stopped) return;
+      if (document.visibilityState !== 'visible') return;
+      void tick();
+    }, 20000);
+
+    void tick();
+
+    return () => {
+      stopped = true;
+      window.clearInterval(id);
+    };
+  }, [envId, getTwikoo, initStatus, initTwikoo, scriptReady, twikooPath]);
 
   return (
     <div className="content-wrapper py-12">
@@ -30,15 +250,12 @@ export default function FriendsPage() {
         <div className="mb-4 card px-6 py-4 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
           <p>相识便是友人，欢迎交换友链</p>
           <p className="mt-2">
-            只需要将你的友链，在主页上列出的任意联系方式申请即可。
-          </p>
-          <p className="mt-1">
-            也可以将友链格式发送至我的邮箱：sokisama0@gmail.com，我看到后会尽快审核并添加。
+            只需要将你的友链，按照下方格式在评论区申请即可，我看到后会尽快审核并添加。
           </p>
         </div>
 
         <div className="mb-8 card px-6 py-4 text-xs md:text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-          <p>在添加友链前：</p>
+          <p>在添加友链前，请确保：</p>
           <p className="mt-1">
             有一个固定的域名，不能是托管的域名（e.g.：.github.io、.vercel.app、netlify.app.）
           </p>
@@ -99,6 +316,72 @@ export default function FriendsPage() {
               </p>
             </a>
           ))}
+        </div>
+
+        <div className="mt-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+            <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+              评论区
+            </div>
+          </div>
+
+          <div>
+            <Script
+              id="twikoo"
+              src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js"
+              strategy="afterInteractive"
+              onLoad={() => setScriptReady(true)}
+            />
+
+            {initStatus === 'error' && (
+              <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-200">
+                <div className="font-semibold mb-1">评论区加载失败</div>
+                <div className="break-words">{errorMessage || '未知错误'}</div>
+                <button
+                  type="button"
+                  className="mt-3 inline-flex items-center rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-500 transition-colors"
+                  onClick={() => void initTwikoo({ force: true })}
+                >
+                  重试
+                </button>
+              </div>
+            )}
+
+            {hasNewComments && initStatus === 'ready' && (
+              <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-950/40 dark:text-blue-200">
+                <div className="font-medium">发现新评论</div>
+                <button
+                  type="button"
+                  className="inline-flex items-center rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors"
+                  onClick={() => void initTwikoo({ force: true })}
+                >
+                  刷新
+                </button>
+              </div>
+            )}
+
+            {safetyWarning && (
+              <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/40 dark:bg-amber-950/40 dark:text-amber-200">
+                {safetyWarning}
+              </div>
+            )}
+
+            {loadingComments && (
+              <div className="mb-4 flex items-center gap-3 text-sm text-neutral-600 dark:text-neutral-300">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-300 border-t-transparent dark:border-neutral-700 dark:border-t-transparent" />
+                <span>正在加载评论…</span>
+              </div>
+            )}
+
+            <div className="twikoo-host">
+              <TwikooContainer
+                ref={twikooElRef}
+                id={twikooElId}
+                className="twikoo"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

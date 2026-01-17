@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, ArrowUp } from 'lucide-react';
 import { usePost } from '@/hooks/usePost';
 import { useTableOfContents } from '@/hooks/useTableOfContents';
 import { formatDate } from '@/lib/utils';
@@ -23,6 +24,24 @@ export default function PostPage() {
     htmlContent,
     offsetTop: 100
   });
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleScrollTop = () => {
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  };
 
   if (error) {
     return (
@@ -191,7 +210,6 @@ export default function PostPage() {
         )}
       </div>
 
-      {/* 移动端浮动目录按钮 */}
       {isVisible && (
         <div className="lg:hidden">
           <TableOfContents
@@ -200,6 +218,19 @@ export default function PostPage() {
             variant="floating"
             onItemClick={scrollToHeading}
           />
+        </div>
+      )}
+
+      {showScrollTop && (
+        <div className="fixed left-40 bottom-6 z-40">
+          <button
+            type="button"
+            onClick={handleScrollTop}
+            aria-label="置顶"
+            className="h-12 w-12 rounded-2xl bg-white text-neutral-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:border-neutral-700"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </button>
         </div>
       )}
     </div>

@@ -271,7 +271,12 @@ function PostsPageContent() {
 
             <div className="card p-6">
               <div className="flex items-center justify-between gap-3">
-                <div className="text-sm font-medium text-neutral-600 dark:text-neutral-400">归档</div>
+                <div className="flex items-center gap-4">
+                  <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                  <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                    归档
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={() =>
@@ -417,7 +422,12 @@ function PostsPageContent() {
                   </div>
 
                   <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
-                    <div className="text-sm font-medium text-neutral-600 dark:text-neutral-400">归档</div>
+                    <div className="flex items-center gap-4">
+                      <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                      <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                        归档
+                      </div>
+                    </div>
                     <div className="mt-4 space-y-2">
                       {archives.map((a) => {
                         const expanded = openYear === a.year;

@@ -69,6 +69,50 @@
     @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-12;
   }
 
+  .twikoo-host {
+    @apply card px-6 py-6;
+  }
+
+  .twikoo-host .tk-comments {
+    @apply text-neutral-700 dark:text-neutral-200;
+    font-family: var(--font-ui);
+  }
+
+  .twikoo-host .tk-comments a {
+    @apply text-neutral-900 dark:text-neutral-100;
+  }
+
+  .twikoo-host .tk-submit textarea,
+  .twikoo-host .tk-input textarea {
+    @apply w-full rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 py-3 text-sm text-neutral-900 dark:text-neutral-100;
+    font-family: var(--font-ui);
+  }
+
+  .twikoo-host .tk-meta-input input {
+    @apply rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-2 text-sm text-neutral-900 dark:text-neutral-100;
+    font-family: var(--font-ui);
+  }
+
+  .twikoo-host .tk-send {
+    @apply rounded-lg bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 px-3 py-2 text-sm font-semibold transition-colors;
+  }
+
+  .twikoo-host .tk-send:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .twikoo-host .tk-comment {
+    @apply rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/40 px-4 py-4 transition-shadow;
+  }
+
+  .twikoo-host .tk-comment:hover {
+    @apply shadow-md;
+  }
+
+  .twikoo-host .tk-replies {
+    @apply mt-4 pl-4 border-l border-neutral-200 dark:border-neutral-800;
+  }
+
   .trip-photos-layout {
     --group-gap: 14px;
     display: grid;
@@ -79,7 +123,7 @@
   
   .trip-section-compact {
     width: 100%;
-    max-width: clamp(860px, 78vw, 1160px);
+    max-width: clamp(720px, 68vw, 980px);
     margin-left: auto;
     margin-right: auto;
   }
