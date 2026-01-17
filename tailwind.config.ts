@@ -12,7 +12,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         mono: ['var(--font-mono)', ...fontFamily.mono],
-        sans: ['var(--font-mono)', ...fontFamily.mono], // 使所有字体都使用等宽字体
+        sans: ['var(--font-ui)', ...fontFamily.sans],
       },
       animation: {
         'slide-in-right': 'slide-in-right 0.25s ease-out',

@@ -7,11 +7,12 @@
 @layer base {
   :root {
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', 'Ubuntu Mono', monospace;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
   }
   
   body {
     @apply bg-neutral-50 text-neutral-900;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: 0.02em;
@@ -20,12 +21,12 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-medium text-neutral-900;
     letter-spacing: -0.01em;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
   }
   
   p {
     @apply text-neutral-700 leading-relaxed;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
   }
   
   a {
@@ -35,7 +36,7 @@
     background-size: 0% 1px;
     background-repeat: no-repeat;
     background-position: bottom left;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
   }
   
   a:hover {
@@ -803,50 +804,50 @@
 /* Prose 样式用于 Markdown 内容 */
 .prose {
   @apply max-w-none text-neutral-700;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose h1 {
   @apply text-3xl font-medium mb-8 mt-10 text-neutral-900;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose h2 {
   @apply text-2xl font-medium mb-6 mt-8 text-neutral-900;
   letter-spacing: -0.01em;
   line-height: 1.3;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose h3 {
   @apply text-xl font-medium mb-4 mt-6 text-neutral-900;
   letter-spacing: -0.01em;
   line-height: 1.4;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose p {
   @apply mb-6 leading-relaxed;
   line-height: 1.65;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose ul, .prose ol {
   @apply mb-6 pl-6;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose li {
   @apply mb-2 leading-relaxed;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose blockquote {
   @apply border-l-4 border-neutral-300 pl-6 italic text-neutral-600 my-6;
   font-style: italic;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .prose img {
@@ -868,19 +869,19 @@
 /* 深色模式的 Prose */
 .dark .prose {
   @apply text-neutral-400;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .dark .prose h1,
 .dark .prose h2,
 .dark .prose h3 {
   @apply text-neutral-100;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .dark .prose blockquote {
   @apply border-neutral-600 text-neutral-500;
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
 }
 
 .dark .prose hr {
