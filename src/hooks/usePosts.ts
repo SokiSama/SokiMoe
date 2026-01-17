@@ -21,6 +21,7 @@ interface UsePostsOptions {
   limit?: number;
   search?: string;
   tag?: string;
+  excludeTag?: string;
   paginated?: boolean;
 }
 
@@ -40,6 +41,7 @@ export function usePosts(options: UsePostsOptions = {}) {
       if (options.limit) params.set('limit', options.limit.toString());
       if (options.search) params.set('search', options.search);
       if (options.tag) params.set('tag', options.tag);
+      if (options.excludeTag) params.set('excludeTag', options.excludeTag);
       if (options.paginated) params.set('paginated', 'true');
 
       const response = await fetch(`/api/posts?${params}`, {
@@ -81,7 +83,7 @@ export function usePosts(options: UsePostsOptions = {}) {
 
   useEffect(() => {
     fetchPosts();
-  }, [options.page, options.limit, options.search, options.tag, options.paginated]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [options.page, options.limit, options.search, options.tag, options.excludeTag, options.paginated]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     ...state,

@@ -194,7 +194,7 @@ function getDefaultConfig(): SiteConfig {
   return {
     title: "Soki Life",
     description: "✨ Yes, the MP is low. No, the healing hasn't stopped. Yes, we will see the dawn.",
-    introduction: '愿母水晶能指引大家走向正确的道路。\n可通过下方链接与我取得联系，亦或者访问我的个人博客。',
+    introduction: '倾听，感受，思考 \n可通过下方链接与我取得联系，愿母水晶能指引我们',
     author: {
       name: 'Lynn',
       email: 'blog@example.com',

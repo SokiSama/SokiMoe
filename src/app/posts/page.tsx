@@ -33,10 +33,13 @@ function PostsPageContent() {
   const { posts, pagination, loading, error } = usePosts({
     page: currentPage,
     limit: postsPerPage,
-    paginated: true
+    paginated: true,
+    excludeTag: 'tech'
   });
 
-  const { posts: allPosts } = usePosts();
+  const { posts: allPosts } = usePosts({
+    excludeTag: 'tech'
+  });
   const { tags } = useTags();
   const [openYear, setOpenYear] = useState<number | null>(null);
   const [mobileArchiveOpen, setMobileArchiveOpen] = useState(false);
@@ -59,6 +62,11 @@ function PostsPageContent() {
       })
       .sort((a, b) => b.year - a.year);
   }, [allPosts]);
+
+  const filteredTags = useMemo(
+    () => tags.filter(({ tag }) => tag.toLowerCase() !== 'tech'),
+    [tags]
+  );
 
   const tagPostsMap = useMemo(() => {
     const map = new Map<string, typeof allPosts>();
@@ -207,7 +215,7 @@ function PostsPageContent() {
                 </div>
               </div>
               <div className="mt-6 space-y-2">
-                {tags.map(({ tag, count }) => {
+                {filteredTags.map(({ tag, count }) => {
                   const key = tag.toLowerCase();
                   const expanded = openTag === key;
                   const list = tagPostsMap.get(key) || [];
@@ -354,7 +362,7 @@ function PostsPageContent() {
                     </div>
 
                     <div className="mt-6 space-y-2">
-                      {tags.map(({ tag, count }) => {
+                      {filteredTags.map(({ tag, count }) => {
                         const key = tag.toLowerCase();
                         const expanded = openTag === key;
                         const list = tagPostsMap.get(key) || [];

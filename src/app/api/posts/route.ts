@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '6');
     const search = searchParams.get('search');
     const tag = searchParams.get('tag');
+     const excludeTag = searchParams.get('excludeTag');
 
     // 如果有搜索或标签过滤参数
     let posts = getAllPosts();
@@ -32,6 +33,14 @@ export async function GET(request: NextRequest) {
         post.tags.some(postTag => 
           postTag.toLowerCase() === tag.toLowerCase()
         )
+      );
+    }
+
+    // 排除指定标签
+    if (excludeTag) {
+      const excludeLower = excludeTag.toLowerCase();
+      posts = posts.filter(post =>
+        !post.tags.some(postTag => postTag.toLowerCase() === excludeLower)
       );
     }
 

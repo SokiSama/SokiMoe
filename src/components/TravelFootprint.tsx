@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowRight, MapPin, Route, Plane } from 'lucide-react';
 
@@ -158,6 +158,8 @@ export function TravelFootprint() {
   const animatedDistance = useCountUp(totalDistance, 1500);
 
   const [pathProgress, setPathProgress] = useState(0);
+  const [planeOffset, setPlaneOffset] = useState(0);
+  const pathRef = useRef<HTMLDivElement | null>(null);
   const [hoverCity, setHoverCity] = useState<CityId | null>(null);
   const [activeCity, setActiveCity] = useState<CityId | null>('hongkong');
   const [selectedNext, setSelectedNext] = useState<NextId>('japan');
@@ -175,6 +177,32 @@ export function TravelFootprint() {
     }, 80);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const el = pathRef.current;
+    if (!el) return;
+
+    const clamped = Math.min(100, Math.max(0, pathProgress));
+    const planeSize = 24;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const width = rect.width;
+      const maxTravel = Math.max(0, width - planeSize);
+      const nextOffset = (maxTravel * clamped) / 100;
+      setPlaneOffset(nextOffset);
+    };
+
+    update();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => update());
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+
+    return;
+  }, [pathProgress]);
 
   useEffect(() => {
     return () => {
@@ -318,17 +346,26 @@ export function TravelFootprint() {
             <div className="mt-4 space-y-2">
               <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
                 <span>从家出发，向着下一段旅程前进中...</span>
-                <span className="tabular-nums text-neutral-700 dark:text-neutral-200">
-                  {Math.round((animatedDistance / 3000) * 100)}
-                  %
-                </span>
               </div>
-              <div className="travel-path-bar">
+              <div
+                className="travel-path-bar"
+                ref={pathRef}
+              >
+                <div className="travel-path-bar-inner" />
                 <div
-                  className="travel-path-bar-inner"
-                  style={{ width: `${pathProgress}%` }}
-                />
-                <div className="travel-path-plane" />
+                  className="travel-path-plane"
+                  style={{
+                    transform: `translate3d(${planeOffset}px, -50%, 0)`,
+                    transition: 'transform 5s linear',
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5 19.5L21 12 2.5 4.5 2.5 10.5 14 12 2.5 13.5z" />
+                  </svg>
+                </div>
               </div>
             </div>
 

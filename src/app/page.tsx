@@ -10,7 +10,6 @@ import {
   Code2,
   Gamepad2,
   Github,
-  Home,
   Send,
   Sparkles,
   Headphones,
@@ -119,14 +118,27 @@ export default function HomePage() {
               </a>
 
               <a
-                href="https://matsusatou.top"
+                href="https://open.spotify.com/user/bm2gkfjrtce2t5n04vowsyfsd"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Website"
-                className="h-14 w-14 rounded-full bg-purple-600 text-white flex items-center justify-center transition-colors hover:bg-purple-500 fade-in-up opacity-0"
+                aria-label="Spotify"
+                className="h-14 w-14 rounded-full bg-[#1DB954] text-white flex items-center justify-center transition-colors hover:bg-[#1ed760] fade-in-up opacity-0"
                 style={{ animationDelay: '0.75s' }}
               >
-                <Home className="h-6 w-6" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  role="img"
+                  className="h-6 w-6"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M12 1.5C6.201 1.5 1.5 6.201 1.5 12S6.201 22.5 12 22.5 22.5 17.799 22.5 12 17.799 1.5 12 1.5zm4.35 14.083a.75.75 0 0 1-1.033.25c-2.827-1.73-6.39-2.123-10.574-1.168a.75.75 0 0 1-.332-1.459c4.54-1.034 8.48-.593 11.64 1.31a.75.75 0 0 1 .299 1.067zm.738-3.024a.937.937 0 0 1-1.29.313c-3.238-1.99-8.18-2.57-11.993-1.414a.938.938 0 0 1-.54-1.797c4.39-1.318 9.818-.67 13.51 1.567a.937.937 0 0 1 .313 1.331zm.13-3.11C14.5 7.14 9.55 6.98 6.14 8.02a1.124 1.124 0 1 1-.647-2.15c3.932-1.184 9.493-1.003 13.06 1.13a1.124 1.124 0 0 1-1.136 1.959z"
+                  />
+                </svg>
               </a>
 
               <a

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
 import { useConfig } from '@/hooks/useConfig';
@@ -13,6 +14,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState('/api/images/avatar.png');
   
   const { data: config, loading } = useConfig();
 
@@ -76,20 +78,44 @@ export function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/80">
         <div className="content-wrapper">
           <div className="flex h-20 items-center justify-between fade-in">
-            <div className="flex items-center space-x-2">
-              <Link href="/" className="text-xl font-medium text-neutral-900 dark:text-neutral-100 transition-smooth">
-                {config.title}
-              </Link>
-              <a
-                href="/api/rss"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100 transition-smooth"
-                aria-label="RSS订阅"
-                title="RSS订阅"
+            <div className="flex items-center space-x-3">
+              <Link
+                href="/"
+                className="relative h-10 w-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 shrink-0"
+                aria-label="返回首页"
+                style={{ marginLeft: '-40px' }}
               >
-                <Rss className="h-4 w-4" />
-              </a>
+                <Image
+                  src={avatarSrc}
+                  alt="站点头像"
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                  loading="lazy"
+                  onError={() => {
+                    if (avatarSrc.endsWith('/api/images/avatar.png')) {
+                      setAvatarSrc('/api/images/avatar.jpg');
+                      return;
+                    }
+                    setAvatarSrc('/images/hello-world.webp');
+                  }}
+                />
+              </Link>
+              <div className="flex items-center space-x-2">
+                <Link href="/" className="text-xl font-medium text-neutral-900 dark:text-neutral-100 transition-smooth">
+                  {config.title}
+                </Link>
+                <a
+                  href="/api/rss"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100 transition-smooth"
+                  aria-label="RSS订阅"
+                  title="RSS订阅"
+                >
+                  <Rss className="h-4 w-4" />
+                </a>
+              </div>
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
