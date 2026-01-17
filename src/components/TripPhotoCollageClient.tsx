@@ -11,6 +11,22 @@ function toAltText(fileName: string, slotLabel: string) {
   return `旅行碎片 ${slotLabel}：${base}`;
 }
 
+function toLocationLabel(fileName: string) {
+  const base = fileName.replace(/\.[^.]+$/, '').trim();
+  const key = base.toLowerCase();
+  const map: Record<string, string> = {
+    hongkong: '中国香港',
+    square: '马来西亚 * 吉隆坡',
+    kl: '马来西亚 * 吉隆坡',
+    zunyi: '贵州遵义',
+    chongqing: '中国重庆',
+    macou: '中国澳门',
+    chengdu: '中国成都',
+    hdl: '海德林咖啡餐厅',
+  };
+  return map[key] ?? base;
+}
+
 export function TripPhotoCollageClient({
   slots,
   right,
@@ -44,25 +60,61 @@ export function TripPhotoCollageClient({
 
   return (
     <div className={["trip-photos-layout", className].filter(Boolean).join(' ')}>
-      <div className="trip-photos-left">
-        {safeSlots.map((slot) => (
-          <div
-            key={slot.id}
-            id={`photo-slot-${slot.id}`}
-            data-photo-slot={slot.id}
-            className="trip-photo-tile"
-          >
-            <div className="trip-photo-tile-inner">
-              <Image
-                src={slot.src}
-                alt={toAltText(slot.fileName, `位置${slot.id.toUpperCase()}`)}
-                fill
-                sizes="(max-width: 768px) 50vw, 420px"
-                className="object-cover"
-              />
-            </div>
+      <div className="trip-photos-left-column">
+        <div className="trip-photos-left">
+          {safeSlots.map((slot) => {
+            const effective =
+              slot.id === 'b'
+                ? { ...slot, src: '/images/zunyi.jpeg', fileName: 'zunyi.jpeg' }
+                : slot.id === 'c'
+                  ? { ...slot, src: '/images/knd.jpeg', fileName: slot.fileName }
+                  : slot;
+
+            return (
+              <div
+                key={slot.id}
+                id={`photo-slot-${slot.id}`}
+                data-photo-slot={slot.id}
+                className="trip-photo-tile"
+              >
+                <div className="trip-photo-tile-inner">
+                  <Image
+                    src={effective.src}
+                    alt={toAltText(effective.fileName, `位置${slot.id.toUpperCase()}`)}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 420px"
+                    className="object-cover"
+                  />
+                  <span className="trip-photo-info">
+                    <svg
+                      className="trip-photo-info-icon"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                    </svg>
+                    <span className="trip-photo-info-text">
+                      {toLocationLabel(effective.fileName)}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="trip-photos-cyber">
+          <div className="trip-photos-cyber-inner">
+            <Image
+              src="/images/cyber.jpeg"
+              alt="探索世界、认识自我、体验文化"
+              fill
+              sizes="(max-width: 768px) 100vw, 800px"
+              className="object-cover"
+            />
+            <div className="trip-photos-cyber-caption">未完待续...</div>
           </div>
-        ))}
+        </div>
       </div>
 
       <div
@@ -85,6 +137,17 @@ export function TripPhotoCollageClient({
             if (w > 0 && h > 0) setRatio(h / w);
           }}
         />
+        <span className="trip-photo-info">
+          <svg
+            className="trip-photo-info-icon"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+          </svg>
+          <span className="trip-photo-info-text">{toLocationLabel(right.fileName)}</span>
+        </span>
       </div>
     </div>
   );

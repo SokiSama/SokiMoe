@@ -1,5 +1,6 @@
 import { YearProgressBar } from '@/components/YearProgressBar';
 import { TripPhotoCollageClient } from '@/components/TripPhotoCollageClient';
+import { TravelFootprint } from '@/components/TravelFootprint';
 import path from 'path';
 import { readdir } from 'fs/promises';
 
@@ -29,7 +30,7 @@ async function getTripImageSlots() {
     ).find((f): f is string => typeof f === 'string') ?? files[0] ?? 'hdl.jpeg';
   const remaining = files.filter((f) => f.toLowerCase() !== rightFile.toLowerCase());
 
-  const preferredOrder = ['HongKong.jpeg', 'Chongqing.jpeg', 'Macou.jpeg', 'chengdu.jpeg'];
+  const preferredOrder = ['square.jpeg', 'KL.jpeg', 'HongKong.jpeg', 'Chongqing.jpeg', 'Macou.jpeg', 'chengdu.jpeg'];
   const pickByName = (name: string) =>
     remaining.find((f) => f.toLowerCase() === name.toLowerCase());
   const ordered = preferredOrder
@@ -57,11 +58,12 @@ export default async function TripPage() {
   return (
     <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
       <h1 className="trip-section-compact text-3xl font-bold mb-4 fade-in-up">
-        Where is Next？
+        在此，打破次元隔阂
       </h1>
       <div className="trip-section-compact">
         <YearProgressBar />
       </div>
+      <TravelFootprint />
       <TripPhotoCollageClient className="trip-section-compact mt-5" slots={slots} right={right} />
     </div>
   );
