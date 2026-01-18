@@ -11,7 +11,6 @@
 - **框架**：Next.js 14 with App Router
 - **语言**：TypeScript
 - **样式**：Tailwind CSS
-- **内容管理**：Markdown + gray-matter
 - **部署**：Vercel
 
 

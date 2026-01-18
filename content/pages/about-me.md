@@ -5,7 +5,6 @@
 ## 技术栈
 
 - **前端开发**：React, Vue
-- **后端开发**：Node.js, Java
 - **数据库**：Dbeaver
 - **工具**：Postman, Git, VS Code，Cursor
 

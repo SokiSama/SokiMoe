@@ -30,7 +30,7 @@ const cities: {
   },
   {
     id: 'kl',
-    name: '马来西亚 * 吉隆坡',
+    name: '马来西亚 吉隆坡',
     country: '马来西亚',
     image: '/images/square.jpeg',
     distanceKm: 2600,
@@ -65,7 +65,7 @@ const cities: {
   },
   {
     id: 'chengdu',
-    name: '中国成都',
+    name: '四川成都',
     country: '中国',
     image: '/images/chengdu.jpeg',
     distanceKm: 900,
@@ -306,7 +306,7 @@ export function TravelFootprint() {
               <span>旅行足迹</span>
             </span>
             <span className="travel-footprint-subtitle">
-              Where is next trip?
+              Where is next?
             </span>
           </div>
         </div>

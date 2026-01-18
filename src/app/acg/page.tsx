@@ -8,9 +8,9 @@ import type { PsnTrophySummary } from '@/lib/psn';
 type TabKey = 'anime' | 'comic' | 'game';
 
 const PSN_TROPHY_SUMMARY_CACHE_KEY = 'psn_trophy_summary_v1';
-const PSN_TROPHY_SUMMARY_CACHE_TTL_MS = 5 * 60_000;
+const PSN_TROPHY_SUMMARY_CACHE_TTL_MS = 12 * 60 * 60_000; // 12小时
 const PSN_RECENT_TITLES_CACHE_KEY = 'psn_recent_titles_v1';
-const PSN_RECENT_TITLES_CACHE_TTL_MS = 5 * 60_000;
+const PSN_RECENT_TITLES_CACHE_TTL_MS = 12 * 60 * 60_000; // 12小时
 
 type BangumiItem = {
   id: number;
@@ -580,7 +580,7 @@ function Game() {
         void fetchSummary({ silent: true });
         void fetchRecentTitles({ silent: true });
       }
-    }, 60_000);
+    }, 12 * 60 * 60_000);
 
     return () => window.clearInterval(interval);
   }, [fetchRecentTitles, fetchSummary]);

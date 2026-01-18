@@ -25,6 +25,7 @@ export default function PostPage() {
     offsetTop: 100
   });
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const isTech = Array.isArray(post?.tags) && post!.tags.some((t) => t.toLowerCase() === 'tech');
 
   useEffect(() => {
     const onScroll = () => {
@@ -108,11 +109,11 @@ export default function PostPage() {
           {/* 返回按钮 */}
           <div className="mb-8 fade-in">
             <Link 
-              href="/posts" 
+              href={isTech ? "http://localhost:3001/tech" : "/posts"} 
               className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              返回文章列表
+              {isTech ? '返回文章列表' : '返回手记列表'}
             </Link>
           </div>
 
@@ -186,7 +187,7 @@ export default function PostPage() {
                   href="/posts" 
                   className="btn-secondary"
                 >
-                  查看更多文章
+                  返回手记列表
                 </Link>
               </div>
             </div>
@@ -222,7 +223,7 @@ export default function PostPage() {
       )}
 
       {showScrollTop && (
-        <div className="fixed left-40 bottom-6 z-40">
+        <div className="fixed left-6 bottom-6 z-40">
           <button
             type="button"
             onClick={handleScrollTop}

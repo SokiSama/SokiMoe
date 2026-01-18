@@ -1,8 +1,8 @@
 ---
-title: 在 blog 中，来显示 PSN 奖杯图标数据
+title: 构建你的博客 PSN 奖杯数据流
 date: '2026-01-17'
 tags: ["tech"]
-description: 调用接口来实现
+description: 调用官方 API，实现奖杯数据的动态抓取
 published: true
 ---
 

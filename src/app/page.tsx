@@ -84,16 +84,16 @@ export default function HomePage() {
               {config?.introduction || ''}
             </p>
 
-            <div className="mt-12 flex justify-start gap-6">
+            <div className="mt-6 flex gap-6">
               <a
                 href="https://github.com/SokiSama"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="h-14 w-14 rounded-full bg-neutral-900 text-white flex items-center justify-center transition-colors hover:bg-neutral-800 fade-in-up opacity-0"
+                className="group -m-2 p-2 fade-in-up opacity-0 flex flex-col items-center gap-2"
                 style={{ animationDelay: '0.55s' }}
               >
-                <Github className="h-6 w-6" />
+                <Github className="h-5 w-5 text-zinc-500 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200" />
               </a>
 
               <a
@@ -101,43 +101,33 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Steam"
-                className="h-14 w-14 rounded-full bg-[#1b2838] text-white flex items-center justify-center transition-colors hover:bg-[#223447] fade-in-up opacity-0"
+                className="group -m-2 p-2 fade-in-up opacity-0 flex flex-col items-center gap-2"
                 style={{ animationDelay: '0.65s' }}
               >
                 <svg
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   role="img"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
+                  className="h-5 w-5 text-zinc-500 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200"
                 >
                   <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z" />
                 </svg>
               </a>
 
               <a
-                href="https://open.spotify.com/user/bm2gkfjrtce2t5n04vowsyfsd"
+                href="https://space.bilibili.com/4686881"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Spotify"
-                className="h-14 w-14 rounded-full bg-[#1DB954] text-white flex items-center justify-center transition-colors hover:bg-[#1ed760] fade-in-up opacity-0"
+                aria-label="Bilibili"
+                className="group -m-2 p-2 fade-in-up opacity-0 flex flex-col items-center gap-2"
                 style={{ animationDelay: '0.75s' }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  role="img"
-                  className="h-6 w-6"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M12 1.5C6.201 1.5 1.5 6.201 1.5 12S6.201 22.5 12 22.5 22.5 17.799 22.5 12 17.799 1.5 12 1.5zm4.35 14.083a.75.75 0 0 1-1.033.25c-2.827-1.73-6.39-2.123-10.574-1.168a.75.75 0 0 1-.332-1.459c4.54-1.034 8.48-.593 11.64 1.31a.75.75 0 0 1 .299 1.067zm.738-3.024a.937.937 0 0 1-1.29.313c-3.238-1.99-8.18-2.57-11.993-1.414a.938.938 0 0 1-.54-1.797c4.39-1.318 9.818-.67 13.51 1.567a.937.937 0 0 1 .313 1.331zm.13-3.11C14.5 7.14 9.55 6.98 6.14 8.02a1.124 1.124 0 1 1-.647-2.15c3.932-1.184 9.493-1.003 13.06 1.13a1.124 1.124 0 0 1-1.136 1.959z"
-                  />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="h-5 w-5 text-zinc-500 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M3.73252 2.67094C3.33229 2.28484 3.33229 1.64373 3.73252 1.25764C4.11291 0.890684 4.71552 0.890684 5.09591 1.25764L7.21723 3.30403C7.27749 3.36218 7.32869 3.4261 7.37081 3.49407H10.5789C10.6211 3.4261 10.6723 3.36218 10.7325 3.30403L12.8538 1.25764C13.2342 0.890684 13.8368 0.890684 14.2172 1.25764C14.6175 1.64373 14.6175 2.28484 14.2172 2.67094L13.364 3.49407H14C16.2091 3.49407 18 5.28493 18 7.49407V12.9996C18 15.2087 16.2091 16.9996 14 16.9996H4C1.79086 16.9996 0 15.2087 0 12.9996V7.49406C0 5.28492 1.79086 3.49407 4 3.49407H4.58579L3.73252 2.67094ZM4 5.42343C2.89543 5.42343 2 6.31886 2 7.42343V13.0702C2 14.1748 2.89543 15.0702 4 15.0702H14C15.1046 15.0702 16 14.1748 16 13.0702V7.42343C16 6.31886 15.1046 5.42343 14 5.42343H4ZM5 9.31747C5 8.76519 5.44772 8.31747 6 8.31747C6.55228 8.31747 7 8.76519 7 9.31747V10.2115C7 10.7638 6.55228 11.2115 6 11.2115C5.44772 11.2115 5 10.7638 5 10.2115V9.31747ZM12 8.31747C11.4477 8.31747 11 8.76519 11 9.31747V10.2115C11 10.7638 11.4477 11.2115 12 11.2115C12.5523 11.2115 13 10.7638 13 10.2115V9.31747C13 8.76519 12.5523 8.31747 12 8.31747Z" fill="currentColor"></path>
                 </svg>
               </a>
 
@@ -146,10 +136,10 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Telegram"
-                className="h-14 w-14 rounded-full bg-sky-600 text-white flex items-center justify-center transition-colors hover:bg-sky-500 fade-in-up opacity-0"
+                className="group -m-2 p-2 fade-in-up opacity-0 flex flex-col items-center gap-2"
                 style={{ animationDelay: '0.85s' }}
               >
-                <Send className="h-6 w-6" />
+                <Send className="h-5 w-5 text-zinc-500 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200" />
               </a>
 
               <a
@@ -157,10 +147,10 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
-                className="h-14 w-14 rounded-full bg-[#1D9BF0] text-white flex items-center justify-center transition-colors hover:bg-[#1A8CD8] fade-in-up opacity-0"
+                className="group -m-2 p-2 fade-in-up opacity-0 flex flex-col items-center gap-2"
                 style={{ animationDelay: '0.95s' }}
               >
-                <Twitter className="h-6 w-6" />
+                <Twitter className="h-5 w-5 text-zinc-500 transition group-hover:text-zinc-700 dark:text-zinc-400 dark:group-hover:text-zinc-200" />
               </a>
             </div>
           </div>

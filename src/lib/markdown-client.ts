@@ -24,7 +24,14 @@ export function markdownToHtml(markdown: string): Promise<string> {
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline">$1</a>')
       
       // 代码块
-      .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-neutral-100 dark:bg-neutral-800 p-4 rounded overflow-x-auto"><code>$2</code></pre>')
+      .replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+        const language = (lang || 'text').toLowerCase();
+        const safeCode = String(code)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+        return `<pre class="language-${language}"><code class="language-${language}">${safeCode}</code></pre>`;
+      })
       
       // 行内代码
       .replace(/`([^`]+)`/g, '<code class="bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-sm">$1</code>')

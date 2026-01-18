@@ -75,6 +75,7 @@ const SidebarTOC: React.FC<TableOfContentsProps> = ({
   className
 }) => {
   const navRef = useRef<HTMLElement>(null);
+  const [progress, setProgress] = useState(0);
 
   // 当 activeId 变化时，自动滚动到激活项
   useEffect(() => {
@@ -111,6 +112,26 @@ const SidebarTOC: React.FC<TableOfContentsProps> = ({
     });
   }, [activeId]);
 
+  useEffect(() => {
+    const calc = () => {
+      const h = document.documentElement;
+      const max = Math.max(1, h.scrollHeight - window.innerHeight);
+      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      setProgress(Number(pct.toFixed(1)));
+    };
+    const onScroll = () => requestAnimationFrame(calc);
+    const onResize = () => requestAnimationFrame(calc);
+    calc();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    document.addEventListener('visibilitychange', calc);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      document.removeEventListener('visibilitychange', calc);
+    };
+  }, []);
+
   return (
     <div className={cn("w-full", className)}>
       <div className="mb-4">
@@ -118,13 +139,19 @@ const SidebarTOC: React.FC<TableOfContentsProps> = ({
           目录
         </h3>
         {showProgress && (
-          <div className="w-full h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden mb-4">
-            <div 
-              className="h-full bg-neutral-900 dark:bg-neutral-100 transition-all duration-300"
-              style={{ width: '0%' }}
-              id="reading-progress"
-            />
-          </div>
+          <>
+            <div className="mb-3 flex items-center gap-2">
+              <span className="text-xs tabular-nums text-neutral-700 dark:text-neutral-200">
+                {Math.round(progress)}%
+              </span>
+            </div>
+            <div className="w-full h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-neutral-900 dark:bg-neutral-100 transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </>
         )}
       </div>
       <nav 

@@ -101,6 +101,64 @@
     @apply opacity-50 cursor-not-allowed;
   }
 
+  /* Twikoo 输入组：保持「昵称/邮箱/网址」与输入框同一行，不被切割 */
+  .twikoo-host .el-input-group {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    width: 100%;
+    border: none !important;
+    background: transparent !important;
+  }
+  .twikoo-host .el-input-group__prepend {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    min-width: 64px;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 9999px;
+    background: #e9ecef !important;
+    color: #6b7280;
+    margin-right: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  .twikoo-host .el-input__inner {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 14px;
+    border-radius: 9999px !important;
+    border: 1px solid #e6e7eb !important;
+    background: #ffffff !important;
+    color: rgb(23 23 23);
+    font-size: 14px;
+  }
+  .twikoo-host .el-input__inner::placeholder {
+    color: #b8bec6;
+    opacity: 1;
+  }
+  .twikoo-host .el-input__inner:focus {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+  }
+  .dark .twikoo-host .el-input-group__prepend {
+    background: #3f3f46 !important;
+    color: #e5e7eb;
+  }
+  .dark .twikoo-host .el-input__inner {
+    border-color: #3f3f46 !important;
+    background: rgb(24 24 27) !important;
+    color: rgb(244 244 245);
+  }
+  .dark .twikoo-host .el-input__inner::placeholder {
+    color: #94a3b8;
+  }
+
   .twikoo-host .tk-comment {
     @apply rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/40 px-4 py-4 transition-shadow;
   }
@@ -169,6 +227,29 @@
   .dark .trip-photos-cyber-caption {
     background: rgba(15, 23, 42, 0.9);
     color: rgb(248, 250, 252);
+  }
+
+  .year-progress-glow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20%;
+    width: 28%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0) 100%);
+    opacity: 0.35;
+    filter: blur(0.5px);
+    pointer-events: none;
+    animation: year-progress-flow 2400ms linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes year-progress-flow {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(140%);
+    }
   }
 
   .trip-photos-left {
@@ -964,6 +1045,25 @@ pre[class*="language-"] {
   direction: ltr; /* 确保文本方向 */
 }
 
+/* 兼容：无语言类代码块也应用 Mac 风格（限制在 prose 内容区） */
+.prose pre:not([class*="language-"]) {
+  @apply bg-neutral-50 text-neutral-900 rounded-lg my-6;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  tab-size: 2;
+  hyphens: none;
+  position: relative;
+  padding: 0;
+  padding-top: 2.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+  direction: ltr;
+}
+
 /* 代码内容区域 - 可滚动 */
 pre[class*="language-"] code {
   display: block;
@@ -982,6 +1082,18 @@ pre[class*="language-"] code *,
 pre[class*="language-"] .token {
   text-align: left !important; /* 强制所有代码元素左对齐 */
   direction: ltr !important; /* 强制文本方向 */
+}
+
+/* 兼容：无语言类代码块内容区域 */
+.prose pre:not([class*="language-"]) code {
+  display: block;
+  padding: 1rem 1.5rem;
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+  margin: 0;
+  text-align: left !important;
+  direction: ltr !important;
 }
 
 /* 行号样式 - 手动实现的行号系统 */
@@ -1022,8 +1134,37 @@ pre[class*="language-"]::before {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* 兼容：无语言类代码块标题栏 */
+.prose pre:not([class*="language-"])::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 /* Mac 三个圆形按钮 */
 pre[class*="language-"]::after {
+  content: '';
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  width: 12px;
+  height: 12px;
+  background: #ff5f57;
+  border-radius: 50%;
+  box-shadow: 
+    18px 0 0 #ffbd2e,
+    36px 0 0 #28ca42;
+  z-index: 10;
+}
+
+/* 兼容：无语言类代码块三色按钮 */
+.prose pre:not([class*="language-"])::after {
   content: '';
   position: absolute;
   top: 0.75rem;
@@ -1076,8 +1217,21 @@ code[class*="language-"] {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
+/* 兼容：无语言类代码块深色主题 */
+.dark .prose pre:not([class*="language-"]) {
+  @apply bg-neutral-800 text-neutral-100;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
 /* 深色主题 Mac 标题栏 */
 .dark pre[class*="language-"]::before {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 兼容：无语言类代码块深色标题栏 */
+.dark .prose pre:not([class*="language-"])::before {
   background: rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }

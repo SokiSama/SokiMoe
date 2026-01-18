@@ -26,6 +26,10 @@
       "href": "/posts"
     },
     {
+      "name": "Notes",
+      "href": "/tech"
+    },
+    {
       "name": "Tags",
       "href": "/tags"
     },
@@ -36,10 +40,6 @@
     {
       "name": "Trip",
       "href": "/trip"
-    },
-    {
-      "name": "Tech",
-      "href": "/tech"
     },
     {
       "name": "Friends",

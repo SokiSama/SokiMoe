@@ -17,7 +17,7 @@ export default function NotFound() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/" className="btn-primary" as="/">
-              {/* <Home className="mr-2 h-4 w-4" /> */}
+              <Home className="mr-2 h-4 w-4" />
               返回首页
             </Link>
             <Link href="/posts" className="btn-secondary" as="/posts">

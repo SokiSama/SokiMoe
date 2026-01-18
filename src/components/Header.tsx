@@ -81,16 +81,15 @@ export function Header() {
             <div className="flex items-center space-x-3">
               <Link
                 href="/"
-                className="relative h-10 w-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 shrink-0"
+                className="relative h-10 w-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 shrink-0 ml-0 md:-ml-10"
                 aria-label="返回首页"
-                style={{ marginLeft: '-40px' }}
               >
                 <Image
                   src={avatarSrc}
                   alt="站点头像"
                   fill
                   sizes="40px"
-                  className="object-cover"
+                  className="object-cover object-center"
                   loading="lazy"
                   onError={() => {
                     if (avatarSrc.endsWith('/api/images/avatar.png')) {

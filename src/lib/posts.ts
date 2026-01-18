@@ -129,6 +129,12 @@ export async function markdownToHtml(markdown: string): Promise<string> {
     .use(remarkHtml, { sanitize: false })
     .process(markdown);
     
+  // 为无语言的代码块添加默认 language-text，以统一样式
+  const preProcessedHtml = remarkResult.toString().replace(
+    /<pre>\s*<code>([\s\S]*?)<\/code>\s*<\/pre>/g,
+    '<pre class="language-text"><code class="language-text">$1</code></pre>'
+  );
+  
   // 然后使用 rehype 处理 HTML，添加代码高亮和标题锚点
   const rehypeResult = await rehype()
     .use(rehypeSlug) // 为标题添加ID
@@ -139,7 +145,7 @@ export async function markdownToHtml(markdown: string): Promise<string> {
       lineNumbersStyle: true
     })
     .use(rehypeStringify)
-    .process(remarkResult.toString());
+    .process(preProcessedHtml);
     
   return rehypeResult.toString();
 }

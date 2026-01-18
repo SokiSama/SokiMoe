@@ -12,7 +12,7 @@ export default async function TechPage() {
             文章
           </h1>
           <p className="text-neutral-600 dark:text-neutral-400">
-            这里记录一些教程。
+            记录一些长篇 教程 / 思考 / 图文
           </p>
         </div>
 

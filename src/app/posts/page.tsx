@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useMemo, useState, useEffect } from 'react';
 import { PostCard } from '@/components/PostCard';
 import { Pagination } from '@/components/Pagination';
 import { usePosts } from '@/hooks/usePosts';
@@ -44,6 +44,7 @@ function PostsPageContent() {
   const [openYear, setOpenYear] = useState<number | null>(null);
   const [mobileArchiveOpen, setMobileArchiveOpen] = useState(false);
   const [openTag, setOpenTag] = useState<string | null>(null);
+  const [totalChars, setTotalChars] = useState<number | null>(null);
 
   const archives = useMemo(() => {
     const byYear = new Map<number, typeof allPosts>();
@@ -100,6 +101,41 @@ function PostsPageContent() {
   };
 
   let lastYear: number | null = null;
+
+  useEffect(() => {
+    let cancelled = false;
+    const calc = async () => {
+      try {
+        if (!allPosts || allPosts.length === 0) {
+          if (!cancelled) setTotalChars(0);
+          return;
+        }
+        const counts = await Promise.all(
+          allPosts.map(async (p) => {
+            try {
+              const resp = await fetch(`/api/posts/${encodeURIComponent(p.slug)}`, { cache: 'no-cache' });
+              if (!resp.ok) return 0;
+              const j = await resp.json();
+              const html = j?.data?.htmlContent || '';
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              const text = doc.body.textContent || '';
+              return text.replace(/\s+/g, '').length;
+            } catch {
+              return 0;
+            }
+          })
+        );
+        const sum = counts.reduce((a, b) => a + b, 0);
+        if (!cancelled) setTotalChars(sum);
+      } catch {
+        if (!cancelled) setTotalChars(null);
+      }
+    };
+    calc();
+    return () => {
+      cancelled = true;
+    };
+  }, [allPosts]);
 
   if (error) {
     return (
@@ -198,20 +234,20 @@ function PostsPageContent() {
   const actualContent = (
     <div className="home-wrapper py-12">
       <div className="mb-8 fade-in-up">
-        <h1 className="text-3xl font-bold mb-4">所有文章</h1>
+        <h1 className="text-3xl font-bold mb-4">手记</h1>
         <p className="text-muted-foreground">
-          共 {pagination?.totalPosts || posts.length} 篇文章
+          捕获灵感，离线沉淀，实时更新
         </p>
       </div>
 
       {posts.length > 0 ? (
         <>
-          <div className="mt-8 lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="card p-6">
+          <div className="mt-8 lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+            <div className="card p-6 h-full">
               <div className="flex items-center gap-4">
                 <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
                 <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                  文章分类
+                  分类
                 </div>
               </div>
               <div className="mt-6 space-y-2">
@@ -269,7 +305,7 @@ function PostsPageContent() {
               </div>
             </div>
 
-            <div className="card p-6">
+            <div className="card p-6 h-full">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-4">
                   <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
@@ -352,6 +388,25 @@ function PostsPageContent() {
                 </div>
               </div>
             </div>
+            
+            <div className="card p-6 h-full">
+              <div className="flex items-center gap-4">
+                <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                  统计
+                </div>
+              </div>
+              <div className="mt-6 space-y-2">
+                <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
+                  <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                    总字数
+                  </span>
+                  <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                    {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mt-10 lg:grid lg:grid-cols-[220px,1fr] lg:gap-10">
@@ -362,7 +417,7 @@ function PostsPageContent() {
                     <div className="flex items-center gap-4">
                       <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
                       <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-                        文章分类
+                        分类
                       </div>
                     </div>
 
@@ -478,6 +533,25 @@ function PostsPageContent() {
                           </div>
                         );
                       })}
+                    </div>
+                  </div>
+                  
+                  <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                      <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                        统计
+                      </div>
+                    </div>
+                    <div className="mt-6 space-y-2">
+                      <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                          总字数
+                        </span>
+                        <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                          {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

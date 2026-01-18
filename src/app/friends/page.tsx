@@ -44,12 +44,6 @@ export default function FriendsPage() {
         description: '做自己喜欢的事',
         url: 'https://blog.atao.cyou',
       },
-      {
-        title: 'SatouのBlog',
-        avatar: 'https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg',
-        description: '彼女の愛は、甘くて痛い',
-        url: 'https://www.matsusatou.top',
-      },
     ],
     []
   );
@@ -196,6 +190,17 @@ export default function FriendsPage() {
       detach();
       observer.disconnect();
     };
+  }, [initStatus, scriptReady]);
+
+  // 将 Twikoo 输入组的 label div 转换为 span，保证结构为 span + input
+  useEffect(() => {
+    if (!scriptReady || initStatus !== 'ready') return;
+    const el = twikooElRef.current;
+    if (!el) return;
+    
+    const obs = new MutationObserver(() => {});
+    obs.observe(el, { childList: true, subtree: true });
+    return () => obs.disconnect();
   }, [initStatus, scriptReady]);
 
   useEffect(() => {
