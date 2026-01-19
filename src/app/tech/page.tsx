@@ -53,18 +53,7 @@ export default async function TechPage() {
     return counts.reduce((a, b) => a + b, 0);
   })();
 
-  function YearDivider({ year }: { year: number }) {
-    return (
-      <div className="mt-[15px] mb-[15px]">
-        <div className="flex justify-end mb-[5px]">
-          <span className="font-semibold leading-snug text-base sm:text-lg md:text-xl text-[#999999]">
-            {year}
-          </span>
-        </div>
-        <div className="border-t border-dashed border-[#CCCCCC]" />
-      </div>
-    );
-  }
+  // 年份分隔已移除
 
   return (
     <div className="content-wrapper py-12">
@@ -89,7 +78,7 @@ export default async function TechPage() {
                         分类
                       </div>
                     </div>
-                    <div className="mt-6 space-y-2">
+                    <div className="mt-4 space-y-2">
                       {tagCounts.length > 0 ? (
                         tagCounts.map(({ tag, count }) => (
                           <div key={tag} className="flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
@@ -117,7 +106,7 @@ export default async function TechPage() {
                         归档
                       </div>
                     </div>
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-3 space-y-2">
                       {archives.length > 0 ? (
                         archives.map((a) => (
                           <div key={a.year} className="flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
@@ -142,7 +131,7 @@ export default async function TechPage() {
                         统计
                       </div>
                     </div>
-                    <div className="mt-6 space-y-2">
+                    <div className="mt-4 space-y-2">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
                         <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
                           总字数
@@ -159,20 +148,11 @@ export default async function TechPage() {
 
             <div>
               <div className="stagger-children space-y-6">
-                {(() => {
-                  let lastYear: number | null = null;
-                  return posts.map((post) => {
-                    const year = new Date(post.date).getFullYear();
-                    const showDivider = year !== lastYear;
-                    lastYear = year;
-                    return (
-                      <div key={post.slug}>
-                        {showDivider && <YearDivider year={year} />}
-                        <PostCard post={post} />
-                      </div>
-                    );
-                  });
-                })()}
+                {posts.map((post, index) => (
+                  <div key={post.slug}>
+                    <PostCard post={post} imageVariant={index % 2 === 0 ? 'left' : 'right'} />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

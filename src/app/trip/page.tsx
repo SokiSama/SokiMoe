@@ -39,18 +39,7 @@ export default function TripPage() {
     return counts.reduce((a, b) => a + b, 0);
   })();
   
-  function YearDivider({ year }: { year: number }) {
-    return (
-      <div className="mt-[15px] mb-[15px]">
-        <div className="flex justify-end mb-[5px]">
-          <span className="font-semibold leading-snug text-base sm:text-lg md:text-xl text-[#999999]">
-            {year}
-          </span>
-        </div>
-        <div className="border-t border-dashed border-[#CCCCCC]" />
-      </div>
-    );
-  }
+  // 年份分隔已移除
   return (
     <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
       <h1 className="trip-section-compact text-3xl font-bold mb-4 fade-in-up">
@@ -76,7 +65,7 @@ export default function TripPage() {
                         归档
                       </div>
                     </div>
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-3 space-y-2">
                       {archives.map((a) => (
                         <div key={a.year} className="rounded-lg">
                           <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
@@ -99,7 +88,7 @@ export default function TripPage() {
                         统计
                       </div>
                     </div>
-                    <div className="mt-6 space-y-2">
+                    <div className="mt-4 space-y-2">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
                         <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
                           总字数
@@ -115,21 +104,12 @@ export default function TripPage() {
             </div>
             
             <div>
-              <div className="space-y-6 stagger-children">
-                {(() => {
-                  let lastYear: number | null = null;
-                  return posts.map((post) => {
-                    const year = new Date(post.date).getFullYear();
-                    const showDivider = year !== lastYear;
-                    lastYear = year;
-                    return (
-                      <div key={post.slug}>
-                        {showDivider && <YearDivider year={year} />}
-                        <PostCard post={post} imageVariant="tall" />
-                      </div>
-                    );
-                  });
-                })()}
+              <div className="masonry">
+                {posts.map((post) => (
+                  <div key={post.slug} className="masonry-item">
+                    <PostCard post={post} imageVariant="tall" />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

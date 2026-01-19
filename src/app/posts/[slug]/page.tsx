@@ -237,7 +237,7 @@ export default function PostPage() {
           </footer>
         </article>
 
-        {(isTech || isTrip) && isVisible && (
+        {(isTech || isTrip || isNotes) && isVisible && (
           <div className="hidden lg:block">
             <div className="sticky top-24">
               <TableOfContents
@@ -253,7 +253,7 @@ export default function PostPage() {
         )}
       </div>
 
-      {(isTech || isTrip) && isVisible && (
+      {(isTech || isTrip || isNotes) && isVisible && (
         <div className="lg:hidden">
           <TableOfContents
             headings={headings}

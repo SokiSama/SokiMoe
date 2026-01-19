@@ -603,6 +603,25 @@
     transform: translateY(0);
   }
 
+  /* Trip Masonry 瀑布流布局 */
+  .masonry {
+    column-gap: 24px;
+    column-count: 1;
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .masonry { column-count: 2; }
+  }
+  @media (min-width: 1024px) {
+    .masonry { column-count: 3; }
+  }
+  .masonry-item {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 24px;
+  }
+
   /* 视觉长度缩短 3cm（桌面端保持响应式） */
   .shorten-width-3cm {
     width: 100%;

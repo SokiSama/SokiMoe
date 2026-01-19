@@ -4,7 +4,7 @@ date: '2026-01-14'
 tags: ["教程"]
 description: 面向不知道谁的一个搭站教程。
 published: true
-cover: /images/Vercel-Logo.png
+cover: /images/vercel1.jpg
 ---
 
 > 本文章为砂糖小站备份过来，部分页面与现今版本不同，须知

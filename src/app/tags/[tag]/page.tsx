@@ -8,19 +8,6 @@ import { useParams } from 'next/navigation';
 import { LoadingTransition } from '@/components/LoadingComponents';
 import { useEffect, useMemo, useState } from 'react';
 
-function YearDivider({ year }: { year: number }) {
-  return (
-    <div className="mt-[15px] mb-[15px]">
-      <div className="flex justify-end mb-[5px]">
-        <span className="font-semibold leading-snug text-base sm:text-lg md:text-xl text-[#999999]">
-          {year}
-        </span>
-      </div>
-      <div className="border-t border-dashed border-[#CCCCCC]" />
-    </div>
-  );
-}
-
 export default function TagPostsPage() {
   const params = useParams();
   const tag = decodeURIComponent(params.tag as string);
@@ -91,7 +78,7 @@ export default function TagPostsPage() {
     };
   }, [posts]);
 
-  let lastYear: number | null = null;
+  // 年份分隔已移除
 
   if (error) {
     return (
@@ -240,7 +227,7 @@ export default function TagPostsPage() {
                         统计
                       </div>
                     </div>
-                    <div className="mt-6 space-y-2">
+                    <div className="mt-4 space-y-2">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
                         <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
                           总字数
@@ -257,18 +244,12 @@ export default function TagPostsPage() {
           ) : null}
 
           <div>
-            <div className="stagger-children space-y-6">
-              {posts.map((post) => {
-                const year = new Date(post.date).getFullYear();
-                const showDivider = year !== lastYear;
-                lastYear = year;
-                return (
-                  <div key={post.slug}>
-                    {showDivider && <YearDivider year={year} />}
-                    <PostCard post={post} />
-                  </div>
-                );
-              })}
+            <div className="posts-list">
+              {posts.map((post, index) => (
+                <div key={post.slug}>
+                  <PostCard post={post} imageVariant={index % 2 === 0 ? 'left' : 'right'} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
