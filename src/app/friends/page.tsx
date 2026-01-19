@@ -181,9 +181,17 @@ export default function FriendsPage() {
   }, [envId, getTwikoo, twikooPath]);
 
   useEffect(() => {
-    if (!scriptReady) return;
+    // 若脚本已加载或全局对象已存在，则初始化
+    if (!scriptReady && !getTwikoo()) return;
     void initTwikoo();
-  }, [initTwikoo, scriptReady]);
+  }, [initTwikoo, scriptReady, getTwikoo]);
+
+  // 预检测 window.twikoo，防止在客户端路由下脚本已存在但 onLoad 不再触发
+  useEffect(() => {
+    if (getTwikoo()) {
+      setScriptReady(true);
+    }
+  }, [getTwikoo]);
 
   useEffect(() => {
     if (!scriptReady || initStatus !== 'ready') return;
@@ -291,7 +299,7 @@ export default function FriendsPage() {
   }, [envId, getTwikoo, initStatus, initTwikoo, scriptReady, twikooPath]);
 
   return (
-    <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+    <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
       <div className="trip-section-compact">
         <h1 className="text-3xl font-bold mb-4 fade-in-up">Friends</h1>
         <p

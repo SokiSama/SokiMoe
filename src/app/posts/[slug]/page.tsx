@@ -109,19 +109,10 @@ export default function PostPage() {
   );
 
   const actualContent = (
-    <div className="post-section-wide px-6 sm:px-8 lg:px-12">
+    <div className="trip-section-compact px-6 sm:px-8 lg:px-12">
       <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-12 xl:gap-16">
         <article className="py-12 min-w-0">
-          {/* 返回按钮 */}
-          <div className="mb-8 fade-in">
-            <Link 
-              href={isTech ? "http://localhost:3001/tech" : "/posts"} 
-              className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {isTech ? '返回文章列表' : '返回手记列表'}
-            </Link>
-          </div>
+          
 
           {/* 文章头部 */}
           <header className="mb-8 fade-in-up">
@@ -173,7 +164,7 @@ export default function PostPage() {
           {/* 文章内容 */}
           <div className="fade-in-delayed" style={{ animationDelay: '0.2s' }}>
             {htmlContent && (
-              <div className="post-content shorten-width-3cm">
+              <div className="post-content shorten-width-8cm">
                 <div className="post-prose">
                   <CodeBlock html={htmlContent} />
                 </div>
@@ -226,15 +217,6 @@ export default function PostPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   如果你觉得这篇文章有用，欢迎分享给更多人。
                 </p>
-              </div>
-              
-              <div className="flex items-center space-x-4">
-                <Link 
-                  href="/posts" 
-                  className="btn-secondary"
-                >
-                  返回手记列表
-                </Link>
               </div>
             </div>
           </footer>

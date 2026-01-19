@@ -5,7 +5,7 @@ export default async function TechPage() {
   const posts = getPostsByTag('tech');
 
   return (
-    <div className="content-wrapper py-12">
+    <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 fade-in-up">
           <h1 className="text-3xl md:text-4xl font-bold mb-3 leading-tight">

@@ -60,11 +60,45 @@
 @layer components {
   /* 布局组件 */
   .content-wrapper {
-    @apply max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12;
+    width: 100%;
+    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .content-wrapper {
+      padding-left: 2rem; /* sm:px-8 */
+      padding-right: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .content-wrapper {
+      padding-left: 3rem; /* lg:px-12 */
+      padding-right: 3rem;
+    }
   }
   
   .home-wrapper {
-    @apply max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12;
+    width: 100%;
+    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .home-wrapper {
+      padding-left: 2rem; /* sm:px-8 */
+      padding-right: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .home-wrapper {
+      padding-left: 3rem; /* lg:px-12 */
+      padding-right: 3rem;
+    }
   }
 
   .twikoo-host {
@@ -179,7 +213,7 @@
   
   .trip-section-compact {
     width: 100%;
-    max-width: clamp(720px, 68vw, 980px);
+    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
     margin-left: auto;
     margin-right: auto;
   }
@@ -559,11 +593,19 @@
       overflow-x: auto;
     }
   }
+  .shorten-width-8cm {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    .shorten-width-8cm {
+      width: clamp(0px, calc(100% - 8cm), 100%);
+      overflow-x: auto;
+    }
+  }
 
   /* Header元素右移 */
-  .shift-right-3cm {
-    margin-left: 3cm;
-  }
+  .shift-right-3cm { margin-left: 0; }
+  @media (min-width: 1024px) { .shift-right-3cm { margin-left: 3cm; } }
   .travel-distance-chip {
     display: inline-flex;
     align-items: center;

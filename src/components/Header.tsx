@@ -77,11 +77,11 @@ export function Header() {
     <>
       <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/80">
         <div className="content-wrapper">
-            <div className="flex h-20 items-center justify-between fade-in">
+          <div className="flex h-20 items-center justify-between fade-in">
             <div className="flex items-center space-x-3">
               <Link
                 href="/"
-                className="relative h-10 w-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 shrink-0 shift-right-3cm"
+                className="relative h-10 w-10 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 shrink-0"
                 aria-label="返回首页"
               >
                 <Image
@@ -100,7 +100,7 @@ export function Header() {
                   }}
                 />
               </Link>
-              <div className="flex items-center space-x-2 shift-right-3cm">
+              <div className="flex items-center space-x-2">
                 <Link href="/" className="text-xl font-medium text-neutral-900 dark:text-neutral-100 transition-smooth">
                   {config.title}
                 </Link>

@@ -14,7 +14,7 @@ export default function AboutPage() {
 
   if (error) {
     return (
-      <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
         <div className="text-center py-16 fade-in">
           <div className="text-red-500 dark:text-red-400">
             <h2 className="text-2xl font-semibold mb-4">加载失败</h2>
@@ -28,7 +28,7 @@ export default function AboutPage() {
   if (!aboutMePage || !aboutBlogPage || !config) {
     if (!loading) {
       return (
-        <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+        <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
           <div className="text-center py-16 fade-in">
             <div className="text-yellow-500 dark:text-yellow-400">
               <h2 className="text-2xl font-semibold mb-4">页面不完整</h2>
@@ -41,7 +41,7 @@ export default function AboutPage() {
   }
 
   const skeletonContent = (
-    <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+    <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
       <div className="trip-section-compact">
         <div className="h-8 w-32 shimmer rounded mb-8"></div>
         
@@ -54,7 +54,7 @@ export default function AboutPage() {
   );
 
   const actualContent = (
-    <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+    <div className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12 relative">
       <div className="trip-section-compact">
         <h1 className="text-3xl font-bold mb-8 fade-in-up">关于</h1>
         
