@@ -39,11 +39,60 @@ export default function FriendsPage() {
   const friends = useMemo(
     () => [
       {
+        title: '鈴奈咲桜のBlog',
+        avatar: 'https://q2.qlogo.cn/headimg_dl?dst_uin=2731443459&spec=5',
+        description: '愛することを忘れないで',
+        url: 'https://blog.sakura.ink',
+      },
+      {
+        title: '小三月',
+        avatar: 'https://gravatar.loli.net/avatar/1741ba4d7382ef4f8a556fdf3d88a4cf?s=300',
+        description: '喵！这里是三月七',
+        url: 'https://blog.nanoka.moe/links',
+      },
+      {
+        title: '熊熊',
+        avatar: 'https://cynosura.one/img/profile-avatar.webp',
+        description: 'Trying to light up the dark.',
+        url: 'https://cynosura.one/',
+      },
+      {
+        title: 'Hoyue の 自留地',
+        avatar: 'https://hoyue.fun/assets/icons/avatar.jpg',
+        description: '这里的一切都有始有终，却能容纳所有的不期而遇和久别重逢。',
+        url: 'https://hoyue.fun',
+      },
+      {
+        title: 'Clementine (aka Clem)',
+        avatar: 'https://friends.ichr.me/img/blog.hly0928.com.png',
+        description: '悟已往之不諫，知來者之可追',
+        url: 'https://blog.hly0928.com/',
+      },
+      {
         title: 'ATao-Blog',
         avatar: 'https://cdn.atao.cyou/Web/Avatar.png',
         description: '做自己喜欢的事',
         url: 'https://blog.atao.cyou',
       },
+      {
+        title: '时隐重工',
+        avatar: 'https://shiyina.com:233/favicon.ico',
+        description: '兴趣使然的未来主义建造者',
+        url: 'https://shiyin.cafe/',
+      },
+      {
+        title: '云海花瑶',
+        avatar: 'https://dn-qiniu-avatar.qbox.me/avatar/d00de9fbffe50946b950a3fd0cd1bfdb',
+        description: '白头并非雪可替,相遇已是上上签',
+        url: 'https://www.moeyao.cn/',
+      },
+      {
+        title: 'Astral Reverie',
+        avatar: 'https://montrong-1300089193.cos.ap-beijing.myqcloud.com/montrong/2025/12/20251222025856537.png',
+        description: '如梦幻，如初遇。',
+        url: 'https://montrong.cn',
+      },
+      
     ],
     []
   );
@@ -242,8 +291,8 @@ export default function FriendsPage() {
   }, [envId, getTwikoo, initStatus, initTwikoo, scriptReady, twikooPath]);
 
   return (
-    <div className="content-wrapper py-12">
-      <div className="max-w-5xl mx-auto">
+    <div className="relative max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
+      <div className="trip-section-compact">
         <h1 className="text-3xl font-bold mb-4 fade-in-up">Friends</h1>
         <p
           className="text-muted-foreground mb-4 fade-in-up"
@@ -265,10 +314,10 @@ export default function FriendsPage() {
             有一个固定的域名，不能是托管的域名（e.g.：.github.io、.vercel.app、netlify.app.）
           </p>
           <p className="mt-1">
-            仅支持个人博客，恕不接受商业类 &amp; 无原创内容的博客
+            仅支持个人博客，恕不接受商业类 &amp; 无任何原创内容的博客
           </p>
-          <p className="mt-1">
-            请确保内容输出，符合行为规范，无不良内容
+            <p className="mt-1">
+            内容输出，符合行为规范，无不良内容
           </p>
 
           <p className="mt-4 text-neutral-500 dark:text-neutral-400">
@@ -276,10 +325,10 @@ export default function FriendsPage() {
           </p>
 
           <div className="mt-2 font-mono space-y-1 break-words">
-            <div>标题: SatouのBlog</div>
+            <div>标题: SokiのBlog</div>
             <div>头像: https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</div>
-            <div>描述: 彼女の愛は、甘くて痛い</div>
-            <div>地址: https://www.matsusatou.top</div>
+            <div>描述: 月下彼岸花</div>
+            <div>地址: https://www.soki.moe</div>
           </div>
         </div>
 

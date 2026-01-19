@@ -5,8 +5,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowLeft, ArrowUp } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 import { usePost } from '@/hooks/usePost';
+import { usePosts } from '@/hooks/usePosts';
 import { useTableOfContents } from '@/hooks/useTableOfContents';
 import { formatDate } from '@/lib/utils';
 import { TagList } from '@/components/TagList';
@@ -24,8 +25,13 @@ export default function PostPage() {
     htmlContent,
     offsetTop: 100
   });
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const isTech = Array.isArray(post?.tags) && post!.tags.some((t) => t.toLowerCase() === 'tech');
+  const { posts: allPosts } = usePosts({ excludeTag: isTech ? undefined : 'tech' });
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex >= 0 ? allPosts[currentIndex + 1] : undefined;
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
 
   useEffect(() => {
     const onScroll = () => {
@@ -46,7 +52,7 @@ export default function PostPage() {
 
   if (error) {
     return (
-      <article className="content-wrapper py-12">
+      <article className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12">
         <div className="text-center py-16 fade-in">
           <div className="text-red-500 dark:text-red-400">
             <h2 className="text-2xl font-semibold mb-4">加载失败</h2>
@@ -69,7 +75,7 @@ export default function PostPage() {
   }
 
   const skeletonContent = (
-    <article className="content-wrapper py-12">
+    <article className="trip-section-compact px-6 sm:px-8 lg:px-12 py-12">
       <div className="mb-8">
         <div className="h-6 w-32 shimmer rounded mb-4"></div>
       </div>
@@ -103,7 +109,7 @@ export default function PostPage() {
   );
 
   const actualContent = (
-    <div className="relative max-w-screen-xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div className="post-section-wide px-6 sm:px-8 lg:px-12">
       <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-12 xl:gap-16">
         <article className="py-12 min-w-0">
           {/* 返回按钮 */}
@@ -167,10 +173,50 @@ export default function PostPage() {
           {/* 文章内容 */}
           <div className="fade-in-delayed" style={{ animationDelay: '0.2s' }}>
             {htmlContent && (
-              <div className="prose max-w-none">
-                <CodeBlock html={htmlContent} />
+              <div className="post-content shorten-width-3cm">
+                <div className="post-prose">
+                  <CodeBlock html={htmlContent} />
+                </div>
               </div>
             )}
+          {/* 上一篇 / 下一篇 */}
+          {(prevPost || nextPost) && (
+            <nav className="post-navigation fade-in-delayed" style={{ animationDelay: '0.3s' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {prevPost && (
+                  <Link
+                    href={`/posts/${encodeURIComponent(prevPost.slug)}`}
+                    className="post-nav-link group"
+                    aria-label={`上一篇：${prevPost.title}`}
+                  >
+                    <div className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">上一篇</div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="truncate font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-primary transition-colors">
+                        {prevPost.title}
+                      </span>
+                      <ArrowLeft className="h-4 w-4 text-neutral-400 group-hover:text-primary transition-colors" />
+                    </div>
+                  </Link>
+                )}
+                {nextPost && (
+                  <Link
+                    href={`/posts/${encodeURIComponent(nextPost.slug)}`}
+                    className="post-nav-link group md:text-right"
+                    aria-label={`下一篇：${nextPost.title}`}
+                  >
+                    <div className="text-xs text-neutral-500 dark:text-neutral-400 mb-1 md:text-right">下一篇</div>
+                    <div className="flex items-center justify-between gap-3 md:flex-row-reverse">
+                      <span className="truncate font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-primary transition-colors">
+                        {nextPost.title}
+                      </span>
+                      <ArrowRight className="h-4 w-4 text-neutral-400 group-hover:text-primary transition-colors" />
+                    </div>
+                  </Link>
+                )}
+              </div>
+            </nav>
+          )}
+
           </div>
 
           {/* 文章底部 */}

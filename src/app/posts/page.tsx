@@ -139,7 +139,7 @@ function PostsPageContent() {
 
   if (error) {
     return (
-      <div className="home-wrapper py-12">
+      <div className="content-wrapper py-12">
         <div className="text-center py-16 fade-in">
           <div className="text-red-500 dark:text-red-400">
             <h2 className="text-2xl font-semibold mb-4">加载失败</h2>
@@ -151,7 +151,7 @@ function PostsPageContent() {
   }
 
   const skeletonContent = (
-    <div className="home-wrapper py-12">
+    <div className="content-wrapper py-12">
       <div className="mb-8">
         <div className="h-8 w-32 shimmer rounded mb-4"></div>
         <div className="h-4 w-48 shimmer rounded"></div>
@@ -188,7 +188,7 @@ function PostsPageContent() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="posts-list">
           <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="card p-6 card-loading">
               <div className="h-6 w-24 shimmer rounded" />
@@ -232,7 +232,7 @@ function PostsPageContent() {
   );
 
   const actualContent = (
-    <div className="home-wrapper py-12">
+    <div className="content-wrapper py-12">
       <div className="mb-8 fade-in-up">
         <h1 className="text-3xl font-bold mb-4">手记</h1>
         <p className="text-muted-foreground">
@@ -559,7 +559,7 @@ function PostsPageContent() {
             </div>
 
             <div>
-              <div className="space-y-6 stagger-children">
+              <div className="posts-list stagger-children">
                 {posts.map((post) => {
                   const year = new Date(post.date).getFullYear();
                   const showDivider = year !== lastYear;
@@ -606,7 +606,7 @@ function PostsPageContent() {
 export default function PostsPage() {
   return (
     <Suspense fallback={
-      <div className="home-wrapper py-12">
+      <div className="content-wrapper py-12">
         <div className="mb-8">
           <div className="h-8 w-32 shimmer rounded mb-4"></div>
           <div className="h-4 w-48 shimmer rounded"></div>
@@ -642,7 +642,7 @@ export default function PostsPage() {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="posts-list">
             <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="card p-6 card-loading">
                 <div className="h-6 w-24 shimmer rounded" />

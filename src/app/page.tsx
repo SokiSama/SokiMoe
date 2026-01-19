@@ -30,7 +30,7 @@ export default function HomePage() {
   if (error) {
     return (
       <div className="home-wrapper py-16 pb-24">
-        <section className="text-center py-20 md:py-32 fade-in">
+        <section className="trip-section-compact text-center py-20 md:py-32 fade-in">
           <div className="text-red-500 dark:text-red-400">
             <h2 className="text-2xl font-bold mb-4">加载失败</h2>
             <p>{error}</p>
@@ -42,7 +42,7 @@ export default function HomePage() {
 
   const skeletonContent = (
     <div className="home-wrapper py-16 pb-24">
-      <section className="text-center py-20 md:py-32">
+      <section className="trip-section-compact text-center py-20 md:py-32">
         <div className="mb-12">
           <div className="h-16 w-96 mx-auto mb-4 shimmer rounded" />
         </div>
@@ -60,7 +60,7 @@ export default function HomePage() {
   const actualContent = (
     <div className="home-wrapper py-16 pb-24">
       {/* Hero + Introduction Section */}
-      <section className="pt-12 pb-20 md:pt-20 md:pb-32 fade-in-up">
+      <section className="trip-section-compact pt-12 pb-20 md:pt-20 md:pb-32 fade-in-up">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
           <div className="text-left order-2 md:order-1">
             <h1
@@ -184,7 +184,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="mt-16 space-y-12 fade-in-delayed" style={{ animationDelay: '0.55s' }}>
+      <div className="trip-section-compact mt-16 space-y-12 fade-in-delayed" style={{ animationDelay: '0.55s' }}>
         <section className="space-y-6">
           <div className="flex items-start gap-4 mt-6">
             <div className="h-8 w-1 rounded bg-blue-600 dark:bg-blue-500 mt-1" />

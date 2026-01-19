@@ -12,5 +12,3 @@ published: true
 姑且认为是丢了吧，下次再去香港顺便重新申请一张得了。
 
 ![card](https://p.ipic.vip/ls9epf.jpg)
-
-至此，我就把 HSBC 蓝狮子绑上了。

@@ -12,6 +12,7 @@ import {
 } from 'psn-api';
 
 import { mapUserTrophyProfileSummary, type PsnTrophySummary } from '@/lib/psn';
+import { getPsnTokenFromEnv } from '@/lib/secret';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -62,7 +63,7 @@ async function getAuthTokens() {
     return getGlobalCache().__psnAuthCache as AuthCache;
   }
 
-  const npsso = process.env.PSN_NPSSO || process.env.PSN_TOKEN;
+  const npsso = getPsnTokenFromEnv();
   if (!npsso) {
     throw new Error('PSN_TOKEN_MISSING');
   }

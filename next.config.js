@@ -59,6 +59,47 @@ const nextConfig = {
         hostname: 'psn-rsc.prod.dl.playstation.net',
         pathname: '/**',
       },
+      // Friends avatars
+      {
+        protocol: 'https',
+        hostname: 'q2.qlogo.cn',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gravatar.loli.net',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cynosura.one',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'hoyue.fun',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'friends.ichr.me',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'shiyina.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dn-qiniu-avatar.qbox.me',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'montrong-1300089193.cos.ap-beijing.myqcloud.com',
+        pathname: '/**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
   },

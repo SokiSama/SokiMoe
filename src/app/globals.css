@@ -1,5 +1,3 @@
-@import "leaflet/dist/leaflet.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -62,11 +60,11 @@
 @layer components {
   /* 布局组件 */
   .content-wrapper {
-    @apply max-w-4xl mx-auto px-6 sm:px-8 lg:px-12;
+    @apply max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12;
   }
   
   .home-wrapper {
-    @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-12;
+    @apply max-w-screen-2xl mx-auto px-6 sm:px-8 lg:px-12;
   }
 
   .twikoo-host {
@@ -419,6 +417,153 @@
     color: rgb(156,163,175);
   }
 
+  /* 文章正文容器与排版 */
+  .post-content {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (min-width: 1024px) {
+    .post-section-wide {
+      width: 100%;
+      max-width: clamp(720px, 90vw, 1300px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  .post-prose {
+    @apply prose;
+  }
+  .post-prose p {
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    font-size: clamp(15px, 0.9vw + 14px, 17px);
+  }
+  .post-prose h2 {
+    font-size: clamp(22px, 1.1vw + 18px, 26px);
+    line-height: 1.35;
+  }
+  .post-prose h3 {
+    font-size: clamp(18px, 0.9vw + 14px, 22px);
+    line-height: 1.4;
+  }
+  .post-prose img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 文章导航 */
+  .post-navigation {
+    @apply mt-10;
+  }
+  .post-nav-link {
+    @apply card p-4 transition-colors;
+  }
+  .post-nav-link:hover {
+    @apply bg-neutral-50 dark:bg-neutral-800;
+  }
+
+  /* Posts 列表 BEM 样式 */
+  .posts-list {
+    --posts-gap: 24px;
+    --posts-item-radius: 12px;
+    --posts-item-padding: 24px;
+    --posts-item-bg: #ffffff;
+    --posts-item-border: rgba(0,0,0,0.08);
+    --posts-item-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: grid;
+    grid-auto-rows: minmax(120px, auto);
+    row-gap: var(--posts-gap);
+  }
+  @media (min-width: 640px) {
+    .posts-list {
+      --posts-gap: 24px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .posts-list {
+      --posts-gap: 24px;
+    }
+  }
+  .posts-list__item {
+    background: var(--posts-item-bg);
+    border: 1px solid var(--posts-item-border);
+    border-radius: var(--posts-item-radius);
+    box-shadow: var(--posts-item-shadow);
+    overflow: hidden;
+    transition: box-shadow 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .posts-list__item:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border-color: rgba(0,0,0,0.12);
+  }
+  .posts-list__item:focus-within {
+    border-color: rgba(37,99,235,0.45);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  }
+  .posts-list__item--disabled,
+  .posts-list__item[aria-disabled="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* PostCard BEM 增强 */
+  .post-card {
+    --card-radius: 12px;
+    --card-padding-x: 24px;
+    --card-padding-y: 24px;
+    --card-title-size: 20px;
+    --card-title-color: #111827;
+    --card-text-color: #4b5563;
+  }
+  .post-card__body {
+    padding: var(--card-padding-y) var(--card-padding-x);
+  }
+  @media (min-width: 768px) {
+    .post-card__body {
+      padding: calc(var(--card-padding-y) + 8px) calc(var(--card-padding-x) + 8px);
+    }
+  }
+  .post-card__title {
+    font-size: var(--card-title-size);
+    color: var(--card-title-color);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .post-card__text {
+    color: var(--card-text-color);
+    line-height: 1.65;
+  }
+  .post-card__footer {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 12px;
+  }
+  .post-card--interactive:hover {
+    transform: translateY(-1px);
+  }
+  .post-card--interactive:active {
+    transform: translateY(0);
+  }
+
+  /* 视觉长度缩短 3cm（桌面端保持响应式） */
+  .shorten-width-3cm {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    .shorten-width-3cm {
+      width: clamp(0px, calc(100% - 3cm), 100%);
+      overflow-x: auto;
+    }
+  }
+
+  /* Header元素右移 */
+  .shift-right-3cm {
+    margin-left: 3cm;
+  }
   .travel-distance-chip {
     display: inline-flex;
     align-items: center;
@@ -898,6 +1043,13 @@
   
   .scrollbar-thin::-webkit-scrollbar-thumb {
     @apply bg-neutral-300 dark:bg-neutral-700 rounded-full;
+  }
+
+  .blurred-line {
+    display: inline-block;
+    filter: blur(3px);
+    border-radius: 6px;
+    padding: 0 4px;
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {

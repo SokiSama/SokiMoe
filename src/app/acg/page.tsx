@@ -159,7 +159,7 @@ function Anime() {
   };
 
   return (
-    <div className="w-full max-w-5xl">
+    <div className="trip-section-compact">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
           {loading
@@ -266,14 +266,14 @@ function Anime() {
                     <button
                       type="button"
                       onClick={() => window.open(`https://bgm.tv/subject/${item.id}`, '_blank', 'noopener,noreferrer')}
-                      className="px-3 py-1.5 rounded-full text-xs sm:text-sm border border-neutral-200 bg-white text-neutral-700 transition-smooth hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary/40"
+                      className="px-3 py-1.5 rounded-full text-xs sm:text-sm bg-neutral-100 text-neutral-700 transition-smooth hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
                     >
                       {item.statusText}
                     </button>
                     <button
                       type="button"
                       onClick={() => window.open(`https://bgm.tv/subject/${item.id}`, '_blank', 'noopener,noreferrer')}
-                      className="px-3 py-1.5 rounded-full text-xs sm:text-sm border border-neutral-200 bg-white text-neutral-700 transition-smooth hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary/40"
+                      className="px-3 py-1.5 rounded-full text-xs sm:text-sm bg-neutral-100 text-neutral-700 transition-smooth hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
                     >
                       {item.progressText}
                     </button>
@@ -304,7 +304,7 @@ function Anime() {
                     {(item.tags?.length ? item.tags : ['未知']).slice(0, 10).map((tag, idx) => (
                       <span
                         key={`${tag}-${idx}`}
-                        className="px-2 py-1 rounded-full text-[11px] leading-none border border-neutral-200 bg-white text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+                        className="px-2.5 py-1.5 rounded-full text-[11px] leading-none bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
                       >
                         {tag}
                       </span>
@@ -339,7 +339,7 @@ function Anime() {
                   {(item.tags?.length ? item.tags : ['未知']).slice(0, 10).map((tag, idx) => (
                     <span
                       key={`${tag}-${idx}`}
-                      className="px-2 py-1 rounded-full text-[11px] leading-none border border-neutral-200 bg-white text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+                      className="px-2.5 py-1.5 rounded-full text-[11px] leading-none bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
                     >
                       {tag}
                     </span>
@@ -362,8 +362,10 @@ function Anime() {
 
 function Comic() {
   return (
-    <div className="text-4xl sm:text-5xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-      NO COMIC
+    <div className="trip-section-compact">
+      <div className="text-4xl sm:text-5xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 text-center">
+        NO COMIC
+      </div>
     </div>
   );
 }
@@ -613,9 +615,9 @@ function Game() {
   };
 
   return (
-    <div className="w-full max-w-5xl">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div className="flex items-center gap-3 min-w-0">
+    <div className="trip-section-compact">
+      <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-3 min-w-0 justify-center">
           {summary?.profile?.onlineId ? (
             <div className="h-10 w-10 rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 shrink-0">
               {summary.profile.avatarUrl ? (
@@ -630,7 +632,7 @@ function Game() {
               ) : null}
             </div>
           ) : null}
-          <div className="min-w-0">
+          <div className="min-w-0 text-center">
             {summary?.profile?.onlineId ? (
               <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
                 {summary.profile.onlineId}
@@ -647,7 +649,7 @@ function Game() {
             </div>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center w-full">
           <button
             type="button"
             onClick={() => {
@@ -751,10 +753,6 @@ function Game() {
             </div>
 
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-neutral-500 dark:text-neutral-400">Tier</span>
-                <span className="text-neutral-700 dark:text-neutral-200 tabular-nums">{summary.tier}</span>
-              </div>
               <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                 <span className="text-neutral-500 dark:text-neutral-400">更新时间</span>
                 <span className="text-neutral-700 dark:text-neutral-200 tabular-nums break-words sm:text-right">
@@ -977,8 +975,8 @@ export default function ACGPage() {
   const Panel = visibleTab === 'anime' ? Anime : visibleTab === 'comic' ? Comic : Game;
 
   return (
-    <div className="content-wrapper py-12">
-      <h1 className="text-3xl font-bold mb-4 fade-in-up">
+    <div className="content-wrapper trip-section-compact py-12">
+      <h1 className="text-3xl font-bold mb-4 fade-in-up text-center">
         你所热爱的，便是你的生活
       </h1>
 
