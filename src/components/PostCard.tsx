@@ -7,19 +7,27 @@ import { TagList } from './TagList';
 
 interface PostCardProps {
   post: PostMeta;
+  imageVariant?: 'default' | 'tall';
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, imageVariant = 'default' }: PostCardProps) {
+  const imageContainerClass =
+    imageVariant === 'tall'
+      ? 'relative w-full h-56 md:h-[220px] flex-shrink-0'
+      : 'relative w-full h-48 md:h-56 flex-shrink-0';
+
   return (
     <article className="card posts-list__item post-card post-card--interactive transition-all duration-200 hover:shadow-md overflow-hidden">
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col">
         {/* 封面图片区域 */}
         {post.cover && (
-          <div className="relative w-full md:w-64 h-48 md:h-auto flex-shrink-0">
+          <div className={imageContainerClass}>
             <Image
               src={post.cover}
               alt={post.title}
               fill
+              sizes="100vw"
+              unoptimized
               className="object-cover"
             />
           </div>

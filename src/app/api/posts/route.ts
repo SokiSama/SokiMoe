@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '6');
     const search = searchParams.get('search');
     const tag = searchParams.get('tag');
-     const excludeTag = searchParams.get('excludeTag');
+    const excludeTagSingle = searchParams.get('excludeTag');
+    const excludeTagMultiple = searchParams.getAll('excludeTag');
 
     // 如果有搜索或标签过滤参数
     let posts = getAllPosts();
@@ -36,12 +37,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 排除指定标签
-    if (excludeTag) {
-      const excludeLower = excludeTag.toLowerCase();
-      posts = posts.filter(post =>
-        !post.tags.some(postTag => postTag.toLowerCase() === excludeLower)
-      );
+    // 排除指定标签（支持多个 excludeTag 参数）
+    {
+      const excludeList = excludeTagMultiple.length > 0
+        ? excludeTagMultiple
+        : (excludeTagSingle ? [excludeTagSingle] : []);
+      if (excludeList.length > 0) {
+        const excludesLower = excludeList.map(t => t.toLowerCase());
+        posts = posts.filter(post =>
+          !post.tags.some(postTag => excludesLower.includes(postTag.toLowerCase()))
+        );
+      }
     }
 
     // 如果需要分页

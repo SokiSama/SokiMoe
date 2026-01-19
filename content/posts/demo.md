@@ -4,6 +4,7 @@ date: '2026-01-17'
 tags: ["tech"]
 description: 调用官方 API，实现奖杯数据的动态抓取
 published: true
+cover: /images/jb.jpg
 ---
 
 # 1.前提配置 

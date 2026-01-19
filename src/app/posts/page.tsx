@@ -34,11 +34,11 @@ function PostsPageContent() {
     page: currentPage,
     limit: postsPerPage,
     paginated: true,
-    excludeTag: 'tech'
+    excludeTags: ['tech', '旅行']
   });
 
   const { posts: allPosts } = usePosts({
-    excludeTag: 'tech'
+    excludeTags: ['tech', '旅行']
   });
   const { tags } = useTags();
   const [openYear, setOpenYear] = useState<number | null>(null);
@@ -65,7 +65,10 @@ function PostsPageContent() {
   }, [allPosts]);
 
   const filteredTags = useMemo(
-    () => tags.filter(({ tag }) => tag.toLowerCase() !== 'tech'),
+    () => tags.filter(({ tag }) => {
+      const lower = tag.toLowerCase();
+      return lower !== 'tech' && lower !== '旅行' && lower !== 'trip';
+    }),
     [tags]
   );
 

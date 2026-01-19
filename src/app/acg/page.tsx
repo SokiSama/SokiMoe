@@ -616,8 +616,8 @@ function Game() {
 
   return (
     <div className="trip-section-compact">
-      <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center gap-3 min-w-0 justify-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           {summary?.profile?.onlineId ? (
             <div className="h-10 w-10 rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 shrink-0">
               {summary.profile.avatarUrl ? (
@@ -632,13 +632,13 @@ function Game() {
               ) : null}
             </div>
           ) : null}
-          <div className="min-w-0 text-center">
+          <div className="min-w-0 text-left">
             {summary?.profile?.onlineId ? (
-              <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
+              <div className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate whitespace-nowrap">
                 {summary.profile.onlineId}
               </div>
             ) : null}
-            <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+            <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
               {loading
                 ? '加载中…'
                 : error
@@ -649,7 +649,7 @@ function Game() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center w-full">
+        <div className="flex justify-end w-full sm:w-auto">
           <button
             type="button"
             onClick={() => {

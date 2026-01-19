@@ -22,6 +22,7 @@ interface UsePostsOptions {
   search?: string;
   tag?: string;
   excludeTag?: string;
+  excludeTags?: string[];
   paginated?: boolean;
 }
 
@@ -42,6 +43,13 @@ export function usePosts(options: UsePostsOptions = {}) {
       if (options.search) params.set('search', options.search);
       if (options.tag) params.set('tag', options.tag);
       if (options.excludeTag) params.set('excludeTag', options.excludeTag);
+      if (options.excludeTags && Array.isArray(options.excludeTags)) {
+        for (const t of options.excludeTags) {
+          if (t && t.trim() !== '') {
+            params.append('excludeTag', t);
+          }
+        }
+      }
       if (options.paginated) params.set('paginated', 'true');
 
       const response = await fetch(`/api/posts?${params}`, {

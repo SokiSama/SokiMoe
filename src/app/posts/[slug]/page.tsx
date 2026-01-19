@@ -26,7 +26,9 @@ export default function PostPage() {
     offsetTop: 100
   });
   const isTech = Array.isArray(post?.tags) && post!.tags.some((t) => t.toLowerCase() === 'tech');
-  const { posts: allPosts } = usePosts({ excludeTag: isTech ? undefined : 'tech' });
+  const isTrip = Array.isArray(post?.tags) && post!.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip');
+  const proseClass = 'post-prose';
+  const { posts: allPosts } = usePosts({ excludeTags: isTech ? undefined : ['tech', '旅行'] });
   const [showScrollTop, setShowScrollTop] = useState(false);
   
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
@@ -110,8 +112,8 @@ export default function PostPage() {
 
   const actualContent = (
     <div className="trip-section-compact px-6 sm:px-8 lg:px-12">
-      <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-12 xl:gap-16">
-        <article className="py-12 min-w-0">
+      <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-6 xl:gap-8">
+        <article className="py-12 min-w-0 posts-article">
           
 
           {/* 文章头部 */}
@@ -164,8 +166,8 @@ export default function PostPage() {
           {/* 文章内容 */}
           <div className="fade-in-delayed" style={{ animationDelay: '0.2s' }}>
             {htmlContent && (
-              <div className="post-content shorten-width-8cm">
-                <div className="post-prose">
+              <div className="post-content">
+                <div className={proseClass}>
                   <CodeBlock html={htmlContent} />
                 </div>
               </div>
@@ -222,8 +224,7 @@ export default function PostPage() {
           </footer>
         </article>
 
-        {/* 桌面端侧边栏目录 */}
-        {isVisible && (
+        {(isTech || isTrip) && isVisible && (
           <div className="hidden lg:block">
             <div className="sticky top-24">
               <TableOfContents
@@ -239,7 +240,7 @@ export default function PostPage() {
         )}
       </div>
 
-      {isVisible && (
+      {(isTech || isTrip) && isVisible && (
         <div className="lg:hidden">
           <TableOfContents
             headings={headings}

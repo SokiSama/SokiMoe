@@ -61,7 +61,7 @@
   /* 布局组件 */
   .content-wrapper {
     width: 100%;
-    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
+    max-width: calc(clamp(720px, 68vw, 980px) + 8cm);
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5rem; /* px-6 */
@@ -82,7 +82,7 @@
   
   .home-wrapper {
     width: 100%;
-    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
+    max-width: calc(clamp(720px, 68vw, 980px) + 8cm);
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5rem; /* px-6 */
@@ -213,7 +213,7 @@
   
   .trip-section-compact {
     width: 100%;
-    max-width: calc(clamp(720px, 68vw, 980px) + 3cm);
+    max-width: calc(clamp(720px, 68vw, 980px) + 8cm);
     margin-left: auto;
     margin-right: auto;
   }
@@ -467,12 +467,19 @@
     }
   }
   .post-prose {
-    @apply prose;
+    @apply prose max-w-none;
+    text-align: left;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
   .post-prose p {
     line-height: 1.75;
     letter-spacing: 0.01em;
     font-size: clamp(15px, 0.9vw + 14px, 17px);
+    text-indent: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   .post-prose h2 {
     font-size: clamp(22px, 1.1vw + 18px, 26px);
@@ -485,6 +492,19 @@
   .post-prose img {
     max-width: 100%;
     height: auto;
+  }
+  .post-prose-limited {
+    max-width: 72ch;
+  }
+  .post-prose .code-block-container > p:first-child {
+    margin-top: 0;
+  }
+
+  /* Posts 文章页：仅在桌面端增加顶层 div 间距约 2cm */
+  @media (min-width: 1024px) {
+    .posts-article > div {
+      margin-bottom: 15cm;
+    }
   }
 
   /* 文章导航 */
