@@ -4,7 +4,7 @@ date: '2025-10-27'
 tags: ["旅行"]
 description: 和业火美少女的一日
 published: true
-cover: /images/cywl.jpg
+cover: /images/chengdustation.jpg
 ---
 
 起因是因为成都海德林主题餐厅正好这个月开了，想找个时间去参观下。问了下在成都的朋友的时间安排。初步和我一样是周末有空的，然后顺便提了一嘴 PJSK（世界计划）的剧场版也是周六首映。考虑到之后天气冷了可能就懒得出门了，于是决定再跑一趟成都玩。（之前去过两次了）

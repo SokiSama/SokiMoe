@@ -34,12 +34,12 @@
       "href": "/tags"
     },
     {
-      "name": "ACG",
-      "href": "/acg"
-    },
-    {
       "name": "Trip",
       "href": "/trip"
+    },
+    {
+      "name": "ACG",
+      "href": "/acg"
     },
     {
       "name": "Friends",

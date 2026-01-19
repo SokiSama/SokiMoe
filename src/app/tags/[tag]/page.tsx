@@ -6,6 +6,7 @@ import { PostCard } from '@/components/PostCard';
 import { useTagPosts } from '@/hooks/useTags';
 import { useParams } from 'next/navigation';
 import { LoadingTransition } from '@/components/LoadingComponents';
+import { useEffect, useMemo, useState } from 'react';
 
 function YearDivider({ year }: { year: number }) {
   return (
@@ -25,6 +26,70 @@ export default function TagPostsPage() {
   const tag = decodeURIComponent(params.tag as string);
 
   const { posts, count, loading, error } = useTagPosts(tag);
+
+  const [openYear, setOpenYear] = useState<number | null>(null);
+  const [totalChars, setTotalChars] = useState<number | null>(null);
+
+  const archives = useMemo(() => {
+    const byYear = new Map<number, typeof posts>();
+    for (const p of posts) {
+      const d = new Date(p.date);
+      const year = Number.isNaN(d.getTime()) ? 0 : d.getFullYear();
+      if (!byYear.has(year)) byYear.set(year, []);
+      byYear.get(year)!.push(p);
+    }
+
+    return Array.from(byYear.entries())
+      .filter(([year]) => year > 0)
+      .map(([year, list]) => {
+        const sorted = [...list].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        return { year, posts: sorted, count: sorted.length };
+      })
+      .sort((a, b) => b.year - a.year);
+  }, [posts]);
+
+  const formatMonthDay = (iso: string) => {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${m}-${day}`;
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    const calc = async () => {
+      try {
+        if (!posts || posts.length === 0) {
+          if (!cancelled) setTotalChars(0);
+          return;
+        }
+        const counts = await Promise.all(
+          posts.map(async (p) => {
+            try {
+              const resp = await fetch(`/api/posts/${encodeURIComponent(p.slug)}`, { cache: 'no-cache' });
+              if (!resp.ok) return 0;
+              const j = await resp.json();
+              const html = j?.data?.htmlContent || '';
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              const text = doc.body.textContent || '';
+              return text.replace(/\s+/g, '').length;
+            } catch {
+              return 0;
+            }
+          })
+        );
+        const sum = counts.reduce((a, b) => a + b, 0);
+        if (!cancelled) setTotalChars(sum);
+      } catch {
+        if (!cancelled) setTotalChars(null);
+      }
+    };
+    calc();
+    return () => {
+      cancelled = true;
+    };
+  }, [posts]);
 
   let lastYear: number | null = null;
 
@@ -103,18 +168,109 @@ export default function TagPostsPage() {
       </div>
 
       {posts.length > 0 ? (
-        <div className="space-y-6 stagger-children">
-          {posts.map((post) => {
-            const year = new Date(post.date).getFullYear();
-            const showDivider = year !== lastYear;
-            lastYear = year;
-            return (
-              <div key={post.slug}>
-                {showDivider && <YearDivider year={year} />}
-                <PostCard post={post} />
+        <div className="mt-10 lg:grid lg:grid-cols-[220px,1fr] lg:gap-10">
+          {tag.toLowerCase() === 'tech' ? (
+            <div className="hidden lg:block">
+              <div className="sticky top-24">
+                <div className="space-y-4">
+                  <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                      <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                        归档
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      {archives.map((a) => {
+                        const expanded = openYear === a.year;
+                        const maxHeight = expanded ? `${a.posts.length * 44 + 8}px` : '0px';
+                        return (
+                          <div key={a.year} className="rounded-lg">
+                            <button
+                              type="button"
+                              onClick={() => setOpenYear((y) => (y === a.year ? null : a.year))}
+                              className={[
+                                'w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2 transition-colors text-left',
+                                'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                              ].join(' ')}
+                              aria-expanded={expanded}
+                            >
+                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                                {a.year}年
+                              </span>
+                              <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                                {a.count}
+                              </span>
+                            </button>
+
+                            <div
+                              className="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
+                              style={{ maxHeight, opacity: expanded ? 1 : 0 }}
+                            >
+                              <div className="mt-1 space-y-1 pb-2">
+                                {a.posts.map((p) => (
+                                  <Link
+                                    key={p.slug}
+                                    href={`/posts/${encodeURIComponent(p.slug)}`}
+                                    className={[
+                                      'flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 transition-colors',
+                                      'hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                                    ].join(' ')}
+                                  >
+                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                      {p.title}
+                                    </span>
+                                    <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
+                                      {formatMonthDay(p.date)}
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
+                      <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
+                        统计
+                      </div>
+                    </div>
+                    <div className="mt-6 space-y-2">
+                      <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                          总字数
+                        </span>
+                        <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
+                          {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ) : null}
+
+          <div>
+            <div className="stagger-children space-y-6">
+              {posts.map((post) => {
+                const year = new Date(post.date).getFullYear();
+                const showDivider = year !== lastYear;
+                lastYear = year;
+                return (
+                  <div key={post.slug}>
+                    {showDivider && <YearDivider year={year} />}
+                    <PostCard post={post} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       ) : (
         <div className="text-center py-16 fade-in-delayed">

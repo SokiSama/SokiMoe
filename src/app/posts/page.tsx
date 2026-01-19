@@ -34,11 +34,11 @@ function PostsPageContent() {
     page: currentPage,
     limit: postsPerPage,
     paginated: true,
-    excludeTags: ['tech', '旅行']
+    excludeTags: ['tech', '旅行', '教程', '思考', '图文']
   });
 
   const { posts: allPosts } = usePosts({
-    excludeTags: ['tech', '旅行']
+    excludeTags: ['tech', '旅行', '教程', '思考', '图文']
   });
   const { tags } = useTags();
   const [openYear, setOpenYear] = useState<number | null>(null);
@@ -67,7 +67,7 @@ function PostsPageContent() {
   const filteredTags = useMemo(
     () => tags.filter(({ tag }) => {
       const lower = tag.toLowerCase();
-      return lower !== 'tech' && lower !== '旅行' && lower !== 'trip';
+      return lower !== 'tech' && lower !== '旅行' && lower !== 'trip' && lower !== '教程' && lower !== '思考' && lower !== '图文';
     }),
     [tags]
   );

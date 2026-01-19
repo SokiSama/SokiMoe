@@ -1,10 +1,10 @@
 ---
 title: 构建你的博客 PSN 奖杯数据流
 date: '2026-01-17'
-tags: ["tech"]
+tags: ["教程"]
 description: 调用官方 API，实现奖杯数据的动态抓取
 published: true
-cover: /images/jb.jpg
+cover: /images/trophy.jpg
 ---
 
 # 1.前提配置 

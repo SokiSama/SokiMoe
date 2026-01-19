@@ -4,6 +4,7 @@ date: '2025-10-22'
 tags: ["随笔"]
 description: 做了一件拖了很久的事情。
 published: true
+cover: /images/hsbc.jpg
 ---
 前因就是我今年6月去香港 HSBC 开了个户，当场拿下红狮子，但是蓝狮子我申请了四个月，至今都没拿到
 

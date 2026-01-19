@@ -4,6 +4,7 @@ date: '2026-01-06'
 tags: ["心得"]
 description: 动荡的一年。
 published: true
+cover: /images/cyber.jpeg
 ---
 
 2025年对我来说就是AI元年，我利用 AI 来辅助我完成一些任务，比如写代码，这个网站的前端就是AI写出来的。  

@@ -26,14 +26,27 @@ export default function PostPage() {
     offsetTop: 100
   });
   const isTech = Array.isArray(post?.tags) && post!.tags.some((t) => t.toLowerCase() === 'tech');
+  const notesSet = new Set(['教程', '思考', '图文'].map((t) => t.toLowerCase()));
+  const isNotes = Array.isArray(post?.tags) && post!.tags.some((t) => notesSet.has(t.toLowerCase()));
   const isTrip = Array.isArray(post?.tags) && post!.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip');
   const proseClass = 'post-prose';
-  const { posts: allPosts } = usePosts({ excludeTags: isTech ? undefined : ['tech', '旅行'] });
+  const { posts: allPosts } = usePosts();
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
-  const prevPost = currentIndex >= 0 ? allPosts[currentIndex + 1] : undefined;
-  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
+  const navPosts = (() => {
+    if (isNotes) {
+      return allPosts.filter((p) => p.tags.some((t) => notesSet.has(t.toLowerCase())));
+    }
+    if (isTrip) {
+      return allPosts.filter((p) => p.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip'));
+    }
+    const excludes = new Set(['tech', '旅行', 'trip', '教程', '思考', '图文'].map((t) => t.toLowerCase()));
+    return allPosts.filter((p) => !p.tags.some((t) => excludes.has(t.toLowerCase())));
+  })();
+
+  const currentIndex = navPosts.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex >= 0 ? navPosts[currentIndex + 1] : undefined;
+  const nextPost = currentIndex > 0 ? navPosts[currentIndex - 1] : undefined;
 
   useEffect(() => {
     const onScroll = () => {
