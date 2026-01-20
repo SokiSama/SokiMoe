@@ -104,10 +104,10 @@ export default function TripPage() {
             </div>
             
             <div>
-              <div className="masonry">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {posts.map((post) => (
-                  <div key={post.slug} className="masonry-item">
-                    <PostCard post={post} imageVariant="tall" />
+                  <div key={post.slug}>
+                    <PostCard post={post} imageVariant="tall" compact />
                   </div>
                 ))}
               </div>

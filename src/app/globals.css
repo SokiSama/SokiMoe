@@ -603,14 +603,23 @@
     transform: translateY(0);
   }
 
+  .post-card-image-aspect {
+    padding-bottom: 56.25%;
+  }
+  @media (max-width: 767px) {
+    .post-card--compact .post-card-image-aspect {
+      padding-bottom: 33.46875%;
+    }
+  }
+
   /* Trip Masonry 瀑布流布局 */
   .masonry {
     column-gap: 24px;
     column-count: 1;
     width: 100%;
   }
-  @media (min-width: 640px) {
-    .masonry { column-count: 2; }
+  @media (min-width: 768px) {
+    .masonry { column-count: 3; }
   }
   @media (min-width: 1024px) {
     .masonry { column-count: 3; }

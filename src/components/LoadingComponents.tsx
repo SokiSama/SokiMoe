@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface SkeletonProps {
   className?: string;
@@ -170,6 +170,7 @@ interface LoadingTransitionProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  appearDelay?: number;
 }
 
 export function LoadingTransition({ 
@@ -177,31 +178,43 @@ export function LoadingTransition({
   skeleton, 
   children, 
   className = '',
-  delay = 300
+  delay = 300,
+  appearDelay = 120
 }: LoadingTransitionProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showSkeleton, setShowSkeleton] = useState(loading);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const [showContent, setShowContent] = useState(!loading);
+  const appearTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!loading && showSkeleton) {
-      // 开始过渡动画：显示内容，开始隐藏骨架屏
-      setShowContent(true);
-      setIsTransitioning(true);
-      
-      // 延迟后完全隐藏骨架屏
-      const timer = setTimeout(() => {
-        setShowSkeleton(false);
-        setIsTransitioning(false);
-      }, delay);
-
-      return () => clearTimeout(timer);
-    } else if (loading && !showSkeleton) {
-      // 重新开始加载：隐藏内容，显示骨架屏
+    if (loading) {
       setShowContent(false);
-      setShowSkeleton(true);
+      if (appearTimerRef.current) {
+        clearTimeout(appearTimerRef.current);
+      }
+      appearTimerRef.current = window.setTimeout(() => {
+        if (loading) {
+          setShowSkeleton(true);
+        }
+      }, appearDelay);
+    } else {
+      if (appearTimerRef.current) {
+        clearTimeout(appearTimerRef.current);
+        appearTimerRef.current = null;
+      }
+      if (showSkeleton) {
+        setShowContent(true);
+        setIsTransitioning(true);
+        const timer = setTimeout(() => {
+          setShowSkeleton(false);
+          setIsTransitioning(false);
+        }, delay);
+        return () => clearTimeout(timer);
+      } else {
+        setShowContent(true);
+      }
     }
-  }, [loading, showSkeleton, delay]);
+  }, [loading, showSkeleton, delay, appearDelay]);
 
   return (
     <div className={`loading-container ${className}`}>

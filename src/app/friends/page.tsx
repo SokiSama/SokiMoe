@@ -92,6 +92,12 @@ export default function FriendsPage() {
         description: '如梦幻，如初遇。',
         url: 'https://montrong.cn',
       },
+       {
+        title: 'Betsy Blog',
+        avatar: 'https://img.micostar.cc/images/avatar.webp',
+        description: '爱我所爱，我们是彼此永远的动力',
+        url: 'https://www.micostar.cc',
+      },
       
     ],
     []

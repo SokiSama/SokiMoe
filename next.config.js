@@ -87,6 +87,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'img.micostar.cc',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'shiyina.com',
         pathname: '/**',
       },

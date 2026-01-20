@@ -8,18 +8,19 @@ import { TagList } from './TagList';
 interface PostCardProps {
   post: PostMeta;
   imageVariant?: 'left' | 'right' | 'tall';
+  compact?: boolean;
 }
 
-export function PostCard({ post, imageVariant = 'left' }: PostCardProps) {
+export function PostCard({ post, imageVariant = 'left', compact = false }: PostCardProps) {
   const imageContainerClass =
     imageVariant === 'tall'
-      ? 'relative w-full h-0 pb-[56.25%] overflow-hidden rounded'
+      ? 'relative w-full h-0 overflow-hidden rounded post-card-image-aspect'
       : imageVariant === 'right'
         ? 'float-right ml-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden rounded'
         : 'float-left mr-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden rounded';
 
   return (
-    <article className="card posts-list__item post-card post-card--interactive transition-all duration-200 hover:shadow-md overflow-hidden">
+    <article className={['card', 'posts-list__item', 'post-card', 'post-card--interactive', compact ? 'post-card--compact' : '', 'transition-all', 'duration-200', 'hover:shadow-md', 'overflow-hidden'].filter(Boolean).join(' ')}>
       <div className={imageVariant === 'tall' ? 'flex flex-col' : 'block'}>
         {imageVariant === 'tall' && post.cover && (
           <div className={imageContainerClass}>
