@@ -552,9 +552,9 @@ function PostsPageContent() {
 
             <div>
               <div className="posts-list stagger-children">
-                {posts.map((post, index) => (
+                {posts.map((post) => (
                   <div key={post.slug}>
-                    <PostCard post={post} imageVariant={index % 2 === 0 ? 'left' : 'right'} />
+                    <PostCard post={post} imageVariant="tall" />
                   </div>
                 ))}
               </div>

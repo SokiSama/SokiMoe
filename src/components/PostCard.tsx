@@ -7,20 +7,22 @@ import { TagList } from './TagList';
 
 interface PostCardProps {
   post: PostMeta;
-  imageVariant?: 'left' | 'right' | 'tall';
+  imageVariant?: 'left' | 'right' | 'tall' | 'inlineTop';
   compact?: boolean;
 }
 
 export function PostCard({ post, imageVariant = 'left', compact = false }: PostCardProps) {
   const imageContainerClass =
     imageVariant === 'tall'
-      ? 'relative w-full h-0 overflow-hidden rounded post-card-image-aspect'
+      ? 'relative w-full post-card-image-blur post-card-image-fade-bottom h-0 overflow-hidden post-card-image-aspect'
       : imageVariant === 'right'
-        ? 'float-right ml-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden rounded'
-        : 'float-left mr-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden rounded';
+        ? 'float-right ml-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden'
+        : imageVariant === 'inlineTop'
+          ? 'w-full max-w-[200px] md:max-w-[240px] h-[150px] md:h-[180px] mb-3 overflow-hidden mx-auto'
+          : 'float-left mr-4 mb-3 h-[100px] w-[120px] md:w-[160px] overflow-hidden';
 
   return (
-    <article className={['card', 'posts-list__item', 'post-card', 'post-card--interactive', compact ? 'post-card--compact' : '', 'transition-all', 'duration-200', 'hover:shadow-md', 'overflow-hidden'].filter(Boolean).join(' ')}>
+    <article className={['card', 'posts-list__item', imageVariant === 'tall' ? 'no-radius' : '', 'post-card', 'post-card--interactive', compact ? 'post-card--compact' : '', 'transition-all', 'duration-200', 'hover:shadow-md', 'overflow-hidden'].filter(Boolean).join(' ')}>
       <div className={imageVariant === 'tall' ? 'flex flex-col' : 'block'}>
         {imageVariant === 'tall' && post.cover && (
           <div className={imageContainerClass}>
@@ -30,7 +32,7 @@ export function PostCard({ post, imageVariant = 'left', compact = false }: PostC
               fill
               sizes="100vw"
               unoptimized
-              className="object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         )}
@@ -41,10 +43,11 @@ export function PostCard({ post, imageVariant = 'left', compact = false }: PostC
               <Image
                 src={post.cover}
                 alt={post.title}
-                width={192}
-                height={100}
-                sizes="(min-width: 768px) 192px, 160px"
-                quality={85}
+                width={imageVariant === 'inlineTop' ? 240 : 160}
+                height={imageVariant === 'inlineTop' ? 180 : 100}
+                sizes={imageVariant === 'inlineTop' ? '(min-width: 768px) 240px, 200px' : '(min-width: 768px) 160px, 120px'}
+                quality={imageVariant === 'inlineTop' ? 100 : 85}
+                unoptimized={imageVariant === 'inlineTop'}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -66,37 +69,64 @@ export function PostCard({ post, imageVariant = 'left', compact = false }: PostC
               </p>
             )}
             
-            {post.tags.length > 0 && (
-              <div className="mb-4">
-                <TagList tags={post.tags} />
+            {imageVariant === 'tall' ? (
+              <div className="mb-2 flex items-center justify-between">
+                <div>
+                  {post.tags.length > 0 && <TagList tags={post.tags} />}
+                </div>
+                <div className="flex items-center gap-2 md:gap-4 whitespace-nowrap text-neutral-500 dark:text-neutral-500">
+                  <div className="flex items-center space-x-1">
+                    <Calendar className="h-4 w-4" />
+                    <time dateTime={post.date}>
+                      {formatDate(post.date)}
+                    </time>
+                  </div>
+                  
+                  {post.readingTime && (
+                    <div className="flex items-center space-x-1 shrink-0">
+                      <Clock className="h-4 w-4" />
+                      <span>{post.readingTime} 分钟阅读</span>
+                    </div>
+                  )}
+                </div>
               </div>
+            ) : (
+              <>
+                {post.tags.length > 0 && (
+                  <div className="mb-4">
+                    <TagList tags={post.tags} />
+                  </div>
+                )}
+              </>
             )}
           </div>
           
-          <div className={`post-card__footer flex flex-col gap-2 text-sm text-neutral-500 dark:text-neutral-500 pt-4 border-t border-neutral-200 dark:border-neutral-700 ${imageVariant === 'tall' ? '' : 'clear-both'}`}>
-            <div className="flex items-center gap-2 md:gap-4 whitespace-nowrap">
-              <div className="flex items-center space-x-1">
-                <Calendar className="h-4 w-4" />
-                <time dateTime={post.date}>
-                  {formatDate(post.date)}
-                </time>
+          {imageVariant !== 'tall' && (
+            <div className={`post-card__footer flex flex-col gap-2 text-sm text-neutral-500 dark:text-neutral-500 pt-4 border-t border-neutral-200 dark:border-neutral-700 clear-both`}>
+              <div className="flex items-center gap-2 md:gap-4 whitespace-nowrap">
+                <div className="flex items-center space-x-1">
+                  <Calendar className="h-4 w-4" />
+                  <time dateTime={post.date}>
+                    {formatDate(post.date)}
+                  </time>
+                </div>
+                
+                {post.readingTime && (
+                  <div className="flex items-center space-x-1 shrink-0">
+                    <Clock className="h-4 w-4" />
+                    <span>{post.readingTime} 分钟阅读</span>
+                  </div>
+                )}
               </div>
               
-              {post.readingTime && (
-                <div className="flex items-center space-x-1 shrink-0">
-                  <Clock className="h-4 w-4" />
-                  <span>{post.readingTime} 分钟阅读</span>
-                </div>
-              )}
+              <Link 
+                href={`/posts/${post.slug}`}
+                className="text-neutral-600 dark:text-neutral-400 font-medium self-end"
+              >
+                阅读更多 →
+              </Link>
             </div>
-            
-            <Link 
-              href={`/posts/${post.slug}`}
-              className="text-neutral-600 dark:text-neutral-400 font-medium self-end"
-            >
-              阅读更多 →
-            </Link>
-          </div>
+          )}
         </div>
       </div>
     </article>

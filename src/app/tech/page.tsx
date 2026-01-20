@@ -147,10 +147,10 @@ export default async function TechPage() {
             </div>
 
             <div>
-              <div className="stagger-children space-y-6">
-                {posts.map((post, index) => (
+              <div className="posts-list stagger-children">
+                {posts.map((post) => (
                   <div key={post.slug}>
-                    <PostCard post={post} imageVariant={index % 2 === 0 ? 'left' : 'right'} />
+                    <PostCard post={post} imageVariant="tall" />
                   </div>
                 ))}
               </div>

@@ -521,7 +521,7 @@
   /* Posts 列表 BEM 样式 */
   .posts-list {
     --posts-gap: 24px;
-    --posts-item-radius: 12px;
+    --posts-item-radius: 13px;
     --posts-item-padding: 24px;
     --posts-item-bg: #ffffff;
     --posts-item-border: rgba(0,0,0,0.08);
@@ -547,6 +547,9 @@
     box-shadow: var(--posts-item-shadow);
     overflow: hidden;
     transition: box-shadow 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .posts-list__item.no-radius {
+    border-radius: 0;
   }
   .posts-list__item:hover {
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
@@ -610,6 +613,45 @@
     .post-card--compact .post-card-image-aspect {
       padding-bottom: 33.46875%;
     }
+  }
+  .post-card-image-narrow {
+    width: calc(100% - 52px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .posts-list .post-card-image-aspect {
+    padding-bottom: 18%;
+  }
+  .post-card-image-blur {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    background: rgba(244, 244, 245, 0.28);
+  }
+  .dark .post-card-image-blur {
+    background: rgba(24, 24, 27, 0.24);
+  }
+  .post-card-image-fade-bottom::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.22) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    z-index: 1;
+  }
+  @media (max-width: 640px) {
+    .post-card-image-fade-bottom::after {
+      height: 32px;
+    }
+  }
+  .dark .post-card-image-fade-bottom::after {
+    background: linear-gradient(to bottom, rgba(24,24,27,0) 0%, rgba(24,24,27,0.10) 60%, rgba(24,24,27,0.26) 100%);
   }
 
   /* Trip Masonry 瀑布流布局 */

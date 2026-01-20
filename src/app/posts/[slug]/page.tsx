@@ -132,7 +132,7 @@ export default function PostPage() {
           {/* 文章头部 */}
           <header className="mb-8 fade-in-up">
             {post?.cover && (
-              <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
+              <div className={['relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden', isNotes ? 'post-card-image-fade-bottom' : ''].join(' ')}>
                 <Image
                   src={post.cover}
                   alt={post.title}
