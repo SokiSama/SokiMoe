@@ -23,11 +23,11 @@ function PostsPageContent() {
     page: currentPage,
     limit: postsPerPage,
     paginated: true,
-    excludeTags: ['tech', '旅行', '教程', '思考', '图文']
+    excludeTags: ['tech', '旅行', '教程', '思考', '图文', '心得']
   });
 
   const { posts: allPosts } = usePosts({
-    excludeTags: ['tech', '旅行', '教程', '思考', '图文']
+    excludeTags: ['tech', '旅行', '教程', '思考', '图文', '心得']
   });
   const { tags } = useTags();
   const [openYear, setOpenYear] = useState<number | null>(null);
@@ -56,7 +56,7 @@ function PostsPageContent() {
   const filteredTags = useMemo(
     () => tags.filter(({ tag }) => {
       const lower = tag.toLowerCase();
-      return lower !== 'tech' && lower !== '旅行' && lower !== 'trip' && lower !== '教程' && lower !== '思考' && lower !== '图文';
+      return lower !== 'tech' && lower !== '旅行' && lower !== 'trip' && lower !== '教程' && lower !== '思考' && lower !== '图文' && lower !== '心得';
     }),
     [tags]
   );
@@ -259,7 +259,7 @@ function PostsPageContent() {
                         ].join(' ')}
                         aria-expanded={expanded}
                       >
-                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary truncate">
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 transition-colors group-hover:text-primary">
                           {tag}
                         </span>
                         <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
@@ -281,7 +281,7 @@ function PostsPageContent() {
                                 'hover:bg-neutral-50 dark:hover:bg-neutral-800',
                               ].join(' ')}
                             >
-                              <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                              <span className="text-sm text-neutral-700 dark:text-neutral-300 whitespace-normal break-words">
                                 {p.title}
                               </span>
                               <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
@@ -364,7 +364,7 @@ function PostsPageContent() {
                                   'hover:bg-neutral-50 dark:hover:bg-neutral-800',
                                 ].join(' ')}
                               >
-                                <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 whitespace-normal break-words">
                                   {p.title}
                                 </span>
                                 <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
@@ -490,7 +490,7 @@ function PostsPageContent() {
                               ].join(' ')}
                               aria-expanded={expanded}
                             >
-                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
                                 {a.year}年
                               </span>
                               <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
@@ -512,7 +512,7 @@ function PostsPageContent() {
                                       'hover:bg-neutral-50 dark:hover:bg-neutral-800',
                                     ].join(' ')}
                                   >
-                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 whitespace-normal break-words">
                                       {p.title}
                                     </span>
                                     <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">

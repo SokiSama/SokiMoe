@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { PsnTrophySummary } from '@/lib/psn';
 
-type TabKey = 'anime' | 'comic' | 'game';
+type TabKey = 'anime';
 
 const PSN_TROPHY_SUMMARY_CACHE_KEY = 'psn_trophy_summary_v1';
 const PSN_TROPHY_SUMMARY_CACHE_TTL_MS = 12 * 60 * 60_000; // 12小时
@@ -942,8 +942,6 @@ export default function ACGPage() {
     () =>
       [
         { key: 'anime' as const, label: 'Anime' },
-        { key: 'comic' as const, label: 'Comic' },
-        { key: 'game' as const, label: 'Game' },
       ] satisfies Array<{ key: TabKey; label: string }>,
     []
   );
@@ -972,7 +970,7 @@ export default function ACGPage() {
     }, 180);
   };
 
-  const Panel = visibleTab === 'anime' ? Anime : visibleTab === 'comic' ? Comic : Game;
+  const Panel = Anime;
 
   return (
     <div className="content-wrapper trip-section-compact py-12">
@@ -984,7 +982,7 @@ export default function ACGPage() {
         <div
           role="tablist"
           aria-label="ACG Tabs"
-          className="inline-grid grid-cols-3 gap-1 rounded-full border border-neutral-200 bg-neutral-100 p-1 dark:border-neutral-800 dark:bg-neutral-900 w-full max-w-xl"
+          className="inline-grid grid-cols-1 gap-1 rounded-full border border-neutral-200 bg-neutral-100 p-1 dark:border-neutral-800 dark:bg-neutral-900 w-full max-w-xl"
         >
           {tabs.map((tab) => {
             const isActive = tab.key === activeTab;

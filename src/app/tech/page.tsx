@@ -3,7 +3,7 @@ import { PostCard } from '@/components/PostCard';
 import { getAllPosts, getPostBySlug, markdownToHtml } from '@/lib/posts';
 
 export default async function TechPage() {
-  const allowed = new Set(['教程', '思考', '图文'].map((t) => t.toLowerCase()));
+  const allowed = new Set(['教程', '思考', '图文', '分享', '生活', '心得', '记录', '随笔'].map((t) => t.toLowerCase()));
   const posts = getAllPosts().filter((p) =>
     p.tags.some((t) => allowed.has(t.toLowerCase()))
   );

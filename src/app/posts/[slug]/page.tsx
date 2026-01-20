@@ -26,10 +26,10 @@ export default function PostPage() {
     offsetTop: 100
   });
   const isTech = Array.isArray(post?.tags) && post!.tags.some((t) => t.toLowerCase() === 'tech');
-  const notesSet = new Set(['教程', '思考', '图文'].map((t) => t.toLowerCase()));
+  const notesSet = new Set(['教程', '思考', '图文', '分享', '生活', '心得'].map((t) => t.toLowerCase()));
   const isNotes = Array.isArray(post?.tags) && post!.tags.some((t) => notesSet.has(t.toLowerCase()));
   const isTrip = Array.isArray(post?.tags) && post!.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip');
-  const proseClass = 'post-prose';
+  const proseClass = 'post-prose post-prose-limited';
   const { posts: allPosts } = usePosts();
   const [showScrollTop, setShowScrollTop] = useState(false);
   
@@ -40,7 +40,7 @@ export default function PostPage() {
     if (isTrip) {
       return allPosts.filter((p) => p.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip'));
     }
-    const excludes = new Set(['tech', '旅行', 'trip', '教程', '思考', '图文'].map((t) => t.toLowerCase()));
+    const excludes = new Set(['tech', '旅行', 'trip', '教程', '思考', '图文', '分享', '生活', '心得'].map((t) => t.toLowerCase()));
     return allPosts.filter((p) => !p.tags.some((t) => excludes.has(t.toLowerCase())));
   })();
 
@@ -155,12 +155,7 @@ export default function PostPage() {
                 </time>
               </div>
               
-              {post?.readingTime && (
-                <div className="flex items-center space-x-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{post.readingTime} 分钟阅读</span>
-                </div>
-              )}
+              
             </div>
             
             {post?.tags && post.tags.length > 0 && (

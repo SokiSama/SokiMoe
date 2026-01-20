@@ -182,7 +182,7 @@ export default function TagPostsPage() {
                               ].join(' ')}
                               aria-expanded={expanded}
                             >
-                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
+                              <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
                                 {a.year}年
                               </span>
                               <span className="shrink-0 inline-flex min-w-[3.25rem] justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
@@ -204,7 +204,7 @@ export default function TagPostsPage() {
                                       'hover:bg-neutral-50 dark:hover:bg-neutral-800',
                                     ].join(' ')}
                                   >
-                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">
+                                    <span className="text-sm text-neutral-700 dark:text-neutral-300 whitespace-normal break-words">
                                       {p.title}
                                     </span>
                                     <span className="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums shrink-0">
@@ -244,10 +244,10 @@ export default function TagPostsPage() {
           ) : null}
 
           <div>
-            <div className="posts-list">
-              {posts.map((post, index) => (
+            <div className="posts-list stagger-children">
+              {posts.map((post) => (
                 <div key={post.slug}>
-                  <PostCard post={post} imageVariant={index % 2 === 0 ? 'left' : 'right'} />
+                  <PostCard post={post} imageVariant="tall" />
                 </div>
               ))}
             </div>

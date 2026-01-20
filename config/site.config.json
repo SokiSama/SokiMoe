@@ -22,23 +22,19 @@
       "href": "/"
     },
     {
-      "name": "Posts",
-      "href": "/posts"
-    },
-    {
       "name": "Notes",
       "href": "/tech"
-    },
-    {
-      "name": "Tags",
-      "href": "/tags"
     },
     {
       "name": "Trip",
       "href": "/trip"
     },
     {
-      "name": "ACG",
+      "name": "Tags",
+      "href": "/tags"
+    },
+    {
+      "name": "Anime",
       "href": "/acg"
     },
     {

@@ -1,7 +1,7 @@
 ---
 title: 构思了一场基于 FF14 主题的婚礼
 date: '2025-12-24'
-tags: ["随笔"]
+tags: ["分享"]
 description: 任务已开启：永结同心绝境战
 published: true
 ---

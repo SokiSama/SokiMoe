@@ -620,7 +620,7 @@
     margin-right: auto;
   }
   .posts-list .post-card-image-aspect {
-    padding-bottom: 18%;
+    padding-bottom: 22%;
   }
   .post-card-image-blur {
     backdrop-filter: blur(6px);
@@ -652,6 +652,12 @@
   }
   .dark .post-card-image-fade-bottom::after {
     background: linear-gradient(to bottom, rgba(24,24,27,0) 0%, rgba(24,24,27,0.10) 60%, rgba(24,24,27,0.26) 100%);
+  }
+
+  .post-card-image-fade-bottom img[data-nimg="fill"] {
+    width: calc(100% + 1cm) !important;
+    left: -0.5cm !important;
+    right: auto !important;
   }
 
   /* Trip Masonry 瀑布流布局 */

@@ -81,13 +81,6 @@ export function PostCard({ post, imageVariant = 'left', compact = false }: PostC
                       {formatDate(post.date)}
                     </time>
                   </div>
-                  
-                  {post.readingTime && (
-                    <div className="flex items-center space-x-1 shrink-0">
-                      <Clock className="h-4 w-4" />
-                      <span>{post.readingTime} 分钟阅读</span>
-                    </div>
-                  )}
                 </div>
               </div>
             ) : (
@@ -110,13 +103,6 @@ export function PostCard({ post, imageVariant = 'left', compact = false }: PostC
                     {formatDate(post.date)}
                   </time>
                 </div>
-                
-                {post.readingTime && (
-                  <div className="flex items-center space-x-1 shrink-0">
-                    <Clock className="h-4 w-4" />
-                    <span>{post.readingTime} 分钟阅读</span>
-                  </div>
-                )}
               </div>
               
               <Link 
