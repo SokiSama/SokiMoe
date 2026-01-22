@@ -155,19 +155,19 @@ export default function TagPostsPage() {
       </div>
 
       {posts.length > 0 ? (
-        <div className="mt-10 lg:grid lg:grid-cols-[220px,1fr] lg:gap-10">
+        <div className="mt-10 lg:grid lg:grid-cols-[200px,1fr] lg:gap-8">
           {tag.toLowerCase() === 'tech' ? (
             <div className="hidden lg:block">
               <div className="sticky top-24">
-                <div className="space-y-4">
-                  <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
+                <div className="space-y-3">
+                  <div className="relative left-0 ml-0 w-[200px] min-w-[180px] max-w-[220px] card p-5">
                     <div className="flex items-center gap-4">
                       <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
                       <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
                         归档
                       </div>
                     </div>
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-3 space-y-1.5">
                       {archives.map((a) => {
                         const expanded = openYear === a.year;
                         const maxHeight = expanded ? `${a.posts.length * 44 + 8}px` : '0px';
@@ -220,17 +220,17 @@ export default function TagPostsPage() {
                     </div>
                   </div>
                   
-                  <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6">
+                  <div className="relative left-0 ml-0 w-[200px] min-w-[180px] max-w-[220px] card p-5">
                     <div className="flex items-center gap-4">
                       <div className="h-1.5 w-12 rounded bg-blue-600 dark:bg-blue-500" />
                       <div className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
                         统计
                       </div>
                     </div>
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-3 space-y-1.5">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
-                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
-                          总字数
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 whitespace-nowrap">
+                          字数
                         </span>
                         <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
                           {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
@@ -247,7 +247,7 @@ export default function TagPostsPage() {
             <div className="posts-list stagger-children">
               {posts.map((post) => (
                 <div key={post.slug}>
-                  <PostCard post={post} imageVariant="tall" />
+                  <PostCard post={post} imageVariant={tag.toLowerCase() === 'tech' ? 'tallHorizontal' : 'tall'} />
                 </div>
               ))}
             </div>

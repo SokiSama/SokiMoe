@@ -29,7 +29,8 @@ export default function PostPage() {
   const notesSet = new Set(['教程', '思考', '图文', '分享', '生活', '心得'].map((t) => t.toLowerCase()));
   const isNotes = Array.isArray(post?.tags) && post!.tags.some((t) => notesSet.has(t.toLowerCase()));
   const isTrip = Array.isArray(post?.tags) && post!.tags.some((t) => t === '旅行' || t.toLowerCase() === 'trip');
-  const proseClass = 'post-prose post-prose-limited';
+  const hasSidebarToc = isTech || isTrip || isNotes;
+  const proseClass = 'post-prose';
   const { posts: allPosts } = usePosts();
   const [showScrollTop, setShowScrollTop] = useState(false);
   
@@ -125,7 +126,7 @@ export default function PostPage() {
 
   const actualContent = (
     <div className="trip-section-compact px-6 sm:px-8 lg:px-12">
-      <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-6 xl:gap-8">
+      <div className="lg:grid lg:grid-cols-[1fr,260px] lg:gap-3 xl:gap-3">
         <article className="py-12 min-w-0 posts-article">
           
 

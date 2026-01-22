@@ -90,8 +90,8 @@ export default function TripPage() {
                     </div>
                     <div className="mt-4 space-y-2">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
-                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
-                          总字数
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 whitespace-nowrap">
+                          字数
                         </span>
                         <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
                           {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}

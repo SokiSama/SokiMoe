@@ -149,7 +149,7 @@ function PostsPageContent() {
         <div className="h-4 w-48 shimmer rounded"></div>
       </div>
 
-      <div className="mt-10 lg:grid lg:grid-cols-[220px,1fr] lg:gap-10">
+      <div className="mt-10 lg:grid lg:grid-cols-[200px,1fr] lg:gap-8">
         <div className="hidden lg:block">
           <div className="space-y-4">
             <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6 card-loading">
@@ -390,8 +390,8 @@ function PostsPageContent() {
               </div>
               <div className="mt-6 space-y-2">
                 <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
-                  <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
-                    总字数
+                  <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 whitespace-nowrap">
+                    字数
                   </span>
                   <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
                     {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
@@ -537,8 +537,8 @@ function PostsPageContent() {
                     </div>
                     <div className="mt-4 space-y-2">
                       <div className="w-full flex items-center justify-between gap-4 rounded-lg px-2.5 py-2">
-                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 truncate">
-                          总字数
+                        <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100 whitespace-nowrap">
+                          字数
                         </span>
                         <span className="shrink-0 inline-flex justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3 py-1 text-sm font-semibold tabular-nums text-neutral-600 dark:text-neutral-200">
                           {typeof totalChars === 'number' ? totalChars.toLocaleString('zh-CN') : '—'}
@@ -554,7 +554,7 @@ function PostsPageContent() {
               <div className="posts-list stagger-children">
                 {posts.map((post) => (
                   <div key={post.slug}>
-                    <PostCard post={post} imageVariant="tall" />
+                    <PostCard post={post} imageVariant="tallHorizontal" />
                   </div>
                 ))}
               </div>
@@ -599,8 +599,8 @@ export default function PostsPage() {
         </div>
         <div className="mt-10 lg:grid lg:grid-cols-[220px,1fr] lg:gap-10">
           <div className="hidden lg:block">
-            <div className="space-y-4">
-              <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6 card-loading">
+            <div className="space-y-3">
+              <div className="relative left-0 ml-0 w-[200px] min-w-[180px] max-w-[220px] card p-5 card-loading">
                 <div className="flex items-center gap-4">
                   <div className="h-1.5 w-12 shimmer rounded" />
                   <div className="h-6 w-28 shimmer rounded" />
@@ -614,7 +614,7 @@ export default function PostsPage() {
                   ))}
                 </div>
               </div>
-              <div className="relative left-0 ml-0 w-[220px] min-w-[200px] max-w-[260px] card p-6 card-loading">
+              <div className="relative left-0 ml-0 w-[200px] min-w-[180px] max-w-[220px] card p-5 card-loading">
                 <div className="h-4 w-16 shimmer rounded" />
                 <div className="mt-6 space-y-4">
                   {Array.from({ length: 6 }).map((_, i) => (

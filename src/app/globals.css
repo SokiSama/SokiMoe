@@ -503,7 +503,7 @@
   /* Posts 文章页：仅在桌面端增加顶层 div 间距约 2cm */
   @media (min-width: 1024px) {
     .posts-article > div {
-      margin-bottom: 15cm;
+      margin-bottom: 2cm;
     }
   }
 
