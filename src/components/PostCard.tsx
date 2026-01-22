@@ -10,9 +10,10 @@ interface PostCardProps {
   imageVariant?: 'left' | 'right' | 'tall' | 'tallHorizontal' | 'inlineTop';
   compact?: boolean;
   hideTags?: boolean;
+  reverse?: boolean;
 }
 
-export function PostCard({ post, imageVariant = 'left', compact = false, hideTags = false }: PostCardProps) {
+export function PostCard({ post, imageVariant = 'left', compact = false, hideTags = false, reverse = false }: PostCardProps) {
   const imageContainerClass =
     imageVariant === 'tall'
       ? 'relative w-full post-card-image-blur post-card-image-fade-bottom h-0 overflow-hidden post-card-image-aspect'
@@ -94,6 +95,8 @@ export function PostCard({ post, imageVariant = 'left', compact = false, hideTag
   }
 
   if (imageVariant === 'tallHorizontal') {
+    const horizontalContainerClass = reverse ? 'flex flex-col md:flex-row-reverse' : 'flex flex-col md:flex-row';
+
     return (
       <article
         className={[
@@ -106,11 +109,9 @@ export function PostCard({ post, imageVariant = 'left', compact = false, hideTag
           'duration-200',
           'hover:shadow-md',
           'overflow-hidden',
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        ].filter(Boolean).join(' ')}
       >
-        <div className="flex flex-col md:flex-row">
+        <div className={horizontalContainerClass}>
           <div className="post-card__body flex flex-col justify-between p-6 md:p-8 md:w-2/3">
             <div>
               <h3 className="post-card__title text-xl font-semibold mb-3 leading-snug">

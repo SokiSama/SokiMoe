@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { JetBrains_Mono, Fira_Code } from 'next/font/google';
 import { ConditionalFooter, ConditionalHeader } from '@/components/ConditionalHeader';
 import { getSiteConfigServer } from '@/lib/config';
@@ -81,6 +82,91 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${jetbrainsMono.variable} ${firaCode.variable} font-sans antialiased`}>
+        <Script
+          src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"
+          strategy="afterInteractive"
+        />
+        <Script id="tsparticles-init" strategy="afterInteractive">
+          {`
+            (function () {
+              var attempts = 0;
+              var maxAttempts = 40;
+              var delay = 100;
+              function init() {
+                if (window.tsParticles && window.tsParticles.load) {
+                  window.tsParticles.load('tsparticles', {
+                    fullScreen: { enable: false },
+                    background: { color: { value: 'transparent' } },
+                    fpsLimit: 60,
+                    detectRetina: true,
+                    interactivity: {
+                      events: {
+                        onHover: { enable: true, mode: 'repulse' },
+                        resize: true
+                      },
+                      modes: {
+                        repulse: { distance: 100, duration: 0.4 }
+                      }
+                    },
+                    particles: {
+                      number: {
+                        value: 170,
+                        density: { enable: true, area: 950 }
+                      },
+                      color: {
+                        value: ['#f9a8d4', '#a855f7', '#38bdf8']
+                      },
+                      opacity: {
+                        value: 0.3,
+                        random: true
+                      },
+                      size: {
+                        value: { min: 2.0, max: 5.0 },
+                        animation: {
+                          enable: true,
+                          speed: 10,
+                          minimumValue: 1.8,
+                          sync: false
+                        }
+                      },
+                      shape: {
+                        type: ['star', 'polygon'],
+                        options: {
+                          star: {
+                            sides: 5
+                          },
+                          polygon: {
+                            sides: 6
+                          }
+                        }
+                      },
+                      move: {
+                        enable: true,
+                        speed: 1.35,
+                        direction: 'top',
+                        random: true,
+                        straight: false,
+                        outModes: { default: 'out' }
+                      },
+                      links: {
+                        enable: false
+                      }
+                    }
+                  });
+                } else if (attempts < maxAttempts) {
+                  attempts += 1;
+                  setTimeout(init, delay);
+                }
+              }
+              init();
+            })();
+          `}
+        </Script>
+        <div
+          id="tsparticles"
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 -z-10"
+        />
         <div className="min-h-screen flex flex-col">
           <ConditionalHeader />
           <main className="flex-1">

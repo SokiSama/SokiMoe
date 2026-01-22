@@ -4,6 +4,7 @@ date: '2025-12-24'
 tags: ["分享"]
 description: 任务已开启：永结同心绝境战
 published: true
+cover: /images/f.jpg
 ---
 
 最近年末将至，在公司闲来无事，就想基于 FF14 的主题，构思一场婚礼。
