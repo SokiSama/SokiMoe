@@ -93,8 +93,8 @@ export default function AdminSettings() {
 
       // 使用默认配置
       const defaultConfig: SiteConfig = {
-        title: "Soki Life",
-        description: "Yes, the MP is low. No, the healing hasn't stopped.",
+        title: "Soki Sugar Life",
+        description: "彼女の愛は、甘くて痛い",
         introduction: '倾听，感受，思考 \n可通过下方链接与我取得联系，愿母水晶能指引我们',
         author: {
           name: 'Lynn',

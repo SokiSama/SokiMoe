@@ -24,7 +24,7 @@ import {
 
 export default function HomePage() {
   const { data: config, loading, error } = useConfig();
-  const [avatarSrc, setAvatarSrc] = useState('/api/images/avatar.png');
+  const [avatarSrc, setAvatarSrc] = useState('/api/images/avatar.jpg');
 
   if (error) {
     return (
@@ -171,10 +171,6 @@ export default function HomePage() {
                   sizes="(min-width: 768px) 320px, 224px"
                   className="object-cover"
                   onError={() => {
-                    if (avatarSrc.endsWith('/api/images/avatar.png')) {
-                      setAvatarSrc('/api/images/avatar.jpg');
-                      return;
-                    }
                     setAvatarSrc('/images/hello-world.webp');
                   }}
                   priority

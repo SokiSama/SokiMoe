@@ -14,7 +14,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState('/api/images/avatar.png');
+  const [avatarSrc, setAvatarSrc] = useState('/api/images/avatar.jpg');
   
   const { data: config, loading } = useConfig();
 
@@ -92,10 +92,6 @@ export function Header() {
                   className="object-cover object-center"
                   loading="lazy"
                   onError={() => {
-                    if (avatarSrc.endsWith('/api/images/avatar.png')) {
-                      setAvatarSrc('/api/images/avatar.jpg');
-                      return;
-                    }
                     setAvatarSrc('/images/hello-world.webp');
                   }}
                 />

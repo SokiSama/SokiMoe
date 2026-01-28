@@ -67,9 +67,9 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: '/api/images/avatar.png',
-      shortcut: '/api/images/avatar.png',
-      apple: '/api/images/avatar.png',
+      icon: '/api/images/avatar.jpg',
+      shortcut: '/api/images/avatar.jpg',
+      apple: '/api/images/avatar.jpg',
     },
   };
 }

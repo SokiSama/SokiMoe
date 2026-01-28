@@ -118,8 +118,8 @@ export function reloadServerConfig(): SiteConfig {
 // 默认配置 - 与静态配置文件保持一致以避免水合错误
 function getDefaultConfig(): SiteConfig {
   return {
-    title: "Soki Life",
-    description: "Yes, the MP is low. No, the healing hasn't stopped.",
+    title: "Soki Sugar Life",
+    description: "彼女の愛は、甘くて痛い",
     introduction: '倾听，感受，思考 \n可通过下方链接与我取得联系，愿母水晶能指引我们',
     author: {
       name: 'Lynn',
