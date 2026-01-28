@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPostBySlug, markdownToHtml } from '@/lib/posts';
 
+export const dynamic = 'force-dynamic';
+
 interface RouteContext {
   params: { slug: string };
 }
