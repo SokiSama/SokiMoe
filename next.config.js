@@ -105,6 +105,16 @@ const nextConfig = {
         hostname: 'montrong-1300089193.cos.ap-beijing.myqcloud.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'blog.jsoftstudio.top',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.blog.saneko.me',
+        pathname: '/**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
   },

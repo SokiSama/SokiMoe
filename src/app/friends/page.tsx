@@ -69,10 +69,10 @@ export default function FriendsPage() {
         url: 'https://blog.hly0928.com/',
       },
       {
-        title: 'ATao-Blog',
-        avatar: 'https://cdn.atao.cyou/Web/Avatar.png',
-        description: '做自己喜欢的事',
-        url: 'https://blog.atao.cyou',
+        title: 'Saneko',
+        avatar: 'https://cdn.blog.saneko.me/Web/Avatar.png',
+        description: 'Do the things that I like.',
+        url: 'https://saneko.me',
       },
       {
         title: '时隐重工',
@@ -92,11 +92,17 @@ export default function FriendsPage() {
         description: '如梦幻，如初遇。',
         url: 'https://montrong.cn',
       },
-       {
+      {
         title: 'Betsy Blog',
         avatar: 'https://img.micostar.cc/images/avatar.webp',
         description: '爱我所爱，我们是彼此永远的动力',
         url: 'https://www.micostar.cc',
+      },
+      {
+        title: 'J的个人博客',
+        avatar: 'https://blog.jsoftstudio.top/css/all/favicon.ico',
+        description: 'hi，欢迎来到我的个人博客，我会在这里分享教程，经验与生活',
+        url: 'https://blog.jsoftstudio.top/',
       },
       
     ],
@@ -127,11 +133,7 @@ export default function FriendsPage() {
     if (!el) {
       return;
     }
-    if (!twikoo?.init) {
-      setInitStatus('error');
-      setErrorMessage('Twikoo 未加载完成，请刷新重试。');
-      return;
-    }
+    if (!twikoo?.init) return;
 
     if (initRunningRef.current) {
       return;
@@ -399,7 +401,10 @@ export default function FriendsPage() {
               id="twikoo"
               src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js"
               strategy="afterInteractive"
-              onLoad={() => setScriptReady(true)}
+              onLoad={() => {
+                setScriptReady(true);
+                void initTwikoo();
+              }}
             />
 
             {initStatus === 'error' && (
