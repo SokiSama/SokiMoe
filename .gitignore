@@ -1,39 +1,13 @@
-# 依赖
+.vercel/
+.next/
 node_modules/
-/.pnp
-.pnp.js
+.pnpm-store/
 
-# 测试
-/coverage
+.env
+.env.*
+!.env.example
 
-# Next.js 构建输出
-/.next/
-/out/
-
-# 生产构建
-/build
-
-# 环境变量
-.env*.local
-
-# Vercel
-.vercel
-
-# TypeScript
+*.log
 *.tsbuildinfo
-next-env.d.ts
-
-# IDE
-.vscode/
-.idea/
-
-# 操作系统
 .DS_Store
 Thumbs.db
-
-# 日志
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
