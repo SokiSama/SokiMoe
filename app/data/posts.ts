@@ -3,7 +3,7 @@ export type LocalPost = {
   title: string;
   date: string;
   description: string;
-  cover: string;
+  cover?: string;
   source: string;
   type: "travel" | "tech";
   tags: string[];
@@ -25,7 +25,6 @@ export const localPosts: LocalPost[] = [
     title: "怎么从零搭建一个网站并绑定域名",
     date: "2026-01-14",
     description: "面向不知道谁的一个搭站教程。",
-    cover: "/images/123.png",
     source: "/posts/web.md",
     type: "tech",
     tags: ["教程"],
@@ -45,7 +44,6 @@ export const localPosts: LocalPost[] = [
     title: "构思了一场基于 FF14 主题的婚礼",
     date: "2025-12-24",
     description: "任务已开启：永结同心绝境战",
-    cover: "/images/f.jpg",
     source: "/posts/wifeff14.md",
     type: "tech",
     tags: ["分享"],
@@ -65,7 +63,6 @@ export const localPosts: LocalPost[] = [
     title: "记一次汇丰香港开户历程",
     date: "2025-10-14",
     description: "肉身赴港开户 HSBC HK",
-    cover: "/images/images.png",
     source: "/posts/HSBCHK.md",
     type: "tech",
     tags: ["心得"],

@@ -38,11 +38,13 @@ export function SiteLeftSidebar({ active, open = false, onClose, showCategories 
           <div className="avatar"><img src="/profile-avatar.webp" alt="Soki 的头像" /></div>
           <h2>Soki</h2>
           <span className="profile-divider" aria-hidden="true" />
-          <p>彼女の愛は、甘くて痛い</p>
+          <p>ACG / INFP / 社畜 / 光呆 / 平成死宅</p>
           <div className="socials" aria-label="个人主页链接">
             <a href="https://github.com/SokiSama" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><img src="/icons/github.svg" alt="" /></a>
             <a href="https://steamcommunity.com/id/SokiSama/" target="_blank" rel="noreferrer" title="Steam" aria-label="Steam"><img src="/icons/steam.svg" alt="" /></a>
+            <a href="https://t.me/MatsuzaSatou" target="_blank" rel="noreferrer" title="Telegram" aria-label="Telegram"><img src="/icons/telegram.svg" alt="" /></a>
             <a href="https://bsky.app/profile/matsusatou.bsky.social" target="_blank" rel="noreferrer" title="Bluesky" aria-label="Bluesky"><img src="/icons/bluesky.svg" alt="" /></a>
+            <a href="mailto:mashiroamane@outlook.com" title="发送邮件" aria-label="发送邮件到 mashiroamane@outlook.com"><img src="/icons/email.svg" alt="" /></a>
           </div>
         </section>
         {children}
