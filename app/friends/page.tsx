@@ -6,38 +6,19 @@ import { CaretDown, PencilSimple } from "@phosphor-icons/react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { FriendList } from "./FriendList";
-import type { Friend } from "./FriendCard";
 import friends from "../../data/friends.json";
 
 const envId = "https://sweet-moonbeam-d0178d.netlify.app/.netlify/functions/twikoo";
 
-type RecentComment = { nick?: string; link?: string; commentText?: string; url?: string };
 type Twikoo = {
   init: (options: { envId: string; el: HTMLElement; path: string; lang: string; onCommentLoaded?: () => void }) => Promise<void>;
-  getRecentComments?: (options: { envId: string; urls?: string[]; pageSize?: number; includeReply?: boolean }) => Promise<RecentComment[]>;
 };
-
-function recentFriendsFromComments(comments: RecentComment[], allFriends: Friend[]) {
-  const matched: Friend[] = [];
-  for (const comment of comments) {
-    const source = `${comment.nick ?? ""} ${comment.link ?? ""} ${comment.commentText ?? ""}`.toLocaleLowerCase();
-    const friend = allFriends.find((item) => {
-      const host = (() => { try { return new URL(item.url).hostname.replace(/^www\./, ""); } catch { return item.url; } })().toLocaleLowerCase();
-      return source.includes(host) || source.includes(item.title.toLocaleLowerCase());
-    });
-    if (friend && !matched.some((item) => item.url === friend.url)) matched.push(friend);
-    if (matched.length === 3) break;
-  }
-  return matched;
-}
 
 export default function FriendsPage() {
   const commentsRef = useRef<HTMLDivElement>(null);
   const initializing = useRef(false);
   const initialized = useRef(false);
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
-  const [recentFriends, setRecentFriends] = useState<Friend[]>([]);
-  const [recentStatus, setRecentStatus] = useState<"loading" | "ready" | "empty">("loading");
 
   const initComments = useCallback(async (force = false) => {
     const element = commentsRef.current;
@@ -54,27 +35,13 @@ export default function FriendsPage() {
     finally { initializing.current = false; }
   }, []);
 
-  const loadRecentFriends = useCallback(async () => {
-    const twikoo = (window as typeof window & { twikoo?: Twikoo }).twikoo;
-    if (!twikoo?.getRecentComments) return;
-    try {
-      const comments = await twikoo.getRecentComments({ envId, urls: ["/friends", "/friends/"], pageSize: 100, includeReply: false });
-      const matched = recentFriendsFromComments(comments, friends as Friend[]);
-      setRecentFriends(matched);
-      setRecentStatus(matched.length ? "ready" : "empty");
-    } catch {
-      setRecentStatus("empty");
-    }
-  }, []);
-
   useEffect(() => {
     if (!(window as typeof window & { twikoo?: Twikoo }).twikoo) return;
     const timer = window.setTimeout(() => {
       void initComments();
-      void loadRecentFriends();
     }, 0);
     return () => window.clearTimeout(timer);
-  }, [initComments, loadRecentFriends]);
+  }, [initComments]);
 
   return (
     <div className="site">
@@ -100,25 +67,25 @@ export default function FriendsPage() {
                 <li><strong>链接：</strong><a href="https://www.soki.moe" target="_blank" rel="noreferrer">https://www.soki.moe</a></li>
                 <li><strong>图标：</strong><a href="https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg" target="_blank" rel="noreferrer">https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</a></li>
               </ul>
+              <div className="site-link-requirements">
+                <h3>友链要求：</h3>
+                <ul>
+                  <li>可在中国大陆正常访问</li>
+                  <li>创作内容符合法律规定</li>
+                  <li>已添加友链信息</li>
+                </ul>
+              </div>
             </div>
           </details>
         </section>
         <section className="comments-section motion-rise">
           <div className="section-title"><span /><h2>评论区</h2></div>
-          <Script id="twikoo-script" src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js" strategy="afterInteractive" onLoad={() => { void initComments(); void loadRecentFriends(); }} onError={() => setStatus("error")} />
+          <Script id="twikoo-script" src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js" strategy="afterInteractive" onLoad={() => { void initComments(); }} onError={() => setStatus("error")} />
           {status === "loading" && <p className="comment-status">正在加载评论…</p>}
           {status === "error" && <div className="comment-error">评论区加载失败。<button type="button" onClick={() => void initComments(true)}>重新加载</button></div>}
           <div className="twikoo-host card"><div ref={commentsRef} id="twikoo-comments" /></div>
         </section>
         </div>
-        <aside className="right-sidebar friends-right-sidebar">
-          <section className="card side-card friend-latest-card">
-            <h3>最近收录</h3>
-            {recentStatus === "loading" && <p className="recent-note">正在读取最新评论…</p>}
-            {recentStatus === "empty" && <p className="recent-note">最新评论中暂无可匹配的已收录友链。</p>}
-            {recentFriends.map((friend) => <a href={friend.url} target="_blank" rel="noreferrer" key={friend.url}><img src={friend.avatar} alt="" referrerPolicy="no-referrer" loading="lazy" decoding="async" /><span><b>{friend.title}</b></span></a>)}
-          </section>
-        </aside>
       </main>
       <SiteFooter />
       <a className="back-top" href="#top" aria-label="回到顶部">↑</a>

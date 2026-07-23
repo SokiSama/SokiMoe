@@ -4,7 +4,7 @@ date: '2025-10-14'
 tags: ["心得"]
 description: 肉身赴港开户 HSBC HK
 published: true
-cover: /images/images.png
+cover: /images/hsbchk-cover.png
 ---
 
 # 前因

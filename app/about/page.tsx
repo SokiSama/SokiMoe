@@ -73,31 +73,15 @@ export default function AboutPage() {
             </header>
             <div className="about-prose">
               <p>我是 Soki，一位不爱写代码的业余开发者，也是 ACG 爱好者。习惯了在生活的喧嚣中构筑自己的小世界。</p>
-              <p>编程全靠爱好，爱好不会成为工作。</p>
+              <p>2022年大学毕业从事软件行业至今，编程全靠爱好，爱好不会成为工作。</p>
               <p>网站创立于 2025 年 10 月，是继 2017 年之后再一次建站。前身「砂糖小站」现已尘封，仅存托管域名用来 Arcade。</p>
-              <p>建立网站的目的，是想记录爱好，收藏乐趣，认识朋友。</p>
-            </div>
-          </section>
-
-          <section className="card about-story-section">
-            <header className="about-story-heading">
-              <span>02</span>
-              <div><p>INTERESTS</p><h2>兴趣爱好</h2></div>
-            </header>
-            <div className="about-prose">
-              <p>喜欢数码、动漫、美食、游戏以及独自旅游。目标是走遍想去的国家。</p>
-              <p>INFP-T，或许可以在这里做真实的自己，对自己不喜欢的事会尽力逃避，无法逃避就会陷入内耗。</p>
-              <p>FF14 母肥 → 猫4，主职贤者，单绝神兵，绝亚打到 P3 散队了，零式万魔殿边境次月，炼狱首月，阿卡迪亚零式登天斗技场轻量级首月；玩高难默认切白魔。现在是导随摸鱼人，没钱了就去挖宝。</p>
-              <p>守望先锋休闲玩家，三种职业都玩，竞技处于黄金水平吧，奶位主要玩雾子和莫姨，DPS 玩小美和死怨，坦位玩奥丽莎和路霸。</p>
-              <p>音游已退坑，BanG Dream 日服无判 27 个位数 gr，舞萌 DX 1W4，Arcaea 10.8，被上班和年龄限制住了精力，深知天花板就在这了。</p>
-              <p>我个人对游戏平台没有什么依赖性，主要是 PS 接电视玩确实很爽，Steam 主要玩网游，Switch 跳舞和玩马车以及并没什么人跟我一起的合家欢游戏。所以哪个顺手玩哪个。</p>
-              <p>VRChat 紫名已退游，没找过砂糖，也没 ERP 过，朋友也没多少，就是觉得社交不行的我在哪里都一样，哪怕我套上了美少女皮。可惜了我为了这游戏买了 Quest 3 + 全追，现在也都卖了。</p>
+              <p>博客主要是以日常为主，没什么技术含量。碎碎念是当空间用的，一些小心思都会丢在那里。</p>
             </div>
           </section>
 
           <section className="card about-section about-inline-section">
             <header className="about-section-heading">
-              <span>03</span>
+              <span>02</span>
               <div><h2>技能</h2><p>技能树总会点在一些适合自己的地方</p></div>
             </header>
             <div className="about-skill-grid">
@@ -109,7 +93,7 @@ export default function AboutPage() {
 
           <section className="card about-section about-inline-section">
             <header className="about-section-heading">
-              <span>04</span>
+              <span>03</span>
               <div><h2>设备</h2><p>我真的不会再乱换设备了.jpg</p></div>
             </header>
             <div className="about-device-grid">

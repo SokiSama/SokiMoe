@@ -22,6 +22,16 @@ type HomePost = {
 const featuredPosts: HomePost[] = [
   {
     category: "旅行",
+    title: "临时起意，再赴香港的一场小旅行",
+    excerpt: "一次内陆金融圈的冲击，加速了我赴港的行程",
+    tags: ["旅行"],
+    date: "2026-07-23",
+    cover: "cover-violet",
+    coverImage: "/images/hong-kong-trip-2026-cover.png",
+    href: "/posts/hong-kong-trip-2026",
+  },
+  {
+    category: "旅行",
     title: "马来西亚游记",
     excerpt: "记录人生第一次出国：从重庆出发，在吉隆坡度过一次带着新鲜感的跨年旅行。",
     tags: ["旅行", "马来西亚"],
@@ -37,7 +47,7 @@ const featuredPosts: HomePost[] = [
     tags: ["旅行", "成都"],
     date: "2025-10-27",
     cover: "cover-sunset",
-    coverImage: "/travel/chengdustation.jpg",
+    coverImage: "/images/chengdu-cover.png",
     href: "/posts/chengdu",
   },
   {
@@ -139,8 +149,13 @@ export default function Home() {
             <div className="home-hero-art" aria-hidden="true"><img src="/home-hero-sumimi.png" alt="" /></div>
           </section>
 
-          {pageItems.map((item) => (
-            <article className={`post-card card${item.coverImage ? "" : " post-card--text"}`} key={item.title}>
+          {pageItems.map((item, index) => (
+            <article
+              className={`post-card card${item.coverImage
+                ? ` post-card--split post-card--cover-${index % 2 === 0 ? "left" : "right"}`
+                : " post-card--text"}`}
+              key={item.title}
+            >
               {item.coverImage && <a
                 className={`post-cover ${item.cover} post-cover--image`}
                 href={item.href}

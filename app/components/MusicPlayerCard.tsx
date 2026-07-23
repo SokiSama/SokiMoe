@@ -89,6 +89,10 @@ export function MusicPlayerCard() {
   );
 
   useEffect(() => {
+    setTrackIndex(Math.floor(Math.random() * tracks.length));
+  }, []);
+
+  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.load();
@@ -185,7 +189,6 @@ export function MusicPlayerCard() {
         })}
       </div>
 
-      <p className="music-preview-note">Apple Music 官方试听</p>
     </section>
   );
 }

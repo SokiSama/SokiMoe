@@ -48,7 +48,7 @@ export function OnThisDayCard() {
 
   return (
     <section className="card side-card on-this-day-card" aria-live="polite">
-      <h3><ClockCounterClockwise aria-hidden="true" weight="duotone" />历史上的今天</h3>
+      <h3>历史上的今天</h3>
       {event ? <article>
         {event.thumbnail && <div className="on-this-day-cover"><img src={event.thumbnail} alt="历史事件相关图片" loading="lazy" referrerPolicy="no-referrer" /></div>}
         {event.year !== null && <span className="on-this-day-year">{event.year} 年</span>}

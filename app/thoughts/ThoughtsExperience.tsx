@@ -6,20 +6,35 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { RandomQuote } from "../components/RandomQuote";
 import type { Thought } from "../data/thoughts";
+import { ProfileCard } from "./ProfileCard";
+import { Timeline, type TimelineItem } from "./Timeline";
 
 const formatter = new Intl.DateTimeFormat("zh-CN", {
   year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit",
 });
+const shanghaiDateFormatter = new Intl.DateTimeFormat("en", {
+  timeZone: "Asia/Shanghai",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+const ONE_DAY = 24 * 60 * 60 * 1000;
 
-const tagPalette = ["pink", "purple", "blue", "green", "yellow"];
+function getShanghaiDay(date: Date) {
+  const parts = shanghaiDateFormatter.formatToParts(date);
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const day = Number(parts.find((part) => part.type === "day")?.value);
+
+  return Date.UTC(year, month - 1, day) / ONE_DAY;
+}
 
 export function ThoughtsExperience({ thoughts }: { thoughts: Thought[] }) {
-  const [tag, setTag] = useState("全部");
   const [month, setMonth] = useState("全部");
   const [filtering, setFiltering] = useState(false);
 
-  const tags = useMemo(() => ["全部", ...Array.from(new Set(thoughts.flatMap((thought) => thought.tags ?? [])))], [thoughts]);
   const months = useMemo(() => {
     const counts = new Map<string, number>();
     thoughts.forEach((thought) => {
@@ -35,17 +50,28 @@ export function ThoughtsExperience({ thoughts }: { thoughts: Thought[] }) {
   const visibleThoughts = thoughts.filter((thought) => {
     const date = new Date(thought.publishedAt);
     const thoughtMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-    return (tag === "全部" || thought.tags?.includes(tag)) && (month === "全部" || month === thoughtMonth);
+    return month === "全部" || month === thoughtMonth;
   });
+  const timelineItems: TimelineItem[] = visibleThoughts.map((thought) => {
+    const date = new Date(thought.publishedAt);
+    const now = new Date();
+    return {
+      id: thought.id,
+      date: `${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}`,
+      year: String(date.getFullYear()),
+      week: new Intl.DateTimeFormat("zh-CN", { weekday: "short" }).format(date),
+      isToday: date.toDateString() === now.toDateString(),
+    };
+  });
+  const recordDays = useMemo(() => {
+    if (thoughts.length === 0) return 0;
 
-  const chooseTag = (nextTag: string) => {
-    if (nextTag === tag) return;
-    setFiltering(true);
-    window.setTimeout(() => {
-      setTag(nextTag);
-      window.setTimeout(() => setFiltering(false), 30);
-    }, 120);
-  };
+    const firstRecordedDay = Math.min(
+      ...thoughts.map((thought) => getShanghaiDay(new Date(thought.publishedAt))),
+    );
+
+    return Math.max(1, getShanghaiDay(new Date()) - firstRecordedDay + 1);
+  }, [thoughts]);
 
   const chooseMonth = (nextMonth: string) => {
     if (nextMonth === month) return;
@@ -75,7 +101,10 @@ export function ThoughtsExperience({ thoughts }: { thoughts: Thought[] }) {
         />
       </header>
 
-      <div className={`thought-list thoughts-filterable${filtering ? " is-filtering" : ""}`}>
+      <Timeline
+        className={`thought-list thoughts-filterable${filtering ? " is-filtering" : ""}`}
+        items={timelineItems}
+      >
         {visibleThoughts.map((thought) => <article className="thought-card card" key={thought.id}>
           <header className="thought-card__header">
             <Image className="thought-card__avatar" src="/about-avatar.png" alt="Soki" width={46} height={46} />
@@ -86,21 +115,19 @@ export function ThoughtsExperience({ thoughts }: { thoughts: Thought[] }) {
             {thought.images.map((image) => <Image src={image} alt="碎念配图" width={1600} height={700} sizes="(max-width: 900px) 100vw, 65vw" key={image} />)}
           </div> : null}
         </article>)}
-      </div>
+      </Timeline>
     </section>
 
     <aside className="thoughts-sidebar">
       <div className="thoughts-sidebar-sticky">
+        <ProfileCard thoughtCount={thoughts.length} recordDays={recordDays} />
+        <RandomQuote />
+
         <section className="thought-widget thought-months card">
           <h2><CalendarBlank weight="duotone" />月份归档</h2>
           <div className="thought-month-list">
             {months.map((item) => <button type="button" className={month === item.key ? "active" : ""} onClick={() => chooseMonth(item.key)} key={item.key}><span>{item.label}</span><em>{item.count}</em><CaretRight /></button>)}
           </div>
-        </section>
-
-        <section className="thought-widget thought-tags card">
-          <h2>碎念标签</h2><p>那些小小的关键词</p>
-          <div>{tags.map((item, index) => <button type="button" className={`${tagPalette[index % tagPalette.length]}${tag === item ? " active" : ""}`} onClick={() => chooseTag(item)} key={item}>{item}</button>)}</div>
         </section>
       </div>
     </aside>
