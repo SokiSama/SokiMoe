@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Copy, Image as ImageIcon, LinkSimple, PencilSimple, UserCircle } from "@phosphor-icons/react";
+import { CaretDown, PencilSimple } from "@phosphor-icons/react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { FriendList } from "./FriendList";
@@ -36,21 +36,8 @@ export default function FriendsPage() {
   const initializing = useRef(false);
   const initialized = useRef(false);
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
-  const [copied, setCopied] = useState(false);
   const [recentFriends, setRecentFriends] = useState<Friend[]>([]);
   const [recentStatus, setRecentStatus] = useState<"loading" | "ready" | "empty">("loading");
-
-  const copyFriendInfo = useCallback(async () => {
-    const text = [
-      "名称：Soki Sugar Life",
-      "描述：彼女の愛は、甘くて痛い",
-      "链接：https://www.soki.moe",
-      "头像：https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg",
-    ].join("\n");
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
-  }, []);
 
   const initComments = useCallback(async (force = false) => {
     const element = commentsRef.current;
@@ -103,6 +90,19 @@ export default function FriendsPage() {
           <div className="friends-hero-art" aria-hidden="true"><img src="/friends-hero.png" alt="" /></div>
         </section>
         <FriendList friends={friends} />
+        <section className="site-link-section motion-rise">
+          <details className="site-link-panel card" open>
+            <summary><span><PencilSimple aria-hidden="true" weight="bold" />本站信息</span><CaretDown aria-hidden="true" /></summary>
+            <div className="site-link-panel__body">
+              <ul>
+                <li><strong>名称：</strong><span>Soki Sugar Life</span></li>
+                <li><strong>描述：</strong><span>彼女の愛は、甘くて痛い</span></li>
+                <li><strong>链接：</strong><a href="https://www.soki.moe" target="_blank" rel="noreferrer">https://www.soki.moe</a></li>
+                <li><strong>图标：</strong><a href="https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg" target="_blank" rel="noreferrer">https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</a></li>
+              </ul>
+            </div>
+          </details>
+        </section>
         <section className="comments-section motion-rise">
           <div className="section-title"><span /><h2>评论区</h2></div>
           <Script id="twikoo-script" src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js" strategy="afterInteractive" onLoad={() => { void initComments(); void loadRecentFriends(); }} onError={() => setStatus("error")} />
@@ -112,18 +112,6 @@ export default function FriendsPage() {
         </section>
         </div>
         <aside className="right-sidebar friends-right-sidebar">
-          <section className="friend-info friend-info--sidebar card">
-            <div className="friend-info-header">
-              <div className="friend-info-title"><LinkSimple aria-hidden="true" weight="bold" /><h3>我的友链</h3></div>
-              <button className="copy-btn" type="button" onClick={copyFriendInfo}><Copy aria-hidden="true" weight="bold" />{copied ? "已复制" : "一键复制"}</button>
-            </div>
-            <div className="friend-info-body" aria-label="本站友链信息">
-              <div className="friend-row"><span className="friend-label"><UserCircle aria-hidden="true" weight="duotone" />名称</span><strong className="friend-value">Soki Sugar Life</strong></div>
-              <div className="friend-row"><span className="friend-label"><PencilSimple aria-hidden="true" weight="duotone" />描述</span><strong className="friend-value">彼女の愛は、甘くて痛い</strong></div>
-              <div className="friend-row"><span className="friend-label"><LinkSimple aria-hidden="true" weight="duotone" />链接</span><strong className="friend-value">https://www.soki.moe</strong></div>
-              <div className="friend-row"><span className="friend-label"><ImageIcon aria-hidden="true" weight="duotone" />头像</span><strong className="friend-value">https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</strong></div>
-            </div>
-          </section>
           <section className="card side-card friend-latest-card">
             <h3>最近收录</h3>
             {recentStatus === "loading" && <p className="recent-note">正在读取最新评论…</p>}
