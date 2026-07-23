@@ -140,17 +140,17 @@ export default function Home() {
           </section>
 
           {pageItems.map((item) => (
-            <article className="post-card card" key={item.title}>
-              <a
-                className={`post-cover ${item.cover}${item.coverImage ? " post-cover--image" : ""}`}
+            <article className={`post-card card${item.coverImage ? "" : " post-card--text"}`} key={item.title}>
+              {item.coverImage && <a
+                className={`post-cover ${item.cover} post-cover--image`}
                 href={item.href}
                 aria-label={`阅读：${item.title}`}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noreferrer" : undefined}
               >
-                {item.coverImage && <img src={item.coverImage} alt="" loading="lazy" />}
-                <span className="cover-orbit" /><span className="cover-label">FIELD NOTE · {item.date.slice(0, 4)}</span>
-              </a>
+                <img src={item.coverImage} alt="" loading="lazy" />
+                <span className="cover-label">FIELD NOTE · {item.date.slice(0, 4)}</span>
+              </a>}
               <div className="post-body">
                 <a
                   href={item.href}

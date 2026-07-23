@@ -127,7 +127,7 @@ export default function LocalPostPage() {
           <article className="travel-article card">
             <a className="article-back" href="/"><ArrowLeft size={18} weight="bold" />返回首页</a>
             <header className="travel-article-header">
-              <img src={post.cover} alt={`${post.title}封面`} />
+              {post.cover && <img src={post.cover} alt={`${post.title}封面`} />}
               <div className="travel-article-title">
                 <span className="eyebrow">
                   {post.type === "travel" ? <MapPin size={16} weight="fill" /> : <Article size={16} weight="fill" />}
