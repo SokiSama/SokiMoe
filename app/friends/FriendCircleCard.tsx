@@ -1,0 +1,88 @@
+"use client";
+
+import { RssSimple } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+
+type FriendArticle = {
+  title: string;
+  url: string;
+  publishedAt: string;
+  siteName: string;
+  siteUrl: string;
+  avatar: string;
+};
+
+type FriendCircleState =
+  | { status: "loading"; articles: FriendArticle[] }
+  | { status: "ready"; articles: FriendArticle[] }
+  | { status: "error"; articles: FriendArticle[] };
+
+const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+  month: "2-digit",
+  day: "2-digit",
+});
+
+export function FriendCircleCard() {
+  const [state, setState] = useState<FriendCircleState>({ status: "loading", articles: [] });
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/friends/feed", { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Friend circle feed unavailable");
+        return response.json() as Promise<{ articles?: FriendArticle[] }>;
+      })
+      .then((payload) => {
+        setState({ status: "ready", articles: payload.articles ?? [] });
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setState({ status: "error", articles: [] });
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <section className="card friend-circle-card" aria-labelledby="friend-circle-title">
+      <h2 id="friend-circle-title">
+        <RssSimple weight="bold" aria-hidden="true" />
+        友圈
+      </h2>
+
+      {state.status === "loading" && (
+        <div className="friend-circle-loading" aria-label="正在读取友圈文章">
+          <i /><i /><i /><i />
+        </div>
+      )}
+
+      {state.status !== "loading" && state.articles.length === 0 && (
+        <p className="friend-circle-empty">
+          {state.status === "error" ? "友圈暂时无法读取" : "暂未发现可用的 RSS 更新"}
+        </p>
+      )}
+
+      {state.articles.length > 0 && (
+        <div className="friend-circle-list">
+          {state.articles.slice(0, 10).map((article) => (
+            <article className="friend-circle-item" key={`${article.siteUrl}-${article.url}`}>
+              <img src={article.avatar} alt="" loading="lazy" referrerPolicy="no-referrer" />
+              <div>
+                <a className="friend-circle-title" href={article.url} target="_blank" rel="noreferrer">
+                  {article.title}
+                </a>
+                <p>
+                  <a href={article.siteUrl} target="_blank" rel="noreferrer">{article.siteName}</a>
+                  <time dateTime={article.publishedAt}>
+                    {dateFormatter.format(new Date(article.publishedAt))}
+                  </time>
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}

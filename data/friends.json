@@ -1,11 +1,11 @@
 [
   { "title": "AmiyaAA’s Blog", "avatar": "https://blog.430309.xyz/favicon.ico", "description": "永远喜欢『真理』", "url": "https://blog.430309.xyz/", "tags": ["生活", "ACG"] },
-  { "title": "鈴奈咲桜のBlog", "avatar": "https://q2.qlogo.cn/headimg_dl?dst_uin=2731443459&spec=5", "description": "愛することを忘れないで", "url": "https://blog.sakura.ink", "tags": ["生活", "随笔"] },
+  { "title": "鈴奈咲桜のBlog", "avatar": "https://q2.qlogo.cn/headimg_dl?dst_uin=2731443459&spec=5", "description": "愛することを忘れないで", "url": "https://blog.sakura.ink", "rss": "https://blog.sakura.ink/rss.xml", "tags": ["生活", "随笔"] },
   { "title": "小三月", "avatar": "https://gravatar.loli.net/avatar/1741ba4d7382ef4f8a556fdf3d88a4cf?s=300", "description": "喵！这里是三月七", "url": "https://blog.nanoka.moe/links", "tags": ["设计", "动画"] },
   { "title": "熊熊", "avatar": "https://cynosura.one/img/avatar.webp", "description": "Trying to light up the dark.", "url": "https://cynosura.one/", "tags": ["技术", "生活"] },
   { "title": "Hoyue の 自留地", "avatar": "https://hoyue.net/assets/icons/avatar.jpg", "description": "这里的一切都有始有终，却能容纳所有的不期而遇和久别重逢。", "url": "https://hoyue.net", "tags": ["生活", "随笔"] },
   { "title": "Clementine (aka Clem)", "avatar": "https://friends.ichr.me/img/blog.hly0928.com.png", "description": "悟已往之不諫，知來者之可追", "url": "https://blog.hly0928.com/", "tags": ["技术", "记录"] },
-  { "title": "Saneko", "avatar": "https://cdn.blog.saneko.me/Web/Avatar.png", "description": "Do the things that I like.", "url": "https://saneko.me", "tags": ["创作", "生活"] },
+  { "title": "Saneko", "avatar": "https://cdn.blog.saneko.me/Web/Avatar.png", "description": "Do the things that I like.", "url": "https://saneko.me", "rss": "https://saneko.me/rss.xml", "tags": ["创作", "生活"] },
   { "title": "时隐重工", "avatar": "https://shiyina.com/favicon.ico", "description": "兴趣使然的未来主义建造者", "url": "https://shiyin.cafe/", "tags": ["技术", "未来"] },
   { "title": "云海花瑶", "avatar": "https://dn-qiniu-avatar.qbox.me/avatar/d00de9fbffe50946b950a3fd0cd1bfdb", "description": "白头并非雪可替，相遇已是上上签", "url": "https://www.moeyao.cn/", "tags": ["生活", "随笔"] },
   { "title": "Astral Reverie", "avatar": "https://montrong-1300089193.cos.ap-beijing.myqcloud.com/montrong/2025/12/20251222025856537.png", "description": "如梦幻，如初遇。", "url": "https://montrong.com", "tags": ["ACG", "创作"] },

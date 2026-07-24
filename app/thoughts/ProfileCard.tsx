@@ -12,16 +12,6 @@ export function ProfileCard({
 }: ProfileCardProps) {
   return (
     <section className="thought-profile-card card">
-      <div className="thought-profile-card__banner">
-        <Image
-          src="/about-hero-banner.png"
-          alt=""
-          fill
-          sizes="320px"
-          priority
-        />
-      </div>
-
       <div className="thought-profile-card__body">
         <Image
           className="thought-profile-card__avatar"

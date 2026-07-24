@@ -132,6 +132,7 @@ export default function Home() {
           active="home"
           open={menuOpen}
           onClose={() => setMenuOpen(false)}
+          showCategories={false}
           categories={sidebarCategories}
           selectedCategory={selectedCategory}
           onCategorySelect={selectCategory}

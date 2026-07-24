@@ -6,6 +6,7 @@ import { CaretDown, PencilSimple } from "@phosphor-icons/react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { FriendList } from "./FriendList";
+import { FriendCircleCard } from "./FriendCircleCard";
 import friends from "../../data/friends.json";
 
 const envId = "https://sweet-moonbeam-d0178d.netlify.app/.netlify/functions/twikoo";
@@ -57,8 +58,8 @@ export default function FriendsPage() {
           <div className="friends-hero-art" aria-hidden="true"><img src="/friends-hero.png" alt="" /></div>
         </section>
         <FriendList friends={friends} />
-        <section className="site-link-section motion-rise">
-          <details className="site-link-panel card" open>
+        <section id="apply-links" className="site-link-section motion-rise">
+          <details className="site-link-panel card">
             <summary><span><PencilSimple aria-hidden="true" weight="bold" />本站信息</span><CaretDown aria-hidden="true" /></summary>
             <div className="site-link-panel__body">
               <ul>
@@ -70,15 +71,15 @@ export default function FriendsPage() {
               <div className="site-link-requirements">
                 <h3>友链要求：</h3>
                 <ul>
-                  <li>可在中国大陆正常访问</li>
+                  <li>域名可在中国大陆正常访问</li>
                   <li>创作内容符合法律规定</li>
-                  <li>已添加友链信息</li>
+                  <li>贵站已添加友链信息</li>
                 </ul>
               </div>
             </div>
           </details>
         </section>
-        <section className="comments-section motion-rise">
+        <section id="comments" className="comments-section motion-rise">
           <div className="section-title"><span /><h2>评论区</h2></div>
           <Script id="twikoo-script" src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js" strategy="afterInteractive" onLoad={() => { void initComments(); }} onError={() => setStatus("error")} />
           {status === "loading" && <p className="comment-status">正在加载评论…</p>}
@@ -86,6 +87,11 @@ export default function FriendsPage() {
           <div className="twikoo-host card"><div ref={commentsRef} id="twikoo-comments" /></div>
         </section>
         </div>
+        <aside className="friends-profile-sidebar">
+          <div className="friends-profile-sticky">
+            <FriendCircleCard />
+          </div>
+        </aside>
       </main>
       <SiteFooter />
       <a className="back-top" href="#top" aria-label="回到顶部">↑</a>
