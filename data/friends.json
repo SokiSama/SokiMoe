@@ -6,11 +6,13 @@
   { "title": "Hoyue の 自留地", "avatar": "https://hoyue.net/assets/icons/avatar.jpg", "description": "这里的一切都有始有终，却能容纳所有的不期而遇和久别重逢。", "url": "https://hoyue.net", "tags": ["生活", "随笔"] },
   { "title": "Clementine (aka Clem)", "avatar": "https://friends.ichr.me/img/blog.hly0928.com.png", "description": "悟已往之不諫，知來者之可追", "url": "https://blog.hly0928.com/", "tags": ["技术", "记录"] },
   { "title": "Saneko", "avatar": "https://cdn.blog.saneko.me/Web/Avatar.png", "description": "Do the things that I like.", "url": "https://saneko.me", "rss": "https://saneko.me/rss.xml", "tags": ["创作", "生活"] },
-  { "title": "时隐重工", "avatar": "https://shiyina.com/favicon.ico", "description": "兴趣使然的未来主义建造者", "url": "https://shiyin.cafe/", "tags": ["技术", "未来"] },
+  { "title": "时隐重工", "avatar": "https://api.shiyin.cafe/favicon.ico", "description": "兴趣使然的未来主义建造者", "url": "https://shiyin.cafe/", "tags": ["技术", "未来"] },
   { "title": "云海花瑶", "avatar": "https://dn-qiniu-avatar.qbox.me/avatar/d00de9fbffe50946b950a3fd0cd1bfdb", "description": "白头并非雪可替，相遇已是上上签", "url": "https://www.moeyao.cn/", "tags": ["生活", "随笔"] },
   { "title": "Astral Reverie", "avatar": "https://montrong-1300089193.cos.ap-beijing.myqcloud.com/montrong/2025/12/20251222025856537.png", "description": "如梦幻，如初遇。", "url": "https://montrong.com", "tags": ["ACG", "创作"] },
   { "title": "Betsy Blog", "avatar": "https://img.micostar.cc/images/avatar.webp", "description": "爱我所爱，我们是彼此永远的动力", "url": "https://www.micostar.cc", "tags": ["生活", "记录"] },
   { "title": "J的个人博客", "avatar": "https://blog.jsoftstudio.top/css/all/favicon.ico", "description": "分享教程、经验与生活", "url": "https://blog.jsoftstudio.top/", "tags": ["教程", "技术"] },
   { "title": "帕琪的小屋", "avatar": "https://pakiknowledge.pages.dev/img/avatar.png", "description": "不为所动，做更专业的自己…", "url": "https://pakiknowledge.pages.dev", "tags": ["开发", "随笔"] }
   ,{ "title": "夜羽的小窝", "avatar": "https://yohanenya.dpdns.org/img/avatar.png", "description": "只是一个一般死肥宅罢了", "url": "https://yohanenya.dpdns.org/", "tags": ["生活", "ACG"] }
+  ,{ "title": "城子的小屋", "avatar": "https://xcz.me/img/avatar.jpg", "description": "小城子的博客", "url": "https://xcz.me/", "tags": ["生活", "博客"] }
+  ,{ "title": "ZLA 小站", "avatar": "https://zla.pub/_next/image?url=%2Fimages%2Favatar.jpg&w=384&q=75", "description": "月亮不抱你，星星会落在你怀里✨🌙", "url": "https://zla.pub/", "tags": ["生活", "博客"] }
 ]

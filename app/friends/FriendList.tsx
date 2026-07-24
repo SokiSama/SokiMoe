@@ -42,7 +42,7 @@ export function FriendList({ friends }: { friends: Friend[] }) {
   return (
     <section id="friend-links" className="card friend-directory">
       <div className="friends-list-head">
-        <h2>朋友们</h2>
+        <h2>友人</h2>
       </div>
       <div className="friend-grid motion-stagger">
         {orderedFriends.map((friend) => (

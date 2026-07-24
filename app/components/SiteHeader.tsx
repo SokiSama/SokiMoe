@@ -43,10 +43,10 @@ export function SiteHeader({ active, onOpenMenu }: { active?: string; onOpenMenu
   }, [mode]);
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 12);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+    const updateScrollState = () => setScrolled(window.scrollY > 12);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
   }, []);
 
   const chooseTheme = (nextMode: ThemeMode) => {
@@ -60,9 +60,7 @@ export function SiteHeader({ active, onOpenMenu }: { active?: string; onOpenMenu
   return (
     <>
       <header
-        className={`site-header topbar${scrolled ? " scrolled" : ""}${
-          onOpenMenu ? " has-mobile-menu" : ""
-        }`}
+        className={`site-header topbar${scrolled ? " scrolled" : ""}${onOpenMenu ? " has-mobile-menu" : ""}`}
       ><div className="header-inner topbar-inner">
         {onOpenMenu && <button className="round-button menu-button" onClick={onOpenMenu} aria-label="打开菜单"><List weight="regular" /></button>}
         <a className="site-brand brand" href="/">
