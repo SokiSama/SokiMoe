@@ -23,7 +23,10 @@ export default function SidebarStickyFollow() {
         Number.parseFloat(rootStyle.getPropertyValue("--site-header-height")) || 60;
       const gap =
         Number.parseFloat(rootStyle.getPropertyValue("--sidebar-sticky-gap")) || 16;
-      const top = Math.min(headerHeight + gap, window.innerHeight - gap - element.offsetHeight);
+      const isHomeRightSidebar = element.matches(".page-shell > .right-sidebar > .sidebar-sticky");
+      const top = isHomeRightSidebar
+        ? headerHeight + gap
+        : Math.min(headerHeight + gap, window.innerHeight - gap - element.offsetHeight);
 
       element.style.setProperty("--sidebar-follow-top", `${top}px`);
     };

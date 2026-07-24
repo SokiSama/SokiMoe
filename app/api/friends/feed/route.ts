@@ -171,7 +171,7 @@ export async function GET() {
     .flatMap((result) => result.articles)
     .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
     .filter((article, index, list) => list.findIndex((item) => item.url === article.url) === index)
-    .slice(0, 10);
+    .slice(0, 8);
 
   return NextResponse.json(
     {

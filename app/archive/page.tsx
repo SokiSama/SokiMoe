@@ -42,7 +42,12 @@ export default function ArchivePage() {
                   {yearPosts.map((post) => (
                     <a href={`/posts/${post.slug}`} key={post.slug}>
                       <time dateTime={post.date}>{post.date.slice(5).replace("-", ".")}</time>
-                      <span>{post.title}</span>
+                      {post.cover ? (
+                        <span className="archive-post-cover" aria-hidden="true">
+                          <img src={post.cover} alt="" />
+                        </span>
+                      ) : null}
+                      <span className="archive-post-title">{post.title}</span>
                     </a>
                   ))}
                 </div>

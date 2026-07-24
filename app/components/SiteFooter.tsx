@@ -9,8 +9,8 @@ export function SiteFooter() {
 
   return (
     <footer className="footer site-footer">
-      <p>网站已运行：<strong>{runningDays}天</strong><span aria-hidden="true">|</span>Stay hungry. Stay foolish.</p>
-      <p>© <span suppressHydrationWarning>{currentYear}</span> Soki. All Rights Reserved.<span aria-hidden="true">|</span><a href="https://icp.gov.moe/?keyword=20263015" target="_blank" rel="noreferrer">萌ICP备20263015号</a></p>
+      <p>网站已运行：<strong>{runningDays}天</strong><span className="footer-separator" aria-hidden="true">|</span>Powered by Next.js · Tailwind CSS</p>
+      <p>© 2025–<span suppressHydrationWarning>{currentYear}</span> Soki. All Rights Reserved.<span className="footer-separator" aria-hidden="true">|</span><a href="https://icp.gov.moe/?keyword=20263015" target="_blank" rel="noreferrer">萌ICP备20263015号</a></p>
     </footer>
   );
 }

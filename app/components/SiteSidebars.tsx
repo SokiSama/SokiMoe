@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import { Article, FolderSimple, Tag, X } from "@phosphor-icons/react";
+import { Article, FolderSimple, Tag, TwitterLogo, X } from "@phosphor-icons/react";
 import { localPosts } from "../data/posts";
 import { PrimaryNav } from "./PrimaryNav";
 import { OnThisDayCard } from "./OnThisDayCard";
@@ -29,7 +29,7 @@ export function SiteProfileCard() {
         <a href="https://github.com/SokiSama" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><img src="/icons/github.svg" alt="" /></a>
         <a href="https://steamcommunity.com/id/SokiSama/" target="_blank" rel="noreferrer" title="Steam" aria-label="Steam"><img src="/icons/steam.svg" alt="" /></a>
         <a href="https://t.me/MatsuzaSatou" target="_blank" rel="noreferrer" title="Telegram" aria-label="Telegram"><img src="/icons/telegram.svg" alt="" /></a>
-        <a href="https://bsky.app/profile/matsusatou.bsky.social" target="_blank" rel="noreferrer" title="Bluesky" aria-label="Bluesky"><img src="/icons/bluesky.svg" alt="" /></a>
+        <a href="https://x.com/soki_ruby" target="_blank" rel="noreferrer" title="Twitter" aria-label="Twitter"><TwitterLogo weight="fill" aria-hidden="true" /></a>
         <a href="mailto:mashiroamane@outlook.com" title="发送邮件" aria-label="发送邮件到 mashiroamane@outlook.com"><img src="/icons/email.svg" alt="" /></a>
       </div>
     </section>

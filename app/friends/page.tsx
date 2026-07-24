@@ -2,14 +2,23 @@
 
 import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CaretDown, PencilSimple } from "@phosphor-icons/react";
+import { CaretDown, Check, Copy } from "@phosphor-icons/react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { FriendList } from "./FriendList";
 import { FriendCircleCard } from "./FriendCircleCard";
+import { TrainJumpCard } from "./TrainJumpCard";
 import friends from "../../data/friends.json";
 
 const envId = "https://sweet-moonbeam-d0178d.netlify.app/.netlify/functions/twikoo";
+const friendLinkText = `名称：
+Soki Sugar Life
+描述：
+月下彼岸花
+链接：
+https://www.soki.moe/
+图标：
+https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg`;
 
 type Twikoo = {
   init: (options: { envId: string; el: HTMLElement; path: string; lang: string; onCommentLoaded?: () => void }) => Promise<void>;
@@ -20,6 +29,26 @@ export default function FriendsPage() {
   const initializing = useRef(false);
   const initialized = useRef(false);
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const copyFriendLink = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(friendLinkText);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = friendLinkText;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+    setLinkCopied(true);
+    window.setTimeout(() => setLinkCopied(false), 1600);
+  };
 
   const initComments = useCallback(async (force = false) => {
     const element = commentsRef.current;
@@ -59,12 +88,31 @@ export default function FriendsPage() {
         </section>
         <FriendList friends={friends} />
         <section id="apply-links" className="site-link-section motion-rise">
-          <details className="site-link-panel card">
-            <summary><span><PencilSimple aria-hidden="true" weight="bold" />本站信息</span><CaretDown aria-hidden="true" /></summary>
+          <details className="site-link-panel card" open>
+            <summary>
+              <span className="terminal-window-title">
+                <i className="terminal-dot terminal-dot--red" />
+                <i className="terminal-dot terminal-dot--yellow" />
+                <i className="terminal-dot terminal-dot--green" />
+                <strong>友链申请</strong>
+              </span>
+              <span className="site-link-panel__actions">
+                <button
+                  type="button"
+                  className="site-link-copy"
+                  onClick={copyFriendLink}
+                  aria-label="复制友链信息"
+                >
+                  {linkCopied ? <Check weight="bold" /> : <Copy weight="duotone" />}
+                  <span>{linkCopied ? "已复制" : "复制"}</span>
+                </button>
+                <CaretDown className="site-link-panel__caret" aria-hidden="true" />
+              </span>
+            </summary>
             <div className="site-link-panel__body">
               <ul>
                 <li><strong>名称：</strong><span>Soki Sugar Life</span></li>
-                <li><strong>描述：</strong><span>彼女の愛は、甘くて痛い</span></li>
+                <li><strong>描述：</strong><span>月下彼岸花</span></li>
                 <li><strong>链接：</strong><a href="https://www.soki.moe" target="_blank" rel="noreferrer">https://www.soki.moe</a></li>
                 <li><strong>图标：</strong><a href="https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg" target="_blank" rel="noreferrer">https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</a></li>
               </ul>
@@ -90,6 +138,7 @@ export default function FriendsPage() {
         <aside className="friends-profile-sidebar">
           <div className="friends-profile-sticky">
             <FriendCircleCard />
+            <TrainJumpCard friends={friends} />
           </div>
         </aside>
       </main>

@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, ArrowRight, Article, CalendarBlank, ListBullets, MapPin } from "@phosphor-icons/react";
+import { ArrowLeft, Article, CalendarBlank, ListBullets, MapPin } from "@phosphor-icons/react";
 import { SiteHeader } from "../../components/SiteHeader";
 import { SiteFooter } from "../../components/SiteFooter";
 import { SiteLeftSidebar, SiteStatsCard } from "../../components/SiteSidebars";
-import { localPostMap, localPosts, type LocalPost } from "../../data/posts";
+import { localPostMap } from "../../data/posts";
 
 type TocItem = { id: string; level: 1 | 2 | 3; title: string };
 
@@ -24,7 +24,7 @@ function extractToc(markdown: string): TocItem[] {
   });
 }
 
-function ArticleTableOfContents({ items, previousPost, nextPost }: { items: TocItem[]; previousPost?: LocalPost; nextPost?: LocalPost }) {
+function ArticleTableOfContents({ items }: { items: TocItem[] }) {
   const [progress, setProgress] = useState(0);
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
 
@@ -65,12 +65,6 @@ function ArticleTableOfContents({ items, previousPost, nextPost }: { items: TocI
           </ol>
         ) : <p>这篇文章暂时没有章节标题。</p>}
       </nav>
-      {(previousPost || nextPost) && (
-        <nav className="card article-neighbors" aria-label="相邻文章">
-          {previousPost && <a href={`/posts/${previousPost.slug}`}><span><ArrowLeft size={16} />上一篇</span><strong>{previousPost.title}</strong></a>}
-          {nextPost && <a href={`/posts/${nextPost.slug}`}><span>下一篇<ArrowRight size={16} /></span><strong>{nextPost.title}</strong></a>}
-        </nav>
-      )}
     </aside>
   );
 }
@@ -79,10 +73,6 @@ export default function LocalPostPage() {
   const params = useParams<{ slug: string }>();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   const post = localPostMap[slug];
-  const orderedPosts = useMemo(() => [...localPosts].sort((a, b) => b.date.localeCompare(a.date)), []);
-  const postIndex = orderedPosts.findIndex((item) => item.slug === slug);
-  const previousPost = postIndex > 0 ? orderedPosts[postIndex - 1] : undefined;
-  const nextPost = postIndex >= 0 && postIndex < orderedPosts.length - 1 ? orderedPosts[postIndex + 1] : undefined;
   const [menuOpen, setMenuOpen] = useState(false);
   const [content, setContent] = useState("");
   const [failed, setFailed] = useState(false);
@@ -160,7 +150,7 @@ export default function LocalPostPage() {
           </article>
         </main>
 
-        <ArticleTableOfContents items={tocItems} previousPost={previousPost} nextPost={nextPost} />
+        <ArticleTableOfContents items={tocItems} />
         {menuOpen && <button className="scrim" onClick={() => setMenuOpen(false)} aria-label="关闭菜单遮罩" />}
       </div>
       <SiteFooter />

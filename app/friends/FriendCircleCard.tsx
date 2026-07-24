@@ -1,6 +1,5 @@
 "use client";
 
-import { RssSimple } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
 type FriendArticle = {
@@ -21,6 +20,11 @@ const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
   month: "2-digit",
   day: "2-digit",
 });
+
+function formatPublishedAt(value: string) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "" : dateFormatter.format(date);
+}
 
 export function FriendCircleCard() {
   const [state, setState] = useState<FriendCircleState>({ status: "loading", articles: [] });
@@ -46,38 +50,53 @@ export function FriendCircleCard() {
 
   return (
     <section className="card friend-circle-card" aria-labelledby="friend-circle-title">
-      <h2 id="friend-circle-title">
-        <RssSimple weight="bold" aria-hidden="true" />
-        友圈
-      </h2>
+      <header className="friend-circle-heading">
+        <h2 id="friend-circle-title">朋友圈 <span aria-hidden="true">✦</span></h2>
+        <p>大家最近都更新了什么</p>
+      </header>
 
       {state.status === "loading" && (
-        <div className="friend-circle-loading" aria-label="正在读取友圈文章">
+        <div className="friend-circle-loading" aria-label="正在读取朋友圈动态">
           <i /><i /><i /><i />
         </div>
       )}
 
       {state.status !== "loading" && state.articles.length === 0 && (
         <p className="friend-circle-empty">
-          {state.status === "error" ? "友圈暂时无法读取" : "暂未发现可用的 RSS 更新"}
+          {state.status === "error" ? "朋友圈暂时无法读取" : "朋友们最近还没有发布新动态"}
         </p>
       )}
 
       {state.articles.length > 0 && (
         <div className="friend-circle-list">
-          {state.articles.slice(0, 10).map((article) => (
+          {state.articles.slice(0, 6).map((article) => (
             <article className="friend-circle-item" key={`${article.siteUrl}-${article.url}`}>
-              <img src={article.avatar} alt="" loading="lazy" referrerPolicy="no-referrer" />
-              <div>
+              <a
+                className="friend-circle-avatar"
+                href={article.siteUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`访问 ${article.siteName}`}
+              >
+                <img
+                  src={article.avatar}
+                  alt={`${article.siteName} 的头像`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+              </a>
+              <div className="friend-circle-content">
                 <a className="friend-circle-title" href={article.url} target="_blank" rel="noreferrer">
                   {article.title}
                 </a>
-                <p>
-                  <a href={article.siteUrl} target="_blank" rel="noreferrer">{article.siteName}</a>
+                <div className="friend-circle-meta">
+                  <a href={article.siteUrl} target="_blank" rel="noreferrer">
+                    {article.siteName}
+                  </a>
                   <time dateTime={article.publishedAt}>
-                    {dateFormatter.format(new Date(article.publishedAt))}
+                    {formatPublishedAt(article.publishedAt)}
                   </time>
-                </p>
+                </div>
               </div>
             </article>
           ))}
