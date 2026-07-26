@@ -94,7 +94,7 @@ export function ThoughtsExperience({ thoughts }: { thoughts: Thought[] }) {
         <Image
           className="thoughts-hero__image"
           src="/thoughts-hero.png"
-          alt="阳光下经过街角的少女与猫"
+          alt="蓝天下相对而立的两位少女"
           fill
           priority
           sizes="(max-width: 900px) 100vw, 70vw"

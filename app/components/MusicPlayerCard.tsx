@@ -10,7 +10,7 @@ import {
   Play,
 } from "@phosphor-icons/react";
 
-const playlistUrl = "https://music.apple.com/jp/playlist/vrchat/pl.u-2aoqXx6tNdNz1jX";
+const playlistUrl = "https://music.apple.com/jp/playlist/pl.u-gxblk30u5P5EL2A";
 
 const tracks = [
   {
@@ -71,26 +71,99 @@ const tracks = [
   },
 ] as const;
 
+const homePlaylistTracks = [
+  { title: "KiLLKiSS", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/62/dd/e4/62dde4e9-701b-3331-9c78-f5449b6a96ae/198704270253_Cover.jpg/160x160bb.jpg" },
+  { title: "顔", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d8/2f/e9/d82fe9a7-cf92-fa6f-5e74-5eb463647b78/198704454127_Cover.jpg/160x160bb.jpg" },
+  { title: "影色舞", artist: "MyGO!!!!!", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/24/97/8d/24978da1-c9f2-b252-b3d9-0fb9f8346fa7/198704278938_Cover.jpg/160x160bb.jpg" },
+  { title: "壱雫空", artist: "MyGO!!!!!", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f4/c7/f7/f4c7f7d9-504b-1350-85a8-4b02ae30ab96/198704226816_Cover.jpg/160x160bb.jpg" },
+  { title: "雑踏、僕らの街", artist: "トゲナシトゲアリ", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/42/4f/b2/424fb29f-e511-839c-c31f-23d48ecf68a3/24UMGIM21411.rgb.jpg/160x160bb.jpg" },
+  { title: "空の箱 (井芹仁菜、河原木桃香)", artist: "トゲナシトゲアリ", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/36/d4/39/36d4394c-995c-7195-2345-47fe55e30774/24UMGIM25049.rgb.jpg/160x160bb.jpg" },
+  { title: "Holiday∞Holiday", artist: "スリーズブーケ", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3b/09/e0/3b09e0d2-0f9e-c57b-c512-b5b79caa78a2/4540774243914.png/160x160bb.jpg" },
+  { title: "Time To Make History", artist: "平田志穂子", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a9/22/52/a9225213-486e-4820-89b8-0c02c1247b6e/049648_J.jpg/160x160bb.jpg" },
+  { title: "Life Will Change", artist: "Lyn", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c2/0d/00/c20d0058-b916-df41-bfdb-d7a5534aa02e/LNCM-1175_PERSONA5-OST_h1_new.jpg/160x160bb.jpg" },
+  { title: "So Cynical (Badum)", artist: "LE SSERAFIM", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a2/27/4c/a2274cd8-8ca4-5fea-32b1-5495347eaf9e/25UMGIM41823.rgb.jpg/160x160bb.jpg" },
+  { title: "No Celestial", artist: "LE SSERAFIM", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/71/c9/7d/71c97dc9-b279-c3df-6369-d04d9ec1529c/22UM1IM18218.rgb.jpg/160x160bb.jpg" },
+  { title: "Virtual to LIVE", artist: "にじさんじ", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/82/9f/c3/829fc3d8-033e-d3eb-500b-28cf55a727b3/859755220214_cover.jpg/160x160bb.jpg" },
+  { title: "Tiny Stars", artist: "澁谷かのん (CV.伊達さゆり) & 唐 可可 (CV.Liyuu)", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a5/c2/85/a5c28545-96b7-8f7d-2fb5-ad0f3c705803/4540774241415.png/160x160bb.jpg" },
+  { title: "LOVE 2000", artist: "八奈見杏菜(CV: 遠野ひかる)", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/95/cf/d1/95cfd185-ffee-1acd-a3ac-d77308e498fd/4534530152909.jpg/160x160bb.jpg" },
+  { title: "Color Your Night", artist: "Lotus Juice / 高橋あず美 / アトラスサウンドチーム / ATLUS GAME MUSIC", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b3/49/78/b34978b0-7320-7e3e-f3ec-22c5e1c03fce/PA00136839_0_184480_jacket.jpg/160x160bb.jpg" },
+  { title: "SWEET HURT", artist: "ReoNa", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/57/31/e7/5731e712-713d-4e73-634d-b4b221cdd9ab/jacket_VVCL01287B00Z_550.jpg/160x160bb.jpg" },
+  { title: "健やかDE居たい", artist: "八木海莉", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/6c/9e/fb/6c9efb75-2973-a633-bcf9-64e4d1c6c9ff/4547366603736.jpg/160x160bb.jpg" },
+  { title: "ファタール - Fatal", artist: "GEMN, 中島健人 & キタニタツヤ", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f6/50/0e/f6500ed2-3b50-b4ba-37c6-5632fabba148/4547366693607.jpg/160x160bb.jpg" },
+  { title: "Ready to", artist: "影森みちる(CV:諸星すみれ)", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1c/3b/5d/1c3b5dab-3de1-b68f-d7eb-a361f167045a/085750_J.jpg/160x160bb.jpg" },
+  { title: "Y.M.C.A.", artist: "ヴィレッジ・ピープル", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/a7/70/df/a770dff5-0b2c-b260-0c10-eea7997d36eb/00731453217126.rgb.jpg/160x160bb.jpg" },
+  { title: "Lemonade", artist: "ミア・テイラー (CV.内田 秀)", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ce/ac/17/ceac1746-b101-b0c7-c9f2-852099311a71/4540774250707.png/160x160bb.jpg" },
+  { title: "Here, the world!", artist: "sumimi", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9f/16/16/9f161692-cfa3-19a0-fd44-cf8215d310b1/198704363160_Cover.jpg/160x160bb.jpg" },
+  { title: "天球(そら)のMúsica", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d2/a7/60/d2a760b1-6952-6830-2dcd-1dfdd44f003f/198704414107_Cover.jpg/160x160bb.jpg" },
+] as const;
+
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
   return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
 }
 
-export function MusicPlayerCard() {
+function syncPlaylistFade(element: HTMLOListElement) {
+  const threshold = 2;
+  element.classList.toggle("can-scroll-up", element.scrollTop > threshold);
+  element.classList.toggle(
+    "can-scroll-down",
+    element.scrollTop + element.clientHeight < element.scrollHeight - threshold,
+  );
+}
+
+async function findPlayableTrackIndexes(signal: AbortSignal) {
+  const playableIndexes: number[] = [];
+  const concurrency = 4;
+
+  for (let start = 0; start < homePlaylistTracks.length; start += concurrency) {
+    const batch = homePlaylistTracks.slice(start, start + concurrency);
+    const results = await Promise.all(batch.map(async (track, offset) => {
+      const params = new URLSearchParams({ title: track.title, artist: track.artist });
+      const response = await fetch(`/api/music-preview?${params.toString()}`, { signal });
+      const payload = await response.json() as { ok: boolean; previewUrl?: string | null };
+      return payload.ok && payload.previewUrl ? start + offset : null;
+    }));
+    playableIndexes.push(...results.filter((index): index is number => index !== null));
+  }
+
+  return playableIndexes;
+}
+
+export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" | "home" }) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const homeAudioRef = useRef<HTMLAudioElement>(null);
+  const homePlaylistRef = useRef<HTMLOListElement>(null);
   const [trackIndex, setTrackIndex] = useState(0);
+  const [homeTrackIndex, setHomeTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [homeIsPlaying, setHomeIsPlaying] = useState(false);
+  const [homePreview, setHomePreview] = useState<{ key: string; url: string | null } | null>(null);
+  const [playableHomeTrackIndexes, setPlayableHomeTrackIndexes] = useState<number[] | null>(null);
+  const [homeCurrentTime, setHomeCurrentTime] = useState(0);
+  const [homeDuration, setHomeDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const current = tracks[trackIndex];
-  const queue = useMemo(
-    () => Array.from({ length: 3 }, (_, offset) => tracks[(trackIndex + offset + 1) % tracks.length]),
-    [trackIndex],
-  );
+  const homeCurrent = homePlaylistTracks[homeTrackIndex];
+  const homeTrackKey = `${homeCurrent.title}\u0000${homeCurrent.artist}`;
+  const homePreviewUrl = homePreview?.key === homeTrackKey ? homePreview.url : null;
+  const homePreviewLoading = homePreview?.key !== homeTrackKey;
+  const homeProgress = homeDuration ? (homeCurrentTime / homeDuration) * 100 : 0;
+  const queue = useMemo(() => {
+    const queueLength = variant === "home" ? tracks.length - 1 : 3;
+    return Array.from({ length: queueLength }, (_, offset) => tracks[(trackIndex + offset + 1) % tracks.length]);
+  }, [trackIndex, variant]);
 
   useEffect(() => {
-    setTrackIndex(Math.floor(Math.random() * tracks.length));
-  }, []);
+    const timer = window.setTimeout(() => {
+      if (variant === "home") {
+        setHomeTrackIndex(Math.floor(Math.random() * homePlaylistTracks.length));
+      } else {
+        setTrackIndex(Math.floor(Math.random() * tracks.length));
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [variant]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -100,6 +173,66 @@ export function MusicPlayerCard() {
     setDuration(0);
     if (isPlaying) void audio.play().catch(() => setIsPlaying(false));
   }, [trackIndex]);
+
+  useEffect(() => {
+    if (variant !== "home") return;
+
+    const controller = new AbortController();
+    const audio = homeAudioRef.current;
+    audio?.pause();
+
+    const params = new URLSearchParams({
+      title: homeCurrent.title,
+      artist: homeCurrent.artist,
+    });
+    fetch(`/api/music-preview?${params.toString()}`, { signal: controller.signal })
+      .then(async (response) => response.json() as Promise<{ ok: boolean; previewUrl?: string | null }>)
+      .then((payload) => {
+        setHomePreview({
+          key: homeTrackKey,
+          url: payload.ok && payload.previewUrl ? payload.previewUrl : null,
+        });
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setHomePreview({ key: homeTrackKey, url: null });
+      })
+
+    return () => controller.abort();
+  }, [homeCurrent.artist, homeCurrent.title, homeTrackKey, variant]);
+
+  useEffect(() => {
+    if (variant !== "home") return;
+
+    const controller = new AbortController();
+    void findPlayableTrackIndexes(controller.signal)
+      .then((indexes) => {
+        setPlayableHomeTrackIndexes(indexes);
+        setHomeTrackIndex((currentIndex) => (
+          indexes.includes(currentIndex) ? currentIndex : (indexes[0] ?? 0)
+        ));
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setPlayableHomeTrackIndexes([]);
+      });
+
+    return () => controller.abort();
+  }, [variant]);
+
+  useEffect(() => {
+    if (variant !== "home" || !homePlaylistRef.current) return;
+
+    const list = homePlaylistRef.current;
+    const frame = window.requestAnimationFrame(() => syncPlaylistFade(list));
+    const observer = new ResizeObserver(() => syncPlaylistFade(list));
+    observer.observe(list);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [playableHomeTrackIndexes, variant]);
 
   const togglePlayback = async () => {
     const audio = audioRef.current;
@@ -119,12 +252,178 @@ export function MusicPlayerCard() {
 
   const selectTrack = (nextIndex: number) => setTrackIndex((nextIndex + tracks.length) % tracks.length);
 
+  const toggleHomePlayback = async () => {
+    const audio = homeAudioRef.current;
+    if (!audio || !homePreviewUrl) return;
+
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setHomeIsPlaying(true);
+      } catch {
+        setHomeIsPlaying(false);
+      }
+    } else {
+      audio.pause();
+      setHomeIsPlaying(false);
+    }
+  };
+
+  const selectHomeTrack = (nextIndex: number) => {
+    homeAudioRef.current?.pause();
+    setHomeCurrentTime(0);
+    setHomeDuration(0);
+    setHomeTrackIndex((nextIndex + homePlaylistTracks.length) % homePlaylistTracks.length);
+  };
+
+  const moveHomeTrack = (offset: number) => {
+    const indexes = playableHomeTrackIndexes?.length
+      ? playableHomeTrackIndexes
+      : homePlaylistTracks.map((_, index) => index);
+    const currentPosition = indexes.indexOf(homeTrackIndex);
+    const nextPosition = (Math.max(currentPosition, 0) + offset + indexes.length) % indexes.length;
+    selectHomeTrack(indexes[nextPosition]);
+  };
+
+  if (variant === "home") {
+    return (
+      <section className="card side-card home-music-card">
+        <header className="home-music-heading">
+          <div>
+            <span>音乐</span>
+            <h3>那些值得循环的歌曲</h3>
+          </div>
+        </header>
+
+        <div className="home-playlist-summary">
+          <div className="home-playlist-brand"><AppleLogo weight="fill" aria-hidden="true" />Music</div>
+          <audio
+            ref={homeAudioRef}
+            src={homePreviewUrl ?? undefined}
+            preload="metadata"
+            onLoadedMetadata={(event) => {
+              setHomeCurrentTime(0);
+              setHomeDuration(event.currentTarget.duration);
+            }}
+            onTimeUpdate={(event) => setHomeCurrentTime(event.currentTarget.currentTime)}
+            onPlay={() => setHomeIsPlaying(true)}
+            onPause={() => setHomeIsPlaying(false)}
+            onEnded={() => moveHomeTrack(1)}
+          />
+          <div className="home-playlist-cover">
+            <img
+              key={homeCurrent.artwork}
+              src={homeCurrent.artwork.replace("/160x160bb.jpg", "/600x600bb.jpg")}
+              alt={`${homeCurrent.title} 歌曲封面`}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <p className="home-playlist-kicker">NOW PLAYING</p>
+          <div className="home-playlist-current" aria-live="polite">
+            <strong>{homeCurrent.title}</strong>
+            <span>{homeCurrent.artist}</span>
+          </div>
+
+          <div className="home-playlist-progress">
+            <input
+              type="range"
+              min="0"
+              max={homeDuration || 30}
+              step="0.1"
+              value={Math.min(homeCurrentTime, homeDuration || 30)}
+              disabled={!homePreviewUrl}
+              aria-label="试听播放进度"
+              style={{ "--home-music-progress": `${homeProgress}%` } as CSSProperties}
+              onChange={(event) => {
+                const nextTime = Number(event.target.value);
+                if (homeAudioRef.current) homeAudioRef.current.currentTime = nextTime;
+                setHomeCurrentTime(nextTime);
+              }}
+            />
+            <div>
+              <span>{formatTime(homeCurrentTime)}</span>
+              <span>{formatTime(homeDuration || 30)}</span>
+            </div>
+          </div>
+
+          <div className="home-playlist-controls">
+            <button type="button" onClick={() => moveHomeTrack(-1)} aria-label="上一首">
+              <CaretLeft weight="bold" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="home-playlist-play"
+              onClick={() => void toggleHomePlayback()}
+              disabled={homePreviewLoading || !homePreviewUrl}
+              aria-label={`${homeIsPlaying ? "暂停" : "播放"} ${homeCurrent.title} 的 30 秒试听`}
+            >
+              {homeIsPlaying
+                ? <Pause weight="fill" aria-hidden="true" />
+                : <Play weight="fill" aria-hidden="true" />}
+            </button>
+            <button type="button" onClick={() => moveHomeTrack(1)} aria-label="下一首">
+              <CaretRight weight="bold" aria-hidden="true" />
+            </button>
+          </div>
+
+          {(homePreviewLoading || !homePreviewUrl) && (
+            <p className="home-playlist-status" role="status">
+              {homePreviewLoading ? "正在加载试听…" : "当前曲目暂无试听"}
+            </p>
+          )}
+        </div>
+
+        <div className="home-playlist-track-panel">
+          <div className="home-playlist-track-heading">
+            <span>歌单曲目</span>
+            <small>
+              {playableHomeTrackIndexes === null ? "筛选中…" : `${playableHomeTrackIndexes.length} 首`}
+            </small>
+          </div>
+          <ol
+            ref={homePlaylistRef}
+            aria-busy={playableHomeTrackIndexes === null}
+            onScroll={(event) => syncPlaylistFade(event.currentTarget)}
+          >
+            {playableHomeTrackIndexes === null ? (
+              <li className="home-playlist-filter-status">正在检查可试听曲目…</li>
+            ) : playableHomeTrackIndexes.length === 0 ? (
+              <li className="home-playlist-filter-status">暂时没有可试听曲目</li>
+            ) : playableHomeTrackIndexes.map((index) => {
+              const track = homePlaylistTracks[index];
+              return (
+              <li
+                className={index === homeTrackIndex ? "is-active" : ""}
+                key={`${track.title}-${track.artist}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => selectHomeTrack(index)}
+                  aria-current={index === homeTrackIndex ? "true" : undefined}
+                  aria-label={`切换到 ${track.title}，${track.artist}`}
+                >
+                  <em>{String(index + 1).padStart(2, "0")}</em>
+                  <img src={track.artwork} alt="" loading="lazy" decoding="async" />
+                  <span><strong>{track.title}</strong><small>{track.artist}</small></span>
+                </button>
+              </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="card side-card music-player-card">
       <div className="music-card-heading">
-        <h3>音乐播放</h3>
-        <a href={playlistUrl} target="_blank" rel="noreferrer" aria-label="在 Apple Music 打开 VRChat 歌单">
-          <AppleLogo aria-hidden="true" weight="fill" />歌单
+        <div>
+          <h3>音乐播放</h3>
+        </div>
+        <a href={playlistUrl} target="_blank" rel="noreferrer" aria-label="在 Apple Music 打开 Soki 的歌单">
+          <AppleLogo aria-hidden="true" weight="fill" />Apple Music
         </a>
       </div>
 

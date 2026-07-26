@@ -58,7 +58,7 @@ export function OnThisDayCard() {
         <ClockCounterClockwise aria-hidden="true" weight="duotone" />
         <p>{loading ? "正在翻阅历史的书页…" : emptyMessage}</p>
       </div>}
-      <small>资料来源：Wikipedia</small>
+      <small>数据来源：小小API</small>
     </section>
   );
 }

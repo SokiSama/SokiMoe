@@ -1,5 +1,6 @@
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteCategoryCard, type SidebarCategory } from "../components/SiteSidebars";
 import { localPosts } from "../data/posts";
 
@@ -21,9 +22,17 @@ export default function ArchivePage() {
   );
 
   return (
-    <div className="site">
-      <SiteHeader active="archive" />
-      <main id="top" className="archive-page">
+    <div className="site immersive-route">
+      <SiteHeader active="archive" floating />
+      <PageCoverBanner
+        eyebrow="ARCHIVES OF TIME"
+        title="归档，是时光的书签"
+        description={`${posts.length} 篇文章，沿着时间慢慢读。`}
+        image="/archive-cover.jpg"
+        imagePosition="center"
+        imageFit="contain"
+      />
+      <main id="top" className="archive-page immersive-content">
         <div className="archive-center">
           <section className="card archive-hero">
             <div>

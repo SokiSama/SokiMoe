@@ -6,6 +6,7 @@ export type LocalPost = {
   cover?: string;
   source: string;
   type: "travel" | "tech";
+  category?: string;
   tags: string[];
 };
 
@@ -28,6 +29,7 @@ export const localPosts: LocalPost[] = [
     cover: "/images/unlock.jpg",
     source: "/posts/mi.md",
     type: "tech",
+    category: "分享",
     tags: ["小米", "解锁", "root", "优化", "教程"],
   },
   {
@@ -145,7 +147,7 @@ export const localPosts: LocalPost[] = [
     title: "结束乐队香港澳门游记",
     date: "2025-08-16",
     description: "被裁员后，我临时计划了一场旅行……",
-    cover: "/travel/hkmacou.jpg",
+    cover: "/home-feature-cover.webp",
     source: "/travel/hkmacou.md",
     type: "travel",
     tags: ["旅行", "香港澳门"],

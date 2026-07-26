@@ -19,7 +19,7 @@ function setDocumentTheme(theme: Theme, animate: boolean) {
   if (animate) window.setTimeout(() => root.classList.remove("theme-changing"), 360);
 }
 
-export function SiteHeader({ active, onOpenMenu }: { active?: string; onOpenMenu?: () => void }) {
+export function SiteHeader({ active, onOpenMenu, floating = false }: { active?: string; onOpenMenu?: () => void; floating?: boolean }) {
   const [mode, setMode] = useState<ThemeMode>("system");
   const [theme, setTheme] = useState<Theme>("light");
   const [scrolled, setScrolled] = useState(false);
@@ -60,7 +60,7 @@ export function SiteHeader({ active, onOpenMenu }: { active?: string; onOpenMenu
   return (
     <>
       <header
-        className={`site-header topbar${scrolled ? " scrolled" : ""}${onOpenMenu ? " has-mobile-menu" : ""}`}
+        className={`site-header topbar${scrolled ? " scrolled" : ""}${onOpenMenu ? " has-mobile-menu" : ""}${floating ? " home-floating" : ""}`}
       ><div className="header-inner topbar-inner">
         {onOpenMenu && <button className="round-button menu-button" onClick={onOpenMenu} aria-label="打开菜单"><List weight="regular" /></button>}
         <a className="site-brand brand" href="/">
