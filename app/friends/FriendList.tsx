@@ -49,6 +49,7 @@ export function FriendList({ friends }: { friends: Friend[] }) {
           <FriendCard friend={friend} rssUrl={feedUrls[friend.url]} key={friend.url} />
         ))}
       </div>
+      <small className="friend-random-note">排序完全随机</small>
     </section>
   );
 }

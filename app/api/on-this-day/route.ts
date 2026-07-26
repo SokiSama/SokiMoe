@@ -1,94 +1,84 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const revalidate = 86_400;
+export const dynamic = "force-dynamic";
 
-type WikimediaPage = {
-  thumbnail?: { source?: string };
-  titles?: { canonical?: string; normalized?: string; display?: string };
-  content_urls?: { desktop?: { page?: string } };
+type XxApiResponse = {
+  code?: number;
+  msg?: string;
+  data?: string[];
 };
 
-type WikimediaEvent = {
-  year?: number;
-  text?: string;
-  pages?: WikimediaPage[];
-};
-
-type WikimediaResponse = { events?: WikimediaEvent[] };
-
+const sourceUrl = "https://xxapi.cn/doc/history";
 const cacheHeaders = {
   "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=86400",
 };
 
-function dateHash(value: string) {
-  let hash = 2_166_136_261;
-  for (const character of value) {
-    hash ^= character.charCodeAt(0);
-    hash = Math.imul(hash, 16_777_619);
+function parseEvent(value: string, index: number) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  const match = /^(-?\d{1,4})年(\d{1,2})月(\d{1,2})日\s*(.+)$/.exec(normalized);
+
+  if (!match) {
+    return {
+      id: index,
+      year: null,
+      month: null,
+      day: null,
+      title: normalized,
+      description: "",
+      thumbnail: null,
+      url: sourceUrl,
+    };
   }
-  return hash >>> 0;
+
+  const [, rawYear, rawMonth, rawDay, title] = match;
+  return {
+    id: index,
+    year: Number(rawYear),
+    month: Number(rawMonth),
+    day: Number(rawDay),
+    title: title.trim(),
+    description: "",
+    thumbnail: null,
+    url: sourceUrl,
+  };
 }
 
-function textLength(value: string) {
-  return Array.from(value.replace(/\s+/g, "")).length;
-}
-
-function pageUrl(page?: WikimediaPage) {
-  if (page?.content_urls?.desktop?.page) return page.content_urls.desktop.page;
-  const title = page?.titles?.canonical || page?.titles?.normalized;
-  return title ? `https://zh.wikipedia.org/wiki/${encodeURIComponent(title)}` : "https://zh.wikipedia.org/";
-}
-
-export async function GET(request: NextRequest) {
-  const requestedDate = request.nextUrl.searchParams.get("date") ?? "";
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(requestedDate);
-  const fallback = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Shanghai",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
-  const date = match ? requestedDate : fallback;
-  const [, month, day] = date.split("-");
-
+export async function GET() {
   try {
-    const response = await fetch(`https://zh.wikipedia.org/api/rest_v1/feed/onthisday/events/${month}/${day}`, {
+    const response = await fetch("https://v2.xxapi.cn/api/history", {
       headers: {
         Accept: "application/json",
-        "Api-User-Agent": "SokiSugarLife/1.0 (https://https-blog-skk-moe.vercel.app)",
+        "User-Agent": "SokiMoe/1.0 (https://https-blog-skk-moe.vercel.app)",
       },
       next: { revalidate: 86_400 },
     });
-    if (!response.ok) throw new Error(`Wikimedia API returned ${response.status}`);
+    if (!response.ok) throw new Error(`History API returned ${response.status}`);
 
-    const payload = await response.json() as WikimediaResponse;
-    const events = (payload.events ?? []).filter((event) => event.text?.trim() && event.pages?.length);
-    const ideal = events.filter((event) => {
-      const length = textLength(event.text ?? "");
-      return length >= 25 && length <= 100 && event.pages?.some((page) => page.thumbnail?.source);
-    });
-    const withImages = events.filter((event) => event.pages?.some((page) => page.thumbnail?.source));
-    const lengthMatched = events.filter((event) => {
-      const length = textLength(event.text ?? "");
-      return length >= 25 && length <= 100;
-    });
-    const candidates = ideal.length ? ideal : withImages.length ? withImages : lengthMatched.length ? lengthMatched : events;
-    const modern = candidates.filter((event) => (event.year ?? 0) >= 1800);
-    const pool = modern.length ? modern : candidates;
-    if (!pool.length) throw new Error("No events available");
+    const payload = await response.json() as XxApiResponse;
+    if (payload.code !== 200 || !Array.isArray(payload.data)) {
+      throw new Error(payload.msg || "History API request failed");
+    }
 
-    const selected = pool[dateHash(date) % pool.length];
-    const page = selected.pages?.find((item) => item.thumbnail?.source) ?? selected.pages?.[0];
+    const events = payload.data
+      .filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+      .map(parseEvent);
+    if (!events.length) throw new Error("No events available");
+
     return NextResponse.json({
       ok: true,
+      events,
       event: {
-        year: selected.year ?? null,
-        text: selected.text?.trim(),
-        thumbnail: page?.thumbnail?.source ?? null,
-        url: pageUrl(page),
+        year: events[0].year,
+        text: events[0].title,
+        thumbnail: null,
+        url: sourceUrl,
       },
     }, { headers: cacheHeaders });
   } catch {
-    return NextResponse.json({ ok: false, event: null }, { status: 200, headers: cacheHeaders });
+    return NextResponse.json(
+      { ok: false, events: [], event: null },
+      { status: 200, headers: { "Cache-Control": "no-store" } },
+    );
   }
 }

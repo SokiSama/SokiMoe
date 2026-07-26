@@ -1,34 +1,22 @@
 "use client";
 
-import Script from "next/script";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CaretDown, Check, Copy } from "@phosphor-icons/react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { PageCoverBanner } from "../components/PageCoverBanner";
+import { TwikooComments } from "../components/TwikooComments";
 import { FriendList } from "./FriendList";
 import { FriendCircleCard } from "./FriendCircleCard";
 import { TrainJumpCard } from "./TrainJumpCard";
 import friends from "../../data/friends.json";
 
-const envId = "https://sweet-moonbeam-d0178d.netlify.app/.netlify/functions/twikoo";
-const friendLinkText = `名称：
-Soki Sugar Life
-描述：
-月下彼岸花
-链接：
-https://www.soki.moe/
-图标：
-https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg`;
-
-type Twikoo = {
-  init: (options: { envId: string; el: HTMLElement; path: string; lang: string; onCommentLoaded?: () => void }) => Promise<void>;
-};
+const friendLinkText = `名称：Soki Sugar Life
+描述：月下彼岸花
+链接：https://www.soki.moe/
+图标：https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg`;
 
 export default function FriendsPage() {
-  const commentsRef = useRef<HTMLDivElement>(null);
-  const initializing = useRef(false);
-  const initialized = useRef(false);
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [linkCopied, setLinkCopied] = useState(false);
 
   const copyFriendLink = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,33 +38,18 @@ export default function FriendsPage() {
     window.setTimeout(() => setLinkCopied(false), 1600);
   };
 
-  const initComments = useCallback(async (force = false) => {
-    const element = commentsRef.current;
-    const twikoo = (window as typeof window & { twikoo?: Twikoo }).twikoo;
-    if (!element || !twikoo?.init || initializing.current || (initialized.current && !force)) return;
-    initializing.current = true;
-    setStatus("loading");
-    if (force) { element.replaceChildren(); initialized.current = false; }
-    try {
-      await twikoo.init({ envId, el: element, path: "/friends", lang: "zh-CN", onCommentLoaded: () => setStatus("ready") });
-      initialized.current = true;
-      setStatus("ready");
-    } catch { setStatus("error"); }
-    finally { initializing.current = false; }
-  }, []);
-
-  useEffect(() => {
-    if (!(window as typeof window & { twikoo?: Twikoo }).twikoo) return;
-    const timer = window.setTimeout(() => {
-      void initComments();
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [initComments]);
-
   return (
-    <div className="site">
-      <SiteHeader active="friends" />
-      <main id="top" className="page-shell friends-page-shell">
+    <div className="site immersive-route">
+      <SiteHeader active="friends" floating />
+      <PageCoverBanner
+        eyebrow="FRIENDS CONNECT! RE:DIVE"
+        title="相遇，是一场温柔的邂逅"
+        description="记录那些值得访问的小站。"
+        image="/friends-cover.jpg"
+        imagePosition="center 62%"
+      />
+      <main id="top" className="page-shell friends-page-shell immersive-content">
+        <div className="friends-main-grid">
         <div className="content friends-content">
         <section className="card friends-hero motion-rise">
           <div className="friends-hero-copy">
@@ -87,7 +60,15 @@ export default function FriendsPage() {
           <div className="friends-hero-art" aria-hidden="true"><img src="/friends-hero.png" alt="" /></div>
         </section>
         <FriendList friends={friends} />
-        <section id="apply-links" className="site-link-section motion-rise">
+        </div>
+        <aside className="friends-profile-sidebar">
+          <div className="friends-profile-sticky">
+            <FriendCircleCard />
+            <TrainJumpCard friends={friends} />
+          </div>
+        </aside>
+        </div>
+        <section id="apply-links" className="site-link-section friends-apply-wide motion-rise">
           <details className="site-link-panel card" open>
             <summary>
               <span className="terminal-window-title">
@@ -119,28 +100,19 @@ export default function FriendsPage() {
               <div className="site-link-requirements">
                 <h3>友链要求：</h3>
                 <ul>
-                  <li>域名可在中国大陆正常访问</li>
-                  <li>创作内容符合法律规定</li>
-                  <li>贵站已添加友链信息</li>
+                  <li>申请前请务必确保贵站有我站的友链，若后续检测到贵站移除本站链接，本站也将相应移除。</li>
+                  <li>本站基于主观审美偏好，优先结交 UI 风格简洁现代、调性相近的个人小站。</li>
+                  <li>拒绝排版混乱、自动播放音频、特效过载或阻塞加载等严重影响浏览体验的站点。</li>
+                  <li>若站点长时间无法访问，我会删除您的友链，恢复后可再次申请。</li>
+                  <li>确保站点无政治敏感/违法内容，无明显广告，无恶意脚本。</li>
+                  <li>确保站点全局启用 HTTPS，中国大陆可以正常访问。</li>
+                  <li>暂时不接受商业及非个人的网站的友链申请。</li>
                 </ul>
               </div>
             </div>
           </details>
         </section>
-        <section id="comments" className="comments-section motion-rise">
-          <div className="section-title"><span /><h2>评论区</h2></div>
-          <Script id="twikoo-script" src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js" strategy="afterInteractive" onLoad={() => { void initComments(); }} onError={() => setStatus("error")} />
-          {status === "loading" && <p className="comment-status">正在加载评论…</p>}
-          {status === "error" && <div className="comment-error">评论区加载失败。<button type="button" onClick={() => void initComments(true)}>重新加载</button></div>}
-          <div className="twikoo-host card"><div ref={commentsRef} id="twikoo-comments" /></div>
-        </section>
-        </div>
-        <aside className="friends-profile-sidebar">
-          <div className="friends-profile-sticky">
-            <FriendCircleCard />
-            <TrainJumpCard friends={friends} />
-          </div>
-        </aside>
+        <TwikooComments path="/friends" className="friends-comments-wide" />
       </main>
       <SiteFooter />
       <a className="back-top" href="#top" aria-label="回到顶部">↑</a>

@@ -3,6 +3,7 @@
 import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
+import { PageCoverBanner } from "../components/PageCoverBanner";
 
 type AnimeItem = {
   id: number;
@@ -37,13 +38,13 @@ function CategoryCard({ items }: { items: AnimeItem[] }) {
     return [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5);
   }, [items]);
   const total = Math.max(1, tags.reduce((sum, [, count]) => sum + count, 0));
-  const colors = ["#8b6cf0", "#86d6c1", "#b6dcae", "#f1ca6d", "#ee93aa"];
+  const colors = ["#ef77a8", "#67cff4", "#f5a6c7", "#9bdcf3", "#ed82b5"];
   const segments = tags.map(([, count], index) => {
     const start = tags.slice(0, index).reduce((sum, [, previousCount]) => sum + previousCount, 0) / total * 100;
     const end = start + count / total * 100;
     return `${colors[index]} ${start}% ${end}%`;
   }).join(", ");
-  const donutStyle = { "--donut": `conic-gradient(${segments || "#ece9fa 0 100%"})` } as CSSProperties;
+  const donutStyle = { "--donut": `conic-gradient(${segments || "#fff0f7 0 100%"})` } as CSSProperties;
   return <section className="card acg-side-card category-card"><h3>分类统计</h3><div className="donut-wrap"><div className="donut" style={donutStyle} aria-label="分类占比图" /><ul>{tags.map(([tag, count], index) => <li key={tag}><i style={{ background: colors[index] }} /><span>{tag}</span><em>{Math.round(count / total * 100)}%</em></li>)}</ul></div></section>;
 }
 
@@ -111,8 +112,15 @@ export default function AcgPage() {
 
   const visible = useMemo(() => filter === "全部" ? items : items.filter((item) => item.statusText === filter), [items, filter]);
 
-  return <div id="top" className="site"><SiteHeader active="acg" />
-    <main className="acg-shell">
+  return <div id="top" className="site immersive-route"><SiteHeader active="acg" floating />
+    <PageCoverBanner
+      eyebrow="OTAKU TECH THE WORLD"
+      title="动漫，是另一种旅行"
+      description="那些陪伴我成长的故事与角色。"
+      image="/acg-hero.png"
+      imagePosition="center top"
+    />
+    <main className="acg-shell immersive-content">
       <div className="acg-center">
         <section className="card acg-hero"><div><span>Otaku tech the world</span><h1>动漫，是另一种旅行</h1><p>那些陪伴我成长的故事与角色</p><i /></div><img src="/acg-hero.png" alt="" aria-hidden="true" /></section>
         <section className="card anime-list-card" id="anime-list">
