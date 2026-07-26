@@ -21,11 +21,28 @@ const monthFormatter = new Intl.DateTimeFormat("en", {
   timeZone: "UTC",
 });
 
+const CONTRIBUTION_DAY_COUNT = 53 * 7;
+
 function createPlaceholderDays() {
-  return Array.from({ length: 371 }, (_, index) => ({
+  return Array.from({ length: CONTRIBUTION_DAY_COUNT }, (_, index) => ({
     date: `placeholder-${index}`,
     level: 0,
   }));
+}
+
+function getRecentContributionDays(days: ContributionDay[]) {
+  const recentDays = days.slice(-CONTRIBUTION_DAY_COUNT);
+  const missingDayCount = CONTRIBUTION_DAY_COUNT - recentDays.length;
+
+  if (missingDayCount <= 0) return recentDays;
+
+  return [
+    ...Array.from({ length: missingDayCount }, (_, index) => ({
+      date: `placeholder-${index}`,
+      level: 0,
+    })),
+    ...recentDays,
+  ];
 }
 
 export function GitHubContributionsCard() {
@@ -48,7 +65,7 @@ export function GitHubContributionsCard() {
   }, []);
 
   const days = payload?.ok ? payload.days : [];
-  const renderedDays = days.length ? days : createPlaceholderDays();
+  const renderedDays = days.length ? getRecentContributionDays(days) : createPlaceholderDays();
   const weeks = useMemo(
     () => Array.from({ length: Math.ceil(renderedDays.length / 7) }, (_, index) => (
       renderedDays.slice(index * 7, index * 7 + 7)

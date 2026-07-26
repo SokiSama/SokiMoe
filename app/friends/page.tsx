@@ -39,7 +39,7 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="site immersive-route">
+    <div className="site immersive-route friends-route">
       <SiteHeader active="friends" floating />
       <PageCoverBanner
         eyebrow="FRIENDS CONNECT! RE:DIVE"

@@ -3,6 +3,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteCategoryCard, type SidebarCategory } from "../components/SiteSidebars";
 import { localPosts } from "../data/posts";
+import { YearProgressStats } from "./YearProgressStats";
 
 export default function ArchivePage() {
   const posts = [...localPosts].sort((a, b) => b.date.localeCompare(a.date));
@@ -22,15 +23,14 @@ export default function ArchivePage() {
   );
 
   return (
-    <div className="site immersive-route">
+    <div className="site immersive-route archive-route">
       <SiteHeader active="archive" floating />
       <PageCoverBanner
         eyebrow="ARCHIVES OF TIME"
         title="归档，是时光的书签"
         description={`${posts.length} 篇文章，沿着时间慢慢读。`}
-        image="/archive-cover.jpg"
-        imagePosition="center"
-        imageFit="contain"
+        image="/archive-cover-night.jpg"
+        imagePosition="center bottom"
       />
       <main id="top" className="archive-page immersive-content">
         <div className="archive-center">
@@ -67,6 +67,7 @@ export default function ArchivePage() {
 
         <aside className="archive-meta-sidebar">
           <div className="archive-sidebar-sticky">
+            <YearProgressStats />
             <SiteCategoryCard categories={categories} />
             <section className="card side-card archive-recent-card">
               <h3>最近文章</h3>
