@@ -1,19 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarBlank, Flag, Tag } from "@phosphor-icons/react";
+import { CaretRight } from "@phosphor-icons/react";
 import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { localPosts } from "../data/posts";
+import { localPosts, type LocalPost } from "../data/posts";
+
+const postDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 function formatPostDate(date: string) {
-  return date;
+  return postDateFormatter.format(new Date(`${date}T00:00:00Z`));
+}
+
+function getPostCategory(post: LocalPost) {
+  return post.category || post.tags[0] || (post.type === "travel" ? "旅行" : "技术");
 }
 
 export default function PostsPage() {
   const posts = [...localPosts].sort((a, b) => b.date.localeCompare(a.date));
-  const pageSize = 4;
+  const pageSize = 5;
   const pageCount = Math.ceil(posts.length / pageSize);
   const [page, setPage] = useState(1);
   const pageItems = posts.slice((page - 1) * pageSize, page * pageSize);
@@ -37,27 +48,32 @@ export default function PostsPage() {
       />
 
       <main id="top" className="posts-index immersive-content">
+        <h1 className="posts-index-sr-title">文章</h1>
         <section id="posts-list-start" className="posts-index-list" aria-label="全部文章">
-          {pageItems.map((post) => (
-            <article className="posts-index-card" key={post.slug}>
-              <a className="posts-index-cover" href={`/posts/${post.slug}`} aria-label={`阅读：${post.title}`}>
-                <img src={post.cover || "/home-cover.webp"} alt={`${post.title}封面`} />
-              </a>
+          {pageItems.map((post) => {
+            const category = getPostCategory(post);
 
-              <div className="posts-index-copy">
-                <div className="posts-index-meta">
-                  <span><Flag weight="duotone" />{post.category || post.tags[0] || "文章"}</span>
-                  <time dateTime={post.date}><CalendarBlank weight="fill" />{formatPostDate(post.date)}</time>
-                </div>
-                <h2><a href={`/posts/${post.slug}`}>{post.title}</a></h2>
-                <p>{post.description}</p>
-                <div className="posts-index-tags">
-                  {post.tags.map((tag) => <span key={tag}><Tag weight="fill" />{tag}</span>)}
-                </div>
-                <a className="posts-index-more" href={`/posts/${post.slug}`}>阅读</a>
-              </div>
-            </article>
-          ))}
+            return (
+              <article className="posts-index-card posts-index-card--reference" key={post.slug}>
+                <a className="posts-index-card-link" href={`/posts/${post.slug}`} aria-label={`阅读：${post.title}`}>
+                  <div className="posts-index-cover" aria-hidden="true">
+                    <img src={post.cover || "/home-cover.webp"} alt="" />
+                  </div>
+                  <div className="posts-index-copy">
+                    <time className="posts-index-date-line" dateTime={post.date}>
+                      {formatPostDate(post.date)}
+                    </time>
+                    <h2>{post.title}</h2>
+                    <p>{post.description}</p>
+                    <div className="posts-index-tags" aria-label="文章分类">
+                      <span>{category}</span>
+                    </div>
+                  </div>
+                  <CaretRight className="posts-index-arrow" weight="bold" aria-hidden="true" />
+                </a>
+              </article>
+            );
+          })}
         </section>
 
         <nav className="posts-pagination" aria-label="文章分页">

@@ -24,7 +24,7 @@ export function SiteProfileCard() {
       <div className="avatar"><img src="/profile-avatar.webp" alt="Soki 的头像" /></div>
       <h2>Soki</h2>
       <span className="profile-divider" aria-hidden="true" />
-      <p>ACG / INFP / 社畜 / 光呆 / 平成死宅</p>
+      <p>ACG / INFP / 社畜 / 光呆</p>
       <div className="socials" aria-label="个人主页链接">
         <a href="https://github.com/SokiSama" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><img src="/icons/github.svg" alt="" /></a>
         <a href="https://steamcommunity.com/id/SokiSama/" target="_blank" rel="noreferrer" title="Steam" aria-label="Steam"><img src="/icons/steam.svg" alt="" /></a>

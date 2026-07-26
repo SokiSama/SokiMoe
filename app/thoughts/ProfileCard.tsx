@@ -21,7 +21,7 @@ export function ProfileCard({
           height={74}
         />
         <h2>Soki</h2>
-        <p>ACG / INFP / 社畜 / 光呆 / 平成死宅</p>
+        <p>ACG / INFP / 社畜 / 光呆</p>
         <div className="thought-profile-card__location">
           <MapPin weight="fill" aria-hidden="true" />
           <span>29.56°N / 106.55°E</span>
