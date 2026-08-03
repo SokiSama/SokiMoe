@@ -4009,6 +4009,69 @@ main {
   box-shadow: 0 22px 52px color-mix(in srgb, var(--primary) 15%, transparent);
 }
 
+/* Final cover-matched palettes: airy classroom blue and soft sleepy pink. */
+.posts-index-route {
+  --primary: #7298c2;
+  --primary-soft: #edf4fb;
+  --secondary: #9bbbd4;
+  --secondary-soft: #f1f7fb;
+  --bg: #f3f5f9;
+  --card: #fdfefe;
+  --text: #34475b;
+  --muted: #7b8fa3;
+  --line: #dce7f0;
+  --posts-brown: #7895b0;
+  --posts-brown-strong: #465f78;
+  --posts-brown-soft: #edf3f8;
+  --posts-brown-line: #cfdeea;
+  --shadow-soft: 0 16px 42px rgba(73, 111, 147, .075);
+}
+
+.posts-index-route .posts-index-date {
+  background: linear-gradient(155deg, #f8fbfd, var(--posts-brown-soft));
+}
+
+.friends-route {
+  --primary: #d59aae;
+  --primary-soft: #f9edf2;
+  --secondary: #e6b8c5;
+  --secondary-soft: #fcf3f6;
+  --bg: #f3f5f9;
+  --card: #fffdfd;
+  --text: #554049;
+  --muted: #9a7d88;
+  --line: #eddde3;
+  --shadow-soft: 0 16px 42px rgba(174, 108, 132, .075);
+}
+
+html[data-theme="dark"] .posts-index-route {
+  --primary: #9dbbda;
+  --primary-soft: #27394b;
+  --secondary: #86a8c4;
+  --secondary-soft: #223341;
+  --bg: #15161b;
+  --card: #1a242e;
+  --text: #e8eff6;
+  --muted: #9dafc0;
+  --line: #2d3d4c;
+  --posts-brown: #a5bed4;
+  --posts-brown-strong: #dbe7f0;
+  --posts-brown-soft: #263644;
+  --posts-brown-line: #41576a;
+}
+
+html[data-theme="dark"] .friends-route {
+  --primary: #e4a9bc;
+  --primary-soft: #3a2931;
+  --secondary: #c88ea2;
+  --secondary-soft: #35262d;
+  --bg: #15161b;
+  --card: #241b1f;
+  --text: #f2e8ec;
+  --muted: #b9a1aa;
+  --line: #402f36;
+}
+
 html[data-theme="dark"] .posts-index-route {
   --primary: #d7aa55;
   --primary-soft: #3a301d;
@@ -9983,4 +10046,19 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
   .immersive-content :is(.card, .posts-index-card, .friend-card, .archive-year, .anime-row):hover {
   border-color: color-mix(in srgb, var(--primary) 38%, var(--line));
   box-shadow: 0 22px 52px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+/* Keep the Friends accent aligned with the final soft-pink surface palette. */
+.friends-route {
+  --primary: #d59aae;
+  --primary-soft: #f9edf2;
+  --secondary: #e6b8c5;
+  --secondary-soft: #fcf3f6;
+}
+
+html[data-theme="dark"] .friends-route {
+  --primary: #e4a9bc;
+  --primary-soft: #3a2931;
+  --secondary: #c88ea2;
+  --secondary-soft: #35262d;
 }
