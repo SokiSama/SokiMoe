@@ -12,6 +12,16 @@ export type LocalPost = {
 
 export const localPosts: LocalPost[] = [
   {
+    slug: "emotional-boundaries",
+    title: "你不必做别人的树洞",
+    date: "2026-08-03",
+    description: "别人的痛苦值得被看见，但你的平静同样值得被保护。",
+    cover: "/images/emotional-boundaries-cover.png",
+    source: "/posts/emotional-boundaries.md",
+    type: "tech",
+    tags: ["随笔"],
+  },
+  {
     slug: "hong-kong-trip-2026",
     title: "临时起意，再赴香港的一场小旅行",
     date: "2026-07-23",
@@ -83,29 +93,9 @@ export const localPosts: LocalPost[] = [
     tags: ["心得"],
   },
   {
-    slug: "googleplay-pay",
-    title: "给 Google Play 绑定支付方式",
-    date: "2025-10-20",
-    description: "在 Google Play 中添加银行卡并完成一次订阅支付。",
-    cover: "/images/legacy/googleplay-cover.webp",
-    source: "/posts/googleplay-pay.md",
-    type: "tech",
-    tags: ["教程", "支付", "Google Play"],
-  },
-  {
-    slug: "newvrchat",
-    title: "欢迎来到次元世界：简单几步串流入坑 VRChat",
-    date: "2025-10-13",
-    description: "从设备激活、Virtual Desktop 配置到进入 VRChat 的完整入门流程。",
-    cover: "/images/legacy/newvrchat-cover.webp",
-    source: "/posts/newvrchat.md",
-    type: "tech",
-    tags: ["教程", "VRChat"],
-  },
-  {
     slug: "start",
     title: "欢迎进入轨道",
-    date: "2025-10-08",
+    date: "2025-07-01",
     description: "也许是本网站的第一篇文章。",
     cover: "/images/start.jpg",
     source: "/posts/start.md",

@@ -78,7 +78,7 @@ export function CyberWorldCard() {
             <span>CYBER WORLD</span>
             <h2 id="cyber-world-title">VRChat 记录</h2>
           </div>
-          <p>穿过屏幕，在虚拟世界收藏真实的相遇。</p>
+          <p>感谢那段时间大家的陪伴，我想我要回到现实了</p>
         </header>
 
         <div className="cyber-world-wall">

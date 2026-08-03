@@ -71,7 +71,15 @@ const tracks = [
   },
 ] as const;
 
-const homePlaylistTracks = [
+type HomePlaylistTrack = {
+  id?: string | number;
+  title: string;
+  artist: string;
+  artwork: string;
+  url?: string | null;
+};
+
+const fallbackHomePlaylistTracks: HomePlaylistTrack[] = [
   { title: "KiLLKiSS", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/62/dd/e4/62dde4e9-701b-3331-9c78-f5449b6a96ae/198704270253_Cover.jpg/160x160bb.jpg" },
   { title: "顔", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d8/2f/e9/d82fe9a7-cf92-fa6f-5e74-5eb463647b78/198704454127_Cover.jpg/160x160bb.jpg" },
   { title: "影色舞", artist: "MyGO!!!!!", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/24/97/8d/24978da1-c9f2-b252-b3d9-0fb9f8346fa7/198704278938_Cover.jpg/160x160bb.jpg" },
@@ -95,7 +103,7 @@ const homePlaylistTracks = [
   { title: "Lemonade", artist: "ミア・テイラー (CV.内田 秀)", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ce/ac/17/ceac1746-b101-b0c7-c9f2-852099311a71/4540774250707.png/160x160bb.jpg" },
   { title: "Here, the world!", artist: "sumimi", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9f/16/16/9f161692-cfa3-19a0-fd44-cf8215d310b1/198704363160_Cover.jpg/160x160bb.jpg" },
   { title: "天球(そら)のMúsica", artist: "Ave Mujica", artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d2/a7/60/d2a760b1-6952-6830-2dcd-1dfdd44f003f/198704414107_Cover.jpg/160x160bb.jpg" },
-] as const;
+];
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -111,24 +119,6 @@ function syncPlaylistFade(element: HTMLOListElement) {
   );
 }
 
-async function findPlayableTrackIndexes(signal: AbortSignal) {
-  const playableIndexes: number[] = [];
-  const concurrency = 4;
-
-  for (let start = 0; start < homePlaylistTracks.length; start += concurrency) {
-    const batch = homePlaylistTracks.slice(start, start + concurrency);
-    const results = await Promise.all(batch.map(async (track, offset) => {
-      const params = new URLSearchParams({ title: track.title, artist: track.artist });
-      const response = await fetch(`/api/music-preview?${params.toString()}`, { signal });
-      const payload = await response.json() as { ok: boolean; previewUrl?: string | null };
-      return payload.ok && payload.previewUrl ? start + offset : null;
-    }));
-    playableIndexes.push(...results.filter((index): index is number => index !== null));
-  }
-
-  return playableIndexes;
-}
-
 export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" | "home" }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const homeAudioRef = useRef<HTMLAudioElement>(null);
@@ -137,14 +127,16 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
   const [homeTrackIndex, setHomeTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [homeIsPlaying, setHomeIsPlaying] = useState(false);
+  const [homePlaylistTracks, setHomePlaylistTracks] = useState<HomePlaylistTrack[]>(fallbackHomePlaylistTracks);
+  const [homePlaylistLoading, setHomePlaylistLoading] = useState(variant === "home");
+  const [homePlaylistFailed, setHomePlaylistFailed] = useState(false);
   const [homePreview, setHomePreview] = useState<{ key: string; url: string | null } | null>(null);
-  const [playableHomeTrackIndexes, setPlayableHomeTrackIndexes] = useState<number[] | null>(null);
   const [homeCurrentTime, setHomeCurrentTime] = useState(0);
   const [homeDuration, setHomeDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const current = tracks[trackIndex];
-  const homeCurrent = homePlaylistTracks[homeTrackIndex];
+  const homeCurrent = homePlaylistTracks[homeTrackIndex] ?? fallbackHomePlaylistTracks[0];
   const homeTrackKey = `${homeCurrent.title}\u0000${homeCurrent.artist}`;
   const homePreviewUrl = homePreview?.key === homeTrackKey ? homePreview.url : null;
   const homePreviewLoading = homePreview?.key !== homeTrackKey;
@@ -156,13 +148,41 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      if (variant === "home") {
-        setHomeTrackIndex(Math.floor(Math.random() * homePlaylistTracks.length));
-      } else {
+      if (variant !== "home") {
         setTrackIndex(Math.floor(Math.random() * tracks.length));
       }
     }, 0);
     return () => window.clearTimeout(timer);
+  }, [variant]);
+
+  useEffect(() => {
+    if (variant !== "home") return;
+
+    const controller = new AbortController();
+    fetch("/api/music-playlist", {
+      cache: "no-store",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Playlist request returned ${response.status}`);
+        return response.json() as Promise<{ ok: boolean; tracks?: HomePlaylistTrack[] }>;
+      })
+      .then((payload) => {
+        if (!payload.ok || !payload.tracks?.length) throw new Error("Playlist was empty");
+        setHomePlaylistTracks(payload.tracks);
+        setHomeTrackIndex(Math.floor(Math.random() * payload.tracks.length));
+        setHomePlaylistFailed(false);
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setHomePlaylistFailed(true);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setHomePlaylistLoading(false);
+      });
+
+    return () => controller.abort();
   }, [variant]);
 
   useEffect(() => {
@@ -202,25 +222,6 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
   }, [homeCurrent.artist, homeCurrent.title, homeTrackKey, variant]);
 
   useEffect(() => {
-    if (variant !== "home") return;
-
-    const controller = new AbortController();
-    void findPlayableTrackIndexes(controller.signal)
-      .then((indexes) => {
-        setPlayableHomeTrackIndexes(indexes);
-        setHomeTrackIndex((currentIndex) => (
-          indexes.includes(currentIndex) ? currentIndex : (indexes[0] ?? 0)
-        ));
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-        setPlayableHomeTrackIndexes([]);
-      });
-
-    return () => controller.abort();
-  }, [variant]);
-
-  useEffect(() => {
     if (variant !== "home" || !homePlaylistRef.current) return;
 
     const list = homePlaylistRef.current;
@@ -232,7 +233,7 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
       window.cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [playableHomeTrackIndexes, variant]);
+  }, [homePlaylistTracks.length, variant]);
 
   const togglePlayback = async () => {
     const audio = audioRef.current;
@@ -277,12 +278,8 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
   };
 
   const moveHomeTrack = (offset: number) => {
-    const indexes = playableHomeTrackIndexes?.length
-      ? playableHomeTrackIndexes
-      : homePlaylistTracks.map((_, index) => index);
-    const currentPosition = indexes.indexOf(homeTrackIndex);
-    const nextPosition = (Math.max(currentPosition, 0) + offset + indexes.length) % indexes.length;
-    selectHomeTrack(indexes[nextPosition]);
+    if (homePlaylistTracks.length === 0) return;
+    selectHomeTrack(homeTrackIndex + offset);
   };
 
   if (variant === "home") {
@@ -378,24 +375,21 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
           <div className="home-playlist-track-heading">
             <span>歌单曲目</span>
             <small>
-              {playableHomeTrackIndexes === null ? "筛选中…" : `${playableHomeTrackIndexes.length} 首`}
+              {homePlaylistLoading ? "更新中…" : `${homePlaylistTracks.length} 首`}
             </small>
           </div>
           <ol
             ref={homePlaylistRef}
-            aria-busy={playableHomeTrackIndexes === null}
+            aria-busy={homePlaylistLoading}
             onScroll={(event) => syncPlaylistFade(event.currentTarget)}
           >
-            {playableHomeTrackIndexes === null ? (
-              <li className="home-playlist-filter-status">正在检查可试听曲目…</li>
-            ) : playableHomeTrackIndexes.length === 0 ? (
-              <li className="home-playlist-filter-status">暂时没有可试听曲目</li>
-            ) : playableHomeTrackIndexes.map((index) => {
-              const track = homePlaylistTracks[index];
+            {homePlaylistTracks.length === 0 ? (
+              <li className="home-playlist-filter-status">歌单暂时没有曲目</li>
+            ) : homePlaylistTracks.map((track, index) => {
               return (
               <li
                 className={index === homeTrackIndex ? "is-active" : ""}
-                key={`${track.title}-${track.artist}`}
+                key={track.id ?? `${track.title}-${track.artist}`}
               >
                 <button
                   type="button"
@@ -411,6 +405,11 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
               );
             })}
           </ol>
+          {homePlaylistFailed && (
+            <p className="home-playlist-status" role="status">
+              最新歌单获取失败，当前显示备用歌单
+            </p>
+          )}
         </div>
       </section>
     );

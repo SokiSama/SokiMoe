@@ -112,7 +112,7 @@ export default function AcgPage() {
 
   const visible = useMemo(() => filter === "全部" ? items : items.filter((item) => item.statusText === filter), [items, filter]);
 
-  return <div id="top" className="site immersive-route"><SiteHeader active="acg" floating />
+  return <div id="top" className="site immersive-route acg-route"><SiteHeader active="acg" floating />
     <PageCoverBanner
       eyebrow="OTAKU TECH THE WORLD"
       title="动漫，是另一种旅行"

@@ -1,6 +1,6 @@
 ---
 title: 欢迎进入轨道
-date: '2025-10-08'
+date: '2025-07-01'
 tags: ["记录"]
 description: 也许是本网站的第一篇文章。
 published: true
