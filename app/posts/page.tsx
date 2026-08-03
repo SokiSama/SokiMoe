@@ -43,8 +43,8 @@ export default function PostsPage() {
         eyebrow="ALL JOURNALS"
         title="文章，是生活留下的注脚"
         description={`这里收录了 ${posts.length} 篇旅行、技术与生活记录。`}
-        image="/posts-cover-sunflower.png"
-        imagePosition="center top"
+        image="/posts-cover-sky.png"
+        imagePosition="center center"
       />
 
       <main id="top" className="posts-index immersive-content">
