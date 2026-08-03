@@ -4,7 +4,7 @@ import { SiteFooter } from "../components/SiteFooter";
 
 export default function AboutPage() {
   return (
-    <div className="site immersive-route">
+    <div className="site immersive-route about-route">
       <SiteHeader active="about" floating />
       <PageCoverBanner
         eyebrow="ABOUT ME"

@@ -3917,6 +3917,163 @@ main {
   }
 }
 
+/* Page-wide palettes sampled from each route's cover artwork. */
+.posts-index-route {
+  --primary: #b98218;
+  --primary-soft: #f8ecd0;
+  --secondary: #718d36;
+  --secondary-soft: #edf2dc;
+  --bg: #f8f5ed;
+  --card: #fffdf8;
+  --text: #40372d;
+  --muted: #8c7b69;
+  --line: #e8ddcc;
+  --posts-brown: #a16f2c;
+  --posts-brown-strong: #5f4930;
+  --posts-brown-soft: #f5ead5;
+  --posts-brown-line: #ddc9a8;
+}
+
+.thoughts-route {
+  --primary: #4d91dd;
+  --primary-soft: #e7f2ff;
+  --secondary: #78b7ea;
+  --secondary-soft: #edf7ff;
+  --link-blue: #4d91dd;
+  --bg: #f1f7fc;
+  --card: #fbfdff;
+  --text: #2d4058;
+  --muted: #71879f;
+  --line: #d8e7f3;
+}
+
+.friends-route {
+  --primary: #754158;
+  --primary-soft: #f3e7ec;
+  --secondary: #9b7081;
+  --secondary-soft: #eee5e9;
+  --bg: #f7f2f4;
+  --card: #fffcfd;
+  --text: #402f37;
+  --muted: #876f79;
+  --line: #e6d7dd;
+}
+
+.acg-route {
+  --primary: #7776bd;
+  --primary-soft: #eeecfa;
+  --secondary: #d68fa8;
+  --secondary-soft: #faedf2;
+  --bg: #f4f2fa;
+  --card: #fdfcff;
+  --text: #38364f;
+  --muted: #7d7997;
+  --line: #dfdcef;
+}
+
+.about-route {
+  --primary: #527ec5;
+  --primary-soft: #e9f0fb;
+  --secondary: #76bad9;
+  --secondary-soft: #eaf7fb;
+  --bg: #f1f6fb;
+  --card: #fcfeff;
+  --text: #2f4058;
+  --muted: #71849d;
+  --line: #d9e5f1;
+}
+
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route) {
+  --shadow-soft: 0 16px 42px color-mix(in srgb, var(--primary) 9%, transparent);
+}
+
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .site-header.home-floating .main-nav.primary-nav a:hover,
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .site-header.home-floating .main-nav.primary-nav a.active {
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 24%, transparent);
+  background: color-mix(in srgb, var(--primary-soft) 82%, var(--card));
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .immersive-content :is(.card, .posts-index-card, .friend-card, .archive-year, .anime-row) {
+  border-color: color-mix(in srgb, var(--primary) 17%, var(--line));
+  box-shadow: var(--shadow-soft);
+}
+
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .immersive-content :is(.card, .posts-index-card, .friend-card, .archive-year, .anime-row):hover {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--line));
+  box-shadow: 0 22px 52px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+html[data-theme="dark"] .posts-index-route {
+  --primary: #d7aa55;
+  --primary-soft: #3a301d;
+  --secondary: #9bb663;
+  --secondary-soft: #29331e;
+  --bg: #181611;
+  --card: #232019;
+  --text: #f0eadf;
+  --muted: #b3a58f;
+  --line: #3d372b;
+  --posts-brown: #d0aa70;
+  --posts-brown-strong: #eadbc3;
+  --posts-brown-soft: #372e21;
+  --posts-brown-line: #59492f;
+}
+
+html[data-theme="dark"] .thoughts-route {
+  --primary: #78b5ef;
+  --primary-soft: #1d3349;
+  --secondary: #66a4dd;
+  --secondary-soft: #192d40;
+  --link-blue: #78b5ef;
+  --bg: #111923;
+  --card: #18232f;
+  --text: #e7f0f8;
+  --muted: #9bafc3;
+  --line: #2b3d50;
+}
+
+html[data-theme="dark"] .friends-route {
+  --primary: #c88ca4;
+  --primary-soft: #382630;
+  --secondary: #a97489;
+  --secondary-soft: #32242b;
+  --bg: #181216;
+  --card: #231a1f;
+  --text: #f0e7eb;
+  --muted: #b59eaa;
+  --line: #3d2d35;
+}
+
+html[data-theme="dark"] .acg-route {
+  --primary: #aaa5ee;
+  --primary-soft: #302d4c;
+  --secondary: #e0a1b8;
+  --secondary-soft: #3b2932;
+  --bg: #151421;
+  --card: #201e2e;
+  --text: #eeecf8;
+  --muted: #aaa6c0;
+  --line: #38354d;
+}
+
+html[data-theme="dark"] .about-route {
+  --primary: #83ace8;
+  --primary-soft: #24344d;
+  --secondary: #7fc4df;
+  --secondary-soft: #203b46;
+  --bg: #111821;
+  --card: #19232e;
+  --text: #e7eef7;
+  --muted: #9cacc0;
+  --line: #2d3b4d;
+}
+
 /* Motion language adapted from Saneko: quick staggered reveals, springy
    avatars, restrained cards, and a scroll-aware floating header. */
 @keyframes sanekoFadeIn {
@@ -9619,4 +9776,211 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
   border-color: rgba(221, 162, 93, .28);
   background: rgba(221, 162, 93, .13);
   box-shadow: 0 6px 20px rgba(133, 79, 43, .24);
+}
+
+/* Final motion authority: use the Friends page's staggered upward reveal everywhere. */
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell
+) > *,
+:is(
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *,
+.thoughts-page .thought-card {
+  --friends-reveal-delay: .08s;
+  opacity: 0;
+  animation: dawnFadeUp .6s ease-out forwards !important;
+  animation-delay: var(--friends-reveal-delay) !important;
+}
+
+.acg-shell > .acg-center,
+.acg-shell > .acg-right {
+  --friends-reveal-delay: .08s;
+  opacity: 0;
+  animation: dawnFadeUp .6s ease-out forwards !important;
+  animation-delay: var(--friends-reveal-delay) !important;
+}
+
+.acg-shell > .acg-right { --friends-reveal-delay: .14s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(2),
+.thoughts-page .thought-card:nth-child(2) { --friends-reveal-delay: .14s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(3),
+.thoughts-page .thought-card:nth-child(3) { --friends-reveal-delay: .20s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(4),
+.thoughts-page .thought-card:nth-child(4) { --friends-reveal-delay: .26s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(5),
+.thoughts-page .thought-card:nth-child(5) { --friends-reveal-delay: .32s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(6),
+.thoughts-page .thought-card:nth-child(6) { --friends-reveal-delay: .38s; }
+
+:is(
+  .home-feed,
+  .posts-index,
+  .thoughts-layout,
+  .friends-main-grid,
+  .archive-page,
+  .about-content,
+  .acg-shell,
+  .article-reading-shell,
+  .posts-index-list,
+  .thought-list,
+  .friend-grid,
+  .friends-profile-sticky,
+  .archive-center,
+  .archive-years,
+  .archive-sidebar-sticky,
+  .anime-rows,
+  .acg-right
+) > *:nth-child(n+7),
+.thoughts-page .thought-card:nth-child(n+7) { --friends-reveal-delay: .44s; }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .home-feed,
+    .posts-index,
+    .thoughts-layout,
+    .friends-main-grid,
+    .archive-page,
+    .about-content,
+    .acg-shell,
+    .article-reading-shell,
+    .posts-index-list,
+    .thought-list,
+    .friend-grid,
+    .friends-profile-sticky,
+    .archive-center,
+    .archive-years,
+    .archive-sidebar-sticky,
+    .anime-rows,
+    .acg-right
+  ) > *,
+  .acg-shell > .acg-center,
+  .acg-shell > .acg-right,
+  .thoughts-page .thought-card {
+    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Final page-theme surface authority. */
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .immersive-content :is(.card, .posts-index-card, .friend-card, .archive-year, .anime-row) {
+  border-color: color-mix(in srgb, var(--primary) 17%, var(--line));
+  box-shadow: var(--shadow-soft);
+}
+
+:is(.posts-index-route, .thoughts-route, .friends-route, .archive-route, .acg-route, .about-route)
+  .immersive-content :is(.card, .posts-index-card, .friend-card, .archive-year, .anime-row):hover {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--line));
+  box-shadow: 0 22px 52px color-mix(in srgb, var(--primary) 15%, transparent);
 }
