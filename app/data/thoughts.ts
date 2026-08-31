@@ -11,6 +11,12 @@ export type Thought = {
 // “碎念”没有公开写入接口。站长在这里维护内容，部署后由页面只读展示。
 export const thoughts: Thought[] = [
   {
+    id: "vrc-turning-point-anniversary",
+    publishedAt: "2026-08-31T18:33:21+08:00",
+    content: "一年前的今天 是我在VRC上的一次重大转折",
+    tags: ["VRC", "回忆"],
+  },
+  {
     id: "removed-filler-tutorials",
     publishedAt: "2026-08-03T21:21:31+08:00",
     content: "删除了几篇所谓的教程，都是当时博客水文章用的",

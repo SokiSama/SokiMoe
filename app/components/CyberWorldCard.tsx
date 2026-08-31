@@ -6,11 +6,11 @@ import { ArrowsOut, X } from "@phosphor-icons/react";
 const photos = [
   {
     src: "/images/vrc/cyber-world-01.webp",
-    alt: "在木质空间里与三位 VRChat 朋友的合影",
+    alt: "暖色室内三位 VRChat 朋友的合影",
   },
   {
     src: "/images/vrc/cyber-world-02.webp",
-    alt: "在栖鸦居所与朋友坐在一起的 VRChat 合影",
+    alt: "明亮咖啡店里四位 VRChat 朋友的合影",
   },
   {
     src: "/images/vrc/cyber-world-03.webp",
@@ -26,7 +26,7 @@ const photos = [
   },
   {
     src: "/images/vrc/cyber-world-06.webp",
-    alt: "神社夜景中的 VRChat 角色近照",
+    alt: "夜色湖畔四位 VRChat 朋友的合影",
   },
   {
     src: "/images/vrc/cyber-world-07.webp",
