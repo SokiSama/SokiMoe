@@ -651,6 +651,18 @@ html[data-theme="dark"] .terminal-dot--green {
 .comment-error button { margin-left: 10px; padding: 5px 10px; border: 0; border-radius: 7px; background: #d95f96; color: white; cursor: pointer; }
 .twikoo-host .tk-comments { color: var(--text); }
 .twikoo-host .tk-comments a { color: var(--link-blue) !important; }
+.twikoo-host .comment-redacted { color: var(--muted); font-style: italic; }
+.twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) .tk-content > * {
+  display: none !important;
+}
+.twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) .tk-content::after {
+  content: "由于违反相关法规，该则留言不予显示";
+  color: var(--muted);
+  font-style: italic;
+}
+.twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) :is(.tk-action, .tk-extras) {
+  display: none !important;
+}
 .twikoo-host textarea, .twikoo-host input { border-color: var(--line) !important; border-radius: 10px !important; background: var(--bg) !important; color: var(--text) !important; }
 .twikoo-host .tk-submit .tk-send { border: 0 !important; border-radius: 9px !important; background: var(--primary) !important; color: white !important; }
 

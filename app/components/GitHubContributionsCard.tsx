@@ -72,6 +72,26 @@ export function GitHubContributionsCard() {
     )),
     [renderedDays],
   );
+  const monthLabels = useMemo(() => {
+    const labels = weeks.map((week, index) => {
+      const firstDate = week.find((day) => !day.date.startsWith("placeholder"));
+      if (!firstDate) return null;
+
+      const date = new Date(`${firstDate.date}T00:00:00Z`);
+      const previousDate = weeks[index - 1]?.find((day) => !day.date.startsWith("placeholder"));
+      const previousMonth = previousDate
+        ? new Date(`${previousDate.date}T00:00:00Z`).getUTCMonth()
+        : -1;
+
+      return date.getUTCMonth() !== previousMonth ? monthFormatter.format(date) : null;
+    });
+
+    return labels.map((label, index) => {
+      if (!label) return "";
+      const nextLabelIndex = labels.findIndex((nextLabel, nextIndex) => nextIndex > index && nextLabel);
+      return nextLabelIndex !== -1 && nextLabelIndex - index < 3 ? "" : label;
+    });
+  }, [weeks]);
 
   return (
     <section className="home-github-card" aria-labelledby="home-github-title">
@@ -89,17 +109,7 @@ export function GitHubContributionsCard() {
       <div className="github-contribution-scroll">
         <div className="github-contribution-chart">
           <div className="github-contribution-months" aria-hidden="true">
-            {weeks.map((week, index) => {
-              const firstDate = week.find((day) => !day.date.startsWith("placeholder"));
-              if (!firstDate) return <span key={index} />;
-              const date = new Date(`${firstDate.date}T00:00:00Z`);
-              const previousWeek = weeks[index - 1];
-              const previousDate = previousWeek?.find((day) => !day.date.startsWith("placeholder"));
-              const previousMonth = previousDate
-                ? new Date(`${previousDate.date}T00:00:00Z`).getUTCMonth()
-                : -1;
-              return <span key={firstDate.date}>{date.getUTCMonth() !== previousMonth ? monthFormatter.format(date) : ""}</span>;
-            })}
+            {monthLabels.map((label, index) => <span key={index}>{label}</span>)}
           </div>
 
           <div className="github-contribution-body">
