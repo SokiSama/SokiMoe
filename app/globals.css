@@ -566,7 +566,7 @@ html[data-theme="dark"] body { background: #15161b; color: #edeef3; color-scheme
 .site-link-panel__body ul { margin: 0; padding: 0; display: grid; gap: 13px; list-style: none; }
 .site-link-panel__body li { min-width: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: baseline; color: #6d7685; font-size: 17px; line-height: 1.75; }
 .site-link-panel__body li::before { display: none; content: none; }
-.site-link-panel__body li strong { margin-right: 15px; color: #303640; font-weight: 700; }
+.site-link-panel__body li strong { margin-right: 15px; color: #303640; font-weight: 700; white-space: nowrap; }
 .site-link-panel__body li span,
 .site-link-panel__body li a { min-width: 0; overflow-wrap: anywhere; }
 .site-link-panel__body li a { color: #39a7d1; text-decoration: none; }
@@ -655,7 +655,7 @@ html[data-theme="dark"] .terminal-dot--green {
 .twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) .tk-content > * {
   display: none !important;
 }
-.twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) .tk-content::after {
+.twikoo-host :is([id="4d49911db58340cc9b90d6face00fc9a"], [id="48e2a54cb83d40e0b432394c2d135d8b"]) .tk-content:not(.comment-redacted)::after {
   content: "由于违反相关法规，该则留言不予显示";
   color: var(--muted);
   font-style: italic;
@@ -1212,12 +1212,12 @@ html[data-theme="dark"] .interest-chip:hover {
   .site-link-panel summary { padding: 14px 17px; }
   .site-link-panel summary > span { font-size: 20px; }
   .site-link-panel__body { padding: 22px 18px 24px; }
-  .site-link-panel__body li { grid-template-columns: 12px max-content minmax(0, 1fr); font-size: 16px; }
+  .site-link-panel__body li { grid-template-columns: max-content minmax(0, 1fr); font-size: 16px; }
   .site-link-panel__body li strong { margin-right: 9px; }
   .site-link-requirements { margin-top: 20px; padding-top: 20px; }
   .site-link-requirements h3 { font-size: 18px; }
   .site-link-panel__body .site-link-requirements li {
-    grid-template-columns: 12px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     font-size: 15px;
   }
   .friend-grid { grid-template-columns: 1fr; }
@@ -3293,8 +3293,9 @@ a { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
 @media (max-width: 900px) {
   .page-shell.friends-page-shell { display: block; }
   .friends-main-grid { display: block; }
-  .friends-profile-sidebar { width: min(100%, 520px); margin: 18px auto 0; }
-  .friends-profile-sticky { position: static; }
+  .friends-main-grid > .friends-content { padding: 0; }
+  .friends-profile-sidebar { width: 100%; margin: 18px 0 0; }
+  .friends-profile-sticky { position: static; display: grid; gap: 16px; }
   .friends-page-shell .friends-content .friend-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

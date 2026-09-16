@@ -1,9 +1,8 @@
-import { Archive, Article, ChatCircleDots, House, Link, UserCircle } from "@phosphor-icons/react";
+import { Archive, Article, House, Link, UserCircle } from "@phosphor-icons/react";
 
 const navItems = [
   { key: "home", label: "首页", href: "/", icon: House },
   { key: "posts", label: "文章", href: "/posts", icon: Article },
-  { key: "thoughts", label: "碎念", href: "/thoughts", icon: ChatCircleDots },
   { key: "friends", label: "友链", href: "/friends", icon: Link },
   { key: "archive", label: "归档", href: "/archive", icon: Archive },
   { key: "about", label: "关于", href: "/about", icon: UserCircle },

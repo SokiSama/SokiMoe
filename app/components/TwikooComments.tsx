@@ -31,8 +31,17 @@ function redactHiddenComments(element: HTMLElement) {
     const content = comment.querySelector<HTMLElement>(".tk-content");
     if (!hiddenCommentIds.has(comment.id) || !content) return;
 
-    content.replaceChildren(document.createTextNode(hiddenCommentNotice));
+    if (content.textContent !== hiddenCommentNotice || content.childElementCount > 0) {
+      content.replaceChildren(document.createTextNode(hiddenCommentNotice));
+    }
     content.classList.add("comment-redacted");
+    comment.querySelectorAll<HTMLElement>("a.tk-nick, .tk-nick a, a.tk-avatar, .tk-avatar a, .tk-avatar.tk-clickable").forEach((link) => {
+      const label = document.createElement("span");
+      label.className = link.className;
+      label.classList.remove("tk-clickable", "tk-nick-link");
+      label.append(...link.childNodes);
+      link.replaceWith(label);
+    });
     comment.querySelector<HTMLElement>(".tk-extras")?.remove();
     comment.querySelector<HTMLElement>(".tk-action")?.remove();
   });
@@ -46,20 +55,20 @@ export function TwikooComments({ path, className = "" }: TwikooCommentsProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
 
   const initComments = useCallback(async (force = false) => {
-    const element = commentsRef.current;
+    const host = commentsRef.current;
     const twikoo = (window as typeof window & { twikoo?: Twikoo }).twikoo;
-    if (!element || !twikoo?.init || initializing.current || (initialized.current && !force)) return;
+    if (!host || !twikoo?.init || initializing.current || (initialized.current && !force)) return;
 
     initializing.current = true;
     setStatus("loading");
-    if (force) {
-      element.replaceChildren();
-      initialized.current = false;
-    }
+    initialized.current = false;
+    const element = document.createElement("div");
+    host.replaceChildren(element);
 
+    // Twikoo replaces its mount node, so observe the stable React-owned host.
     observerRef.current?.disconnect();
-    observerRef.current = new MutationObserver(() => redactHiddenComments(element));
-    observerRef.current.observe(element, { childList: true, subtree: true });
+    observerRef.current = new MutationObserver(() => redactHiddenComments(host));
+    observerRef.current.observe(host, { childList: true, subtree: true });
 
     try {
       await twikoo.init({
@@ -68,11 +77,11 @@ export function TwikooComments({ path, className = "" }: TwikooCommentsProps) {
         path,
         lang: "zh-CN",
         onCommentLoaded: () => {
-          redactHiddenComments(element);
+          redactHiddenComments(host);
           setStatus("ready");
         },
       });
-      redactHiddenComments(element);
+      redactHiddenComments(host);
       initialized.current = true;
       setStatus("ready");
     } catch {
@@ -86,10 +95,8 @@ export function TwikooComments({ path, className = "" }: TwikooCommentsProps) {
     observerRef.current?.disconnect();
     initialized.current = false;
     commentsRef.current?.replaceChildren();
-    setStatus("idle");
-    if (!(window as typeof window & { twikoo?: Twikoo }).twikoo) return;
-
     const timer = window.setTimeout(() => {
+      setStatus("idle");
       void initComments();
     }, 0);
     return () => {
@@ -115,7 +122,7 @@ export function TwikooComments({ path, className = "" }: TwikooCommentsProps) {
           <button type="button" onClick={() => void initComments(true)}>重新加载</button>
         </div>
       )}
-      <div className="twikoo-host card"><div ref={commentsRef} /></div>
+      <div className="twikoo-host card" ref={commentsRef} />
     </section>
   );
 }
