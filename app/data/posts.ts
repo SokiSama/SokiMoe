@@ -12,6 +12,17 @@ export type LocalPost = {
 
 export const localPosts: LocalPost[] = [
   {
+    slug: "DS",
+    title: "我通关并白金了死亡搁浅",
+    date: "2026-09-22",
+    description: "从 PC 上的半途而废，到 PS5 上 126 小时的白金旅程。Keep on keeping on.",
+    cover: "/images/DS-cover.png",
+    source: "/posts/DS.md",
+    type: "tech",
+    category: "游戏",
+    tags: ["游戏", "死亡搁浅", "白金", "心得"],
+  },
+  {
     slug: "emotional-boundaries",
     title: "你不必做别人的树洞",
     date: "2026-08-03",
