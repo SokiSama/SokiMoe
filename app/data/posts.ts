@@ -15,7 +15,7 @@ export const localPosts: LocalPost[] = [
     slug: "DS",
     title: "我通关并白金了死亡搁浅",
     date: "2026-09-22",
-    description: "从 PC 上的半途而废，到 PS5 上 126 小时的白金旅程。Keep on keeping on.",
+    description: "体验了一把送快递的时光",
     cover: "/images/DS-cover.png",
     source: "/posts/DS.md",
     type: "tech",
