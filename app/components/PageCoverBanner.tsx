@@ -18,8 +18,6 @@ export function PageCoverBanner({
   imageFit = "cover",
 }: PageCoverBannerProps) {
   const coverStyle = {
-    backgroundImage: `url("${image}")`,
-    backgroundPosition: imagePosition,
     "--route-cover-image": `url("${image}")`,
     "--route-cover-position": imagePosition,
   } as CSSProperties;
@@ -30,6 +28,7 @@ export function PageCoverBanner({
       style={coverStyle}
       aria-label={`${title}页面封面`}
     >
+      <div className="route-cover__artwork" aria-hidden="true" />
       <div className="route-cover__shade" aria-hidden="true" />
       <div className="route-cover__card">
         <span>{eyebrow}</span>

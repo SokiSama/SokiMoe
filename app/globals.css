@@ -296,9 +296,6 @@ html[data-theme="dark"] body { background: #15161b; color: #edeef3; color-scheme
 .friends a:hover { color: var(--primary); }
 .footer { padding: 24px; color: var(--muted); text-align: center; font-size: 12px; }
 .site-footer { position: relative; padding: 22px 20px 24px; overflow: hidden; line-height: 1.65; }
-.site-footer::before, .site-footer::after { content: ""; position: absolute; width: 17px; height: 17px; opacity: .52; pointer-events: none; }
-.site-footer::before { left: 16%; top: 20px; background: #ffd8e9; clip-path: polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%); }
-.site-footer::after { right: 20%; top: 54px; background: #ffd1e7; clip-path: polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%); }
 .site-footer p { margin: 0; }
 .site-footer p:first-child { color: color-mix(in srgb, var(--text) 82%, var(--muted)); font-size: 17px; }
 .site-footer p:last-child { margin-top: 3px; color: color-mix(in srgb, var(--text) 58%, var(--muted)); font-size: 15px; }
@@ -3269,16 +3266,35 @@ a { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
   .friends-main-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 294px;
-    align-items: start;
+    align-items: stretch;
     gap: 20px;
   }
-  .friends-profile-sidebar { min-width: 0; }
-  .friends-profile-sticky {
-    position: sticky;
-    top: calc(var(--site-header-height) + var(--sidebar-sticky-gap));
+  .friends-profile-sidebar {
     min-width: 0;
+    min-height: 0;
+    display: flex;
+  }
+  .friends-profile-sticky {
+    position: static;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
     display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     gap: 16px;
+  }
+  /* Grow only the circle card; the train card keeps its natural height. */
+  .friends-profile-sticky > .friend-circle-card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .friends-profile-sticky .friend-circle-heading { flex-shrink: 0; }
+  .friends-profile-sticky .friend-circle-list {
+    flex: 1;
+    min-height: 0;
+    grid-auto-rows: minmax(min-content, 1fr);
+    overflow-y: auto;
   }
   .friends-main-grid > .friends-content {
     width: 100%;
@@ -5357,7 +5373,7 @@ html[data-theme="dark"] .site-header.home-floating .primary-nav a.active {
 .home-profile-socials svg {
   width: 25px;
   height: 25px;
-  color: #96969f;
+  color: #7b7b84;
 }
 
 .home-memory {
@@ -6361,22 +6377,32 @@ html[data-theme="dark"] .site-header.home-floating .brand-avatar {
 }
 
 .route-cover {
+  --route-cover-tail: 240px;
   position: relative;
   z-index: 1;
   isolation: isolate;
   overflow: hidden;
   min-height: clamp(460px, 62vh, 650px);
-  background-color: #eef3f8;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
-.route-cover--contain {
+.route-cover__artwork {
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 calc(-1 * var(--route-cover-tail));
+  overflow: hidden;
+  background-image: var(--route-cover-image);
+  background-position: var(--route-cover-position);
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.route-cover--contain .route-cover__artwork {
   background-image: none !important;
 }
 
-.route-cover--contain::before,
-.route-cover--contain::after {
+.route-cover--contain .route-cover__artwork::before,
+.route-cover--contain .route-cover__artwork::after {
   position: absolute;
   z-index: 0;
   content: "";
@@ -6386,14 +6412,14 @@ html[data-theme="dark"] .site-header.home-floating .brand-avatar {
   pointer-events: none;
 }
 
-.route-cover--contain::before {
+.route-cover--contain .route-cover__artwork::before {
   inset: -24px;
   background-size: cover;
   filter: blur(18px) saturate(.82);
   opacity: .72;
 }
 
-.route-cover--contain::after {
+.route-cover--contain .route-cover__artwork::after {
   inset: 0;
   background-size: cover;
   transform: scale(.82);
@@ -6404,7 +6430,7 @@ html[data-theme="dark"] .site-header.home-floating .brand-avatar {
 .route-cover__shade {
   position: absolute;
   z-index: 1;
-  inset: 0;
+  inset: 0 0 calc(-1 * var(--route-cover-tail));
   background:
     linear-gradient(180deg, rgba(255, 255, 255, .08) 42%, rgba(244, 247, 251, .48) 78%, var(--bg) 100%),
     linear-gradient(90deg, rgba(255, 255, 255, .12), transparent 40%, rgba(255, 255, 255, .06));
@@ -8859,7 +8885,7 @@ html[data-theme="dark"] .route-cover__shade {
 
 /* Final route-cover authority: title sits directly inside the artwork. */
 .route-cover {
-  overflow: hidden;
+  overflow: visible;
   min-height: clamp(500px, 66vh, 680px);
 }
 
@@ -8954,6 +8980,7 @@ html[data-theme="dark"] .route-cover__card p {
 
 @media (max-width: 768px) {
   .route-cover {
+    --route-cover-tail: 180px;
     min-height: 430px;
   }
 
@@ -9876,6 +9903,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
   .anime-rows,
   .acg-right
 ) > *,
+.home-profile-panel,
 .thoughts-page .thought-card {
   --friends-reveal-delay: .08s;
   opacity: 0;
@@ -10041,6 +10069,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
   ) > *,
   .acg-shell > .acg-center,
   .acg-shell > .acg-right,
+  .home-profile-panel,
   .thoughts-page .thought-card {
     opacity: 1;
     animation: none !important;
