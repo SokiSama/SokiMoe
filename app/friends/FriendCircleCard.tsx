@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 type FriendArticle = {
   title: string;
+  summary?: string;
   url: string;
   publishedAt: string;
   siteName: string;
@@ -97,6 +98,7 @@ export function FriendCircleCard() {
                     {formatPublishedAt(article.publishedAt)}
                   </time>
                 </div>
+                {article.summary && <p className="friend-circle-summary">{article.summary}</p>}
               </div>
             </article>
           ))}

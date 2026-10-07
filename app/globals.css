@@ -3270,13 +3270,13 @@ a { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
     gap: 20px;
   }
   .friends-profile-sidebar {
+    position: relative;
     min-width: 0;
     min-height: 0;
-    display: flex;
   }
   .friends-profile-sticky {
-    position: static;
-    flex: 1;
+    position: absolute;
+    inset: 0;
     min-width: 0;
     min-height: 0;
     display: grid;
@@ -3375,6 +3375,11 @@ a { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
 
 .friend-circle-list {
   display: grid;
+  scrollbar-width: none;
+}
+
+.friend-circle-list::-webkit-scrollbar {
+  display: none;
 }
 
 .friend-circle-item {
@@ -3460,6 +3465,23 @@ a { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
   flex: 0 0 auto;
   color: color-mix(in srgb, var(--muted) 78%, transparent);
   font-variant-numeric: tabular-nums;
+}
+
+.friend-circle-summary {
+  margin: 9px 0 0;
+  display: -webkit-box;
+  overflow: hidden;
+  color: #929299;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+html[data-theme="dark"] .friend-circle-summary {
+  color: #a4a4ac;
 }
 
 .friend-circle-empty {

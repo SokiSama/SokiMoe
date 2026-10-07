@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import friends from "../../../../data/friends.json";
+import { extractFriendArticleSummary } from "../../../lib/friend-feed-summary";
 
 export const runtime = "nodejs";
 export const revalidate = 1800;
@@ -9,6 +10,7 @@ type Friend = (typeof friends)[number] & { rss?: string };
 
 type FriendArticle = {
   title: string;
+  summary: string;
   url: string;
   publishedAt: string;
   siteName: string;
@@ -82,6 +84,7 @@ function parseFeed(xml: string, feedUrl: string, friend: Friend): FriendArticle[
 
     return [{
       title,
+      summary: extractFriendArticleSummary(entry),
       url,
       publishedAt: date.toISOString(),
       siteName: friend.title,
