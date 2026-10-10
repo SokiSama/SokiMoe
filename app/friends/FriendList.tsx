@@ -43,13 +43,13 @@ export function FriendList({ friends }: { friends: Friend[] }) {
     <section id="friend-links" className="card friend-directory">
       <div className="friends-list-head">
         <h2>友人</h2>
+        <small className="friend-random-note">排序完全随机</small>
       </div>
       <div className="friend-grid motion-stagger">
         {orderedFriends.map((friend) => (
           <FriendCard friend={friend} rssUrl={feedUrls[friend.url]} key={friend.url} />
         ))}
       </div>
-      <small className="friend-random-note">排序完全随机</small>
     </section>
   );
 }
