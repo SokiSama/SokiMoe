@@ -10113,6 +10113,89 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 /* Keep the Friends accent aligned with the final soft-pink surface palette. */
+/* Journal cards: a pale cover at rest and a quiet grey surface on interaction. */
+.posts-index-route .immersive-content .posts-index-card.posts-index-card--reference {
+  --journal-surface: #fdfdfd;
+  --journal-active-surface: #e6e9e8;
+  border-color: #dedfdf;
+  background: var(--journal-surface);
+  box-shadow: none;
+  transition: background-color .25s ease, border-color .25s ease;
+}
+
+.posts-index-route .immersive-content .posts-index-card.posts-index-card--reference:is(:hover, :focus-within) {
+  border-color: #d9dddc;
+  background: var(--journal-active-surface);
+  box-shadow: none;
+  transform: none;
+}
+
+.posts-index-route .posts-index-card--reference .posts-index-cover img,
+.posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover img {
+  filter: grayscale(.82) saturate(.25) brightness(1.08);
+  opacity: .3;
+  transform: none;
+}
+
+.posts-index-route .posts-index-card--reference .posts-index-cover::after {
+  background: var(--journal-surface);
+  opacity: .32;
+  transition: background-color .25s ease;
+}
+
+.posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover::after {
+  background: var(--journal-active-surface);
+  opacity: .32;
+}
+
+.posts-index-route .posts-index-card--reference .posts-index-copy h2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+}
+
+.posts-index-route .posts-index-card--reference .posts-index-tags span {
+  background: #f4f4f4;
+  transition: background-color .25s ease;
+}
+
+.posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-tags span {
+  background: #d7dcda;
+}
+
+.posts-index-arrow svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity .2s ease;
+}
+
+.posts-index-arrow-active,
+.posts-index-card-link:is(:hover, :focus-visible) .posts-index-arrow-rest { opacity: 0; }
+.posts-index-card-link:is(:hover, :focus-visible) .posts-index-arrow-active { opacity: 1; }
+
+.posts-index-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -4px;
+  border-radius: inherit;
+}
+
+html[data-theme="dark"] .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference {
+  --journal-surface: #24262b;
+  --journal-active-surface: #303533;
+  border-color: #3c403e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .posts-index-route .posts-index-card--reference,
+  .posts-index-route .posts-index-card--reference *,
+  .posts-index-route .posts-index-card--reference *::after {
+    transition: none !important;
+  }
+}
+
 .friends-route {
   --primary: #d59aae;
   --primary-soft: #f9edf2;

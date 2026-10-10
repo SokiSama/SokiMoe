@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CaretRight } from "@phosphor-icons/react";
+import { ArrowRight, CaretRight } from "@phosphor-icons/react";
 import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
@@ -69,7 +69,10 @@ export default function PostsPage() {
                       <span>{category}</span>
                     </div>
                   </div>
-                  <CaretRight className="posts-index-arrow" weight="bold" aria-hidden="true" />
+                  <span className="posts-index-arrow" aria-hidden="true">
+                    <CaretRight className="posts-index-arrow-rest" weight="bold" />
+                    <ArrowRight className="posts-index-arrow-active" weight="bold" />
+                  </span>
                 </a>
               </article>
             );
