@@ -5753,9 +5753,11 @@ html[data-theme="dark"] .github-contribution-legend i[data-level="0"] {
 }
 
 .page-shell.home-reimagined-shell {
+  position: relative;
+  z-index: 2;
   width: min(calc(100% - 36px), 1180px);
   max-width: 1180px;
-  padding: 238px 0 54px;
+  padding: 258px 0 54px;
   display: block;
 }
 
