@@ -287,8 +287,8 @@ export function MusicPlayerCard({ variant = "sidebar" }: { variant?: "sidebar" |
       <section className="card side-card home-music-card">
         <header className="home-music-heading">
           <div>
-            <span>音乐</span>
-            <h3>那些值得循环的歌曲</h3>
+            <span>MUSIC</span>
+            <h2>那些值得循环的歌曲</h2>
           </div>
         </header>
 

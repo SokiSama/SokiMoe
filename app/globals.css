@@ -6993,16 +6993,17 @@ html[data-theme="dark"] .route-cover__shade {
 
 .home-music-heading > div > span {
   display: block;
-  margin-bottom: 12px;
-  color: #4f9fc9;
+  margin-bottom: 11px;
+  color: #ef77a8;
   font-size: 12px;
   font-weight: 850;
-  letter-spacing: .14em;
+  letter-spacing: .16em;
 }
 
-.home-music-heading h3 {
+.home-music-heading h2 {
   margin: 0;
   font-size: clamp(25px, 2.4vw, 34px);
+  font-weight: 400;
   line-height: 1.25;
   letter-spacing: -.035em;
 }
@@ -7229,7 +7230,7 @@ html[data-theme="dark"] .route-cover__shade {
     align-items: flex-start;
   }
 
-  .home-music-heading h3 {
+  .home-music-heading h2 {
     font-size: 24px;
   }
 
@@ -9210,7 +9211,6 @@ html[data-theme="dark"] .route-cover__card p {
   align-items: stretch;
 }
 
-.home-music-heading > div > span,
 .home-playlist-track-heading {
   color: var(--home-music-accent-strong);
 }
