@@ -10138,7 +10138,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 /* Journal cards use a soft tint sampled from each original cover. */
 .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference {
   --journal-surface: #fdfdfd;
-  --journal-accent: #929e99;
+  --journal-accent: #5f7aa8;
   --journal-active-surface: color-mix(in srgb, var(--journal-accent) 18%, var(--journal-surface));
   border-color: #dedfdf;
   background: var(--journal-surface);

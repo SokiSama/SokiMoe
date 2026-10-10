@@ -1,4 +1,5 @@
 const coverThemes = new Map<string, string>();
+const fallbackTheme = "rgb(95, 122, 168)";
 
 /** Sample the original cover, favouring its dominant coloured pixels. */
 export function getCoverTheme(image: HTMLImageElement): string | undefined {
@@ -20,8 +21,9 @@ export function getCoverTheme(image: HTMLImageElement): string | undefined {
       const [red, green, blue, alpha] = pixels.slice(i, i + 4);
       const high = Math.max(red, green, blue);
       const low = Math.min(red, green, blue);
-      if (alpha < 128 || high < 25 || low > 235) continue;
       const saturation = high ? (high - low) / high : 0;
+      // Ignore white, pale neutrals and greys; use a coloured detail instead.
+      if (alpha < 128 || high < 25 || low > 190 || saturation < .12) continue;
       const weight = (alpha / 255) * (.15 + saturation * saturation * 2);
       const key = (red >> 5) * 64 + (green >> 5) * 8 + (blue >> 5);
       const bucket = buckets.get(key) || { weight: 0, red: 0, green: 0, blue: 0 };
@@ -33,10 +35,20 @@ export function getCoverTheme(image: HTMLImageElement): string | undefined {
     }
 
     const dominant = [...buckets.values()].sort((a, b) => b.weight - a.weight)[0];
-    if (!dominant) return;
+    if (!dominant) {
+      coverThemes.set(source, fallbackTheme);
+      return fallbackTheme;
+    }
     const rgb = [dominant.red, dominant.green, dominant.blue]
       .map((channel) => Math.round(channel / dominant.weight));
-    const theme = `rgb(${rgb.join(", ")})`;
+    // Keep the sampled hue, but prevent a pastel cover producing a white tint.
+    const high = Math.max(...rgb);
+    const low = Math.min(...rgb);
+    const saturation = Math.max((high - low) / high, .32);
+    const visibleRgb = rgb.map((channel) => Math.round(
+      Math.min(high, 180) * (1 - (high - channel) / (high - low) * saturation),
+    ));
+    const theme = `rgb(${visibleRgb.join(", ")})`;
     coverThemes.set(source, theme);
     return theme;
   } catch {
