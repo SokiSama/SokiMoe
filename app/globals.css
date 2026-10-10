@@ -10135,10 +10135,11 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 /* Keep the Friends accent aligned with the final soft-pink surface palette. */
-/* Journal cards: a pale cover at rest and a quiet grey surface on interaction. */
+/* Journal cards use a soft tint sampled from each original cover. */
 .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference {
   --journal-surface: #fdfdfd;
-  --journal-active-surface: #e6e9e8;
+  --journal-accent: #929e99;
+  --journal-active-surface: color-mix(in srgb, var(--journal-accent) 18%, var(--journal-surface));
   border-color: #dedfdf;
   background: var(--journal-surface);
   box-shadow: none;
@@ -10146,7 +10147,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference:is(:hover, :focus-within) {
-  border-color: #d9dddc;
+  border-color: color-mix(in srgb, var(--journal-accent) 30%, var(--journal-surface));
   background: var(--journal-active-surface);
   box-shadow: none;
   transform: none;
@@ -10183,7 +10184,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 .posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-tags span {
-  background: #d7dcda;
+  background: color-mix(in srgb, var(--journal-accent) 28%, var(--journal-surface));
 }
 
 .posts-index-arrow svg {
@@ -10199,14 +10200,14 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 .posts-index-card-link:is(:hover, :focus-visible) .posts-index-arrow-active { opacity: 1; }
 
 .posts-index-card-link:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--journal-accent);
   outline-offset: -4px;
   border-radius: inherit;
 }
 
 html[data-theme="dark"] .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference {
   --journal-surface: #24262b;
-  --journal-active-surface: #303533;
+  --journal-active-surface: color-mix(in srgb, var(--journal-accent) 24%, var(--journal-surface));
   border-color: #3c403e;
 }
 
