@@ -13,9 +13,9 @@ export type LocalPost = {
 export const localPosts: LocalPost[] = [
   {
     slug: "PSN",
-    title: "使用Vibe Coding搓出用来同步奖杯与游戏时长的开源项目",
+    title: "奇思妙想之做出一个可以同时查看多个主机游戏时长的项目",
     date: "2026-10-10",
-    description: "PlayTrace 开发笔记：把 PlayStation 和 Switch 的游玩时长放在一起，慢慢记录下来。",
+    description: "本项目基于vibe coding开发，仅供娱乐",
     cover: "/images/playtrace-cover.png",
     source: "/posts/PSN.md",
     type: "tech",
