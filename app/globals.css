@@ -7253,8 +7253,7 @@ html[data-theme="dark"] .route-cover__shade {
   }
 }
 
-/* Use the same soft card surface on the homepage and immersive pages. */
-.home-about-sections > .card,
+/* Soft card surfaces on immersive pages. */
 .immersive-route .immersive-content .card {
   border: 1px solid color-mix(in srgb, var(--text) 8%, var(--line));
   border-radius: 24px;
@@ -7264,11 +7263,34 @@ html[data-theme="dark"] .route-cover__shade {
   -webkit-backdrop-filter: blur(18px) saturate(1.08);
 }
 
-html[data-theme="dark"] .home-about-sections > .card,
 html[data-theme="dark"] .immersive-route .immersive-content .card {
   border-color: rgba(255, 255, 255, .07);
   background: rgba(31, 32, 40, .9);
   box-shadow: 0 20px 52px rgba(0, 0, 0, .24);
+}
+
+/* All homepage sections share the profile panel's surface and rounded corners. */
+.home-profile-panel,
+.home-about-sections > .card {
+  border: 1px solid rgba(255, 255, 255, .72);
+  border-radius: 34px;
+  background: rgba(255, 255, 255, .91);
+  box-shadow: 0 30px 80px rgba(51, 65, 85, .16);
+  backdrop-filter: blur(22px) saturate(1.08);
+  -webkit-backdrop-filter: blur(22px) saturate(1.08);
+}
+
+html[data-theme="dark"] .home-profile-panel,
+html[data-theme="dark"] .home-about-sections > .card {
+  border-color: rgba(255, 255, 255, .1);
+  background: rgba(31, 32, 40, .93);
+}
+
+@media (max-width: 680px) {
+  .home-profile-panel,
+  .home-about-sections > .card {
+    border-radius: 25px;
+  }
 }
 
 /* Homepage Bangumi anime collection */
