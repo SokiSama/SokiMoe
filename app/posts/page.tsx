@@ -46,7 +46,7 @@ export default function PostsPage() {
         eyebrow="ALL JOURNALS"
         title="文章，是生活留下的注脚"
         description={`这里收录了 ${posts.length} 篇旅行、技术与生活记录。`}
-        image="/posts-cover-sky.png"
+        image="/posts-cover-ocean.png"
         imagePosition="center center"
       />
 
