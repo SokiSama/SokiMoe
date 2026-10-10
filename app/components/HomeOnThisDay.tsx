@@ -31,7 +31,6 @@ export function HomeOnThisDay() {
     <section className="card home-site-timeline" aria-labelledby="home-site-timeline-title">
       <header className="home-site-timeline__heading">
         <div>
-          <span>时间轨迹</span>
           <h2 id="home-site-timeline-title">记录网站开发的进程</h2>
         </div>
       </header>
