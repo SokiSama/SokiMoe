@@ -69,7 +69,7 @@ export function SiteHeader({ active, onOpenMenu, floating = false }: { active?: 
         </a>
         <PrimaryNav active={active} className="main-nav primary-nav" />
         <div className="header-actions top-actions">
-          <a className="header-action rss-action" href="https://www.soki.moe/api/rss" target="_blank" rel="noreferrer" aria-label="RSS 订阅" title="RSS 订阅"><RssSimple weight="bold" /></a>
+          <a className="header-action rss-action" href="/api/rss" target="_blank" rel="noreferrer" aria-label="RSS 订阅" title="RSS 订阅"><RssSimple weight="bold" /></a>
           <button className="header-action" onClick={() => chooseTheme(theme === "dark" ? "light" : "dark")} aria-pressed={theme === "dark"} aria-label={theme === "dark" ? "切换到浅色模式" : "切换到深色模式"} title={theme === "dark" ? "浅色模式" : "深色模式"}>{theme === "dark" ? <Sun weight="bold" /> : <Moon weight="bold" />}</button>
         </div>
       </div></header>

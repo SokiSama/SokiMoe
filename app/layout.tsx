@@ -5,6 +5,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Soki Sugar Life",
   description: "一个清爽、响应式的三栏个人博客主题。",
+  alternates: {
+    types: { "application/rss+xml": "https://www.soki.moe/api/rss" },
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
