@@ -5755,6 +5755,8 @@ html[data-theme="dark"] .github-contribution-legend i[data-level="0"] {
 .page-shell.home-reimagined-shell {
   position: relative;
   z-index: 2;
+  /* The top spacing overlaps the profile links; let clicks pass through it. */
+  pointer-events: none;
   width: min(calc(100% - 36px), 1180px);
   max-width: 1180px;
   padding: 258px 0 54px;
@@ -5762,6 +5764,7 @@ html[data-theme="dark"] .github-contribution-legend i[data-level="0"] {
 }
 
 .home-reimagined-shell > .home-feed {
+  pointer-events: auto;
   width: 100%;
   padding: 0;
 }
