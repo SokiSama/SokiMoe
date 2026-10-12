@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { CSSProperties } from "react";
-import { ArrowRight, CaretRight } from "@phosphor-icons/react";
+import { CaretRight } from "@phosphor-icons/react";
 import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { localPosts, type LocalPost } from "../data/posts";
-import { getCoverTheme } from "../lib/cover-theme";
 
 const postDateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -29,7 +27,6 @@ export default function PostsPage() {
   const pageSize = 5;
   const pageCount = Math.ceil(posts.length / pageSize);
   const [page, setPage] = useState(1);
-  const [coverThemes, setCoverThemes] = useState<Record<string, string>>({});
   const pageItems = posts.slice((page - 1) * pageSize, page * pageSize);
 
   const changePage = (nextPage: number) => {
@@ -60,23 +57,12 @@ export default function PostsPage() {
               <article
                 className="posts-index-card posts-index-card--reference"
                 key={post.slug}
-                style={coverThemes[post.slug] ? { "--journal-accent": coverThemes[post.slug] } as CSSProperties : undefined}
               >
                 <a className="posts-index-card-link" href={`/posts/${post.slug}`} aria-label={`阅读：${post.title}`}>
                   <div className="posts-index-cover" aria-hidden="true">
                     <img
                       src={post.cover || "/home-cover.webp"}
                       alt=""
-                      ref={(image) => {
-                        // Cached images may finish loading before React attaches onLoad.
-                        if (!image?.complete || coverThemes[post.slug]) return;
-                        const theme = getCoverTheme(image);
-                        if (theme) setCoverThemes((current) => current[post.slug] === theme ? current : { ...current, [post.slug]: theme });
-                      }}
-                      onLoad={(event) => {
-                        const theme = getCoverTheme(event.currentTarget);
-                        if (theme) setCoverThemes((current) => current[post.slug] === theme ? current : { ...current, [post.slug]: theme });
-                      }}
                     />
                   </div>
                   <div className="posts-index-copy">
@@ -90,8 +76,7 @@ export default function PostsPage() {
                     </div>
                   </div>
                   <span className="posts-index-arrow" aria-hidden="true">
-                    <CaretRight className="posts-index-arrow-rest" weight="bold" />
-                    <ArrowRight className="posts-index-arrow-active" weight="bold" />
+                    <CaretRight weight="bold" />
                   </span>
                 </a>
               </article>
