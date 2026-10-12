@@ -10141,7 +10141,7 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 /* Keep the Friends accent aligned with the final soft-pink surface palette. */
-/* Journal cards keep their original covers and stable surfaces on hover. */
+/* Journal covers stay muted at rest and show their original colours on hover. */
 .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference,
 .posts-index-route .immersive-content .posts-index-card.posts-index-card--reference:is(:hover, :focus-within) {
   --journal-surface: #fdfdfd;
@@ -10155,18 +10155,35 @@ html[data-theme="dark"] .archive-route .site-header.home-floating .primary-nav a
 }
 
 .posts-index-route .posts-index-card--reference .posts-index-cover img,
+html[data-theme="dark"] .posts-index-route .posts-index-card--reference .posts-index-cover img {
+  filter: grayscale(.82) saturate(.25) brightness(1.08);
+  opacity: .3;
+  transform: none;
+  transition: filter .25s ease, opacity .25s ease;
+}
+
+html[data-theme="dark"] .posts-index-route .posts-index-card--reference .posts-index-cover img {
+  filter: grayscale(.62) saturate(.5) brightness(.72);
+  opacity: .58;
+}
+
 .posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover img,
-html[data-theme="dark"] .posts-index-route .posts-index-card--reference .posts-index-cover img,
 html[data-theme="dark"] .posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover img {
   filter: none;
   opacity: 1;
   transform: none;
-  transition: none;
 }
 
 .posts-index-route .posts-index-card--reference .posts-index-cover::after,
-.posts-index-route .posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover::after {
-  content: none;
+html[data-theme="dark"] .posts-index-route .posts-index-card--reference .posts-index-cover::after {
+  content: "";
+  background: var(--journal-surface);
+  opacity: .32;
+  transition: opacity .25s ease;
+}
+
+.posts-index-route .posts-index-card.posts-index-card--reference:is(:hover, :focus-within) .posts-index-cover::after {
+  opacity: 0;
 }
 
 .posts-index-route .posts-index-card--reference .posts-index-copy h2 {
