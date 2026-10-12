@@ -13,7 +13,7 @@ export type LocalPost = {
 export const localPosts: LocalPost[] = [
   {
     slug: "PSN",
-    title: "奇思妙想之做出一个可以同时查看多个主机游戏时长的项目",
+    title: "一个可以记录多平台的奖杯与时长的项目",
     date: "2026-10-10",
     description: "本项目基于vibe coding开发，仅供娱乐",
     cover: "/images/playtrace-cover.png",
