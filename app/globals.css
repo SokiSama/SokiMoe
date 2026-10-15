@@ -9677,54 +9677,108 @@ html[data-theme="dark"] .route-cover__card p {
 
 .cyber-world-lightbox {
   position: fixed;
-  z-index: 120;
   inset: 0;
-  padding: 28px;
-  display: grid;
-  place-items: center;
-  background: rgba(10, 9, 16, .88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: max(76px, env(safe-area-inset-top)) max(84px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(84px, env(safe-area-inset-left));
+  overflow: hidden;
+  border: 0;
+  color: #fff;
+  background: transparent;
   animation: cyberWorldFadeIn .2s ease-out both;
 }
 
+.cyber-world-lightbox[open] {
+  display: grid;
+  place-items: center;
+}
+
+.cyber-world-lightbox::backdrop {
+  background: rgba(10, 9, 16, .88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 .cyber-world-lightbox figure {
-  max-width: min(1500px, 94vw);
-  max-height: 90vh;
+  min-width: 0;
+  max-width: min(1500px, 100%);
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 .cyber-world-lightbox figure img {
   max-width: 100%;
-  max-height: calc(90vh - 46px);
+  max-height: calc(100vh - 180px);
+  max-height: calc(100dvh - 180px);
   display: block;
   border-radius: 16px;
   object-fit: contain;
   box-shadow: 0 28px 90px rgba(0, 0, 0, .5);
 }
 
-.cyber-world-lightbox__close {
-  position: fixed;
+.cyber-world-lightbox figcaption {
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.cyber-world-lightbox figcaption span {
+  display: block;
+  color: rgba(255, 255, 255, .7);
+  font-variant-numeric: tabular-nums;
+}
+
+.cyber-world-lightbox > button {
+  position: absolute;
   z-index: 1;
-  top: 22px;
-  right: 22px;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, .2);
   border-radius: 50%;
   color: #fff;
-  background: rgba(255, 255, 255, .1);
+  background: rgba(35, 33, 44, .85);
   cursor: pointer;
+  touch-action: manipulation;
 }
 
-.cyber-world-lightbox__close:hover,
-.cyber-world-lightbox__close:focus-visible {
-  background: rgba(255, 255, 255, .18);
+.cyber-world-lightbox__close {
+  top: max(20px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
 }
 
-.cyber-world-lightbox__close svg {
+.cyber-world-lightbox__previous,
+.cyber-world-lightbox__next {
+  top: calc(50% - 24px);
+}
+
+.cyber-world-lightbox__previous {
+  left: max(20px, env(safe-area-inset-left));
+}
+
+.cyber-world-lightbox__next {
+  right: max(20px, env(safe-area-inset-right));
+}
+
+.cyber-world-lightbox > button:hover,
+.cyber-world-lightbox > button:focus-visible {
+  background: rgba(75, 71, 90, .95);
+}
+
+.cyber-world-lightbox > button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.cyber-world-lightbox > button svg {
   width: 20px;
   height: 20px;
 }
@@ -9782,12 +9836,31 @@ html[data-theme="dark"] .route-cover__card p {
   }
 
   .cyber-world-lightbox {
-    padding: 16px;
+    padding: max(76px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(96px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  .cyber-world-lightbox figure img {
+    max-height: calc(100vh - 250px);
+    max-height: calc(100dvh - 250px);
   }
 
   .cyber-world-lightbox__close {
-    top: 14px;
-    right: 14px;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+  }
+
+  .cyber-world-lightbox__previous,
+  .cyber-world-lightbox__next {
+    top: auto;
+    bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .cyber-world-lightbox__previous {
+    left: calc(50% - 64px);
+  }
+
+  .cyber-world-lightbox__next {
+    right: calc(50% - 64px);
   }
 }
 
