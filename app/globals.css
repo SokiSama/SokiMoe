@@ -2441,7 +2441,10 @@ a {
 }
 .back-top::before {
   content: "";
-  position: static;
+  /* Center independently of the fallback text's anonymous grid item. */
+  position: absolute;
+  inset: 0;
+  margin: auto;
   width: 10px;
   height: 10px;
   border-top: 3px solid #374151;
