@@ -1,3 +1,5 @@
+.compact { display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; color: var(--text); background: transparent; cursor: pointer; }
+.compact:hover { color: var(--primary); }
 .control { display: inline-flex; flex: none; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--home-line); border-radius: 999px; background: var(--home-soft); }
 .control button { position: relative; display: grid; place-items: center; width: 34px; height: 27px; padding: 0; border: 0; border-radius: 999px; color: var(--home-muted); background: transparent; cursor: pointer; transition: background-color .18s, color .18s, box-shadow .18s; }
 .control button[aria-pressed="true"] { color: var(--home-text); background: var(--home-card); box-shadow: 0 2px 8px #00000012; }

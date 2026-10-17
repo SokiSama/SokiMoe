@@ -21,18 +21,21 @@
 .meta > span, .readingStats > span { display: inline-flex; align-items: center; gap: 8px; }
 .meta svg, .readingStats svg { flex: none; }
 .readingStats { display: flex; flex-wrap: wrap; gap: 20px; padding: 15px 0; margin-top: 25px; border-top: 1px solid var(--home-line); border-bottom: 1px solid var(--home-line); color: var(--home-muted); font-size: 14px; }
-.hero { position: relative; width: min(920px, calc(100% - 48px)); aspect-ratio: 16 / 9; margin: 48px auto 0; overflow: hidden; border-radius: 16px; background: var(--home-soft); }
-.hero img { object-fit: cover; }
 .readingLayout { position: relative; width: min(720px, calc(100% - 48px)); margin: 44px auto 0; }
-.progressSidebar { --primary: #ef77a8; --text: #334155; --muted: #8992a3; --line: #e8ebf1; position: absolute; top: 0; bottom: 0; right: calc(100% + 48px); width: 240px; }
-.progressSidebar :global(.article-progress) { position: sticky; top: 100px; max-height: calc(100vh - 130px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-.progressSidebar :global(.article-progress-directory) { margin: 0; padding: 8px 4px 12px 18px; border: 0; background: transparent; box-shadow: none; border-radius: 0; }
-.progressSidebar :global(.article-progress-directory ol) { margin: 0; padding-left: 0; border-left: 0; }
-.progressSidebar :global(.article-progress-directory a) { padding: 6px 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
-.progressSidebar :global(.article-progress-directory a:hover) { color: var(--text); }
-.progressSidebar :global(.article-progress-directory a.active) { color: var(--text); }
-.progressSidebar :global(.article-progress-directory a.active::before) { left: -18px; width: 4px; height: 34px; border-radius: 999px; background: var(--primary); box-shadow: none; }
-:global(html[data-theme="dark"]) .progressSidebar { --text: #dce3ed; --muted: #929eaf; --line: #353a44; }
+.progressSidebar { --toc-accent: #e60033; position: absolute; top: 0; bottom: 0; right: calc(100% + 48px); width: 240px; }
+.toc { position: sticky; top: 100px; display: flex; flex-direction: column; max-height: calc(100dvh - 130px); padding: 0 4px; }
+.tocTitle { flex: none; margin: 0 0 17px; color: var(--home-muted); font-family: var(--article-display); font-size: 13px; font-weight: 400; letter-spacing: .28em; }
+.tocList { min-height: 0; margin: 0; padding: 0; overflow-y: auto; list-style: none; scrollbar-width: thin; scrollbar-color: var(--home-line) transparent; }
+.tocList li { margin: 0 0 9px; padding-left: calc(var(--toc-depth) * 20px); }
+.tocLink { position: relative; display: block; padding: 2px 0 2px 19px; color: var(--home-muted); font-size: 15px; font-weight: 400; line-height: 1.7; overflow-wrap: anywhere; transition: color .2s; }
+.tocLink::before { content: ""; position: absolute; top: .58em; left: 2px; width: 6px; height: 9px; border-left: 1.5px solid color-mix(in srgb, var(--home-muted) 60%, transparent); border-bottom: 1.5px solid color-mix(in srgb, var(--home-muted) 60%, transparent); }
+.tocLink:hover, .tocLink.tocActive { color: var(--home-text); }
+.tocLink.tocActive::before { border-color: var(--toc-accent); }
+.tocEmpty { margin: 0; color: var(--home-muted); font-size: 13px; line-height: 1.7; }
+.tocProgress { flex: none; display: flex; align-items: center; gap: 12px; margin-top: 28px; }
+.tocProgressTrack { flex: 1; height: 18px; overflow: hidden; background: radial-gradient(circle, color-mix(in srgb, var(--home-muted) 40%, transparent) .6px, transparent .8px) 0 0 / 3px 3px; }
+.tocProgressTrack > span { display: block; height: 100%; background: repeating-conic-gradient(var(--toc-accent) 0% 25%, transparent 0% 50%) 0 0 / 3px 3px; transition: width .18s ease-out; }
+.tocProgressValue { min-width: 3ch; color: var(--home-muted); font-size: 13px; line-height: 1; font-variant-numeric: tabular-nums; }
 .prose { min-width: 0; min-height: 220px; color: var(--home-text); font-size: 17px; font-weight: 400; line-height: 1.95; overflow-wrap: break-word; }
 .prose > :first-child { margin-top: 0; }
 .prose p { margin: 0 0 25px; }
@@ -75,10 +78,8 @@
 }
 @media (max-width: 980px) {
   .progressSidebar { position: static; width: 100%; margin-bottom: 32px; }
-  .progressSidebar :global(.article-progress) { position: static; max-height: none; padding: 0; }
-  .progressSidebar :global(.article-progress-directory) { max-height: 170px; overflow-y: auto; }
-  .progressSidebar :global(.article-progress-status) { margin: 0; }
-  .hero { width: min(920px, calc(100% - 48px)); }
+  .toc { position: static; max-height: none; padding: 0; }
+  .tocList { max-height: 200px; }
 }
 @media (max-width: 680px) {
   .articleHeader, .readingLayout, .comments { width: calc(100% - 40px); }
@@ -87,7 +88,6 @@
   .articleHeader h1::before { width: 4px; top: .24em; }
   .meta { gap: 7px 14px; font-size: 12px; }
   .readingStats { margin-top: 20px; padding: 12px 0; font-size: 12px; }
-  .hero { width: calc(100% - 32px); margin-top: 28px; border-radius: 12px; }
   .readingLayout { margin-top: 30px; }
   .prose { font-size: 15px; line-height: 1.95; }
   .prose p { margin-bottom: 22px; }

@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import {
-  ArrowCircleUp, ArrowLeft, CalendarBlank, Clock, Folder, Hash,
+  ArrowLeft, CalendarBlank, Clock, Folder, Hash,
   RssSimple,
 } from "@phosphor-icons/react";
 import { JournalHeader } from "../../components/JournalHeader";
@@ -42,6 +41,7 @@ function extractToc(markdown: string): TocItem[] {
 function ArticleReadingProgress({ items }: { items: TocItem[] }) {
   const [progress, setProgress] = useState(0);
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+  const topLevel = items.length ? Math.min(...items.map(item => item.level)) : 1;
 
   useEffect(() => {
     const updateReadingState = () => {
@@ -66,14 +66,15 @@ function ArticleReadingProgress({ items }: { items: TocItem[] }) {
 
   return (
     <aside className={styles.progressSidebar}>
-      <nav className="article-progress" aria-label="文章阅读进度">
-        <div className="article-progress-status" aria-label={`阅读进度 ${progress}%`}>
-          <i className="article-progress-ring" style={{ "--article-progress-angle": `${progress * 3.6}deg` } as CSSProperties} aria-hidden="true" /><strong>{progress}%</strong>
+      <nav className={styles.toc} aria-label="文章目录">
+        <h2 className={styles.tocTitle}>目录</h2>
+        {items.length ? <ol className={styles.tocList}>{items.map(item => <li style={{ "--toc-depth": item.level - topLevel } as CSSProperties} key={item.id}><a className={`${styles.tocLink} ${activeId === item.id ? styles.tocActive : ""}`} href={`#${item.id}`} aria-current={activeId === item.id ? "location" : undefined}>{item.title}</a></li>)}</ol> : <p className={styles.tocEmpty}>这篇文章暂时没有章节标题。</p>}
+        <div className={styles.tocProgress}>
+          <div className={styles.tocProgressTrack} role="progressbar" aria-label="阅读进度" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
+            <span style={{ width: `${progress}%` }} />
+          </div>
+          <span className={styles.tocProgressValue}>{progress}%</span>
         </div>
-        <section className="article-progress-directory article-toc" aria-label="文章目录">
-          {items.length ? <ol>{items.map(item => <li className={`toc-level-${item.level}`} key={item.id}><a className={activeId === item.id ? "active" : ""} href={`#${item.id}`} aria-current={activeId === item.id ? "location" : undefined}>{item.title}</a></li>)}</ol> : <p>这篇文章暂时没有章节标题。</p>}
-        </section>
-        <a href="#top"><ArrowCircleUp size={24} weight="regular" aria-hidden="true" /><span>回到顶部</span></a>
       </nav>
     </aside>
   );
@@ -116,7 +117,6 @@ export default function LocalPostPage() {
               <div className={styles.meta}><span><CalendarBlank size={15} /><time dateTime={post.date}>{post.date}</time></span><span><Folder size={15} />{category}</span>{post.tags[0] && <span><Hash size={15} />{post.tags[0]}</span>}</div>
               <div className={styles.readingStats} aria-live="polite"><span>{content ? reading.count : "—"} 字</span><span><Clock size={15} />{content ? reading.minutes : "—"} 分钟</span></div>
             </header>
-            <figure className={styles.hero}><Image src={post.cover || "/home-cover.webp"} alt={`${post.title} 封面`} fill sizes="(max-width: 980px) 100vw, 920px" priority /></figure>
             <div className={styles.readingLayout}>
               <ArticleReadingProgress items={tocItems} />
               <article id="article-content" className={styles.prose}>

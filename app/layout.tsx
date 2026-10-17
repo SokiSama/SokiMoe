@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import SidebarStickyFollow from "./components/SidebarStickyFollow";
+import { SiteMotion } from "./components/SiteMotion";
 import "./globals.css";
+import "./motion.css";
 
 export const metadata: Metadata = {
   title: "Soki Sugar Life",
@@ -11,5 +13,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="zh-CN" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var m=localStorage.getItem('soki-theme-mode')||'system';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'}catch(e){}})();` }} /></head><body><SidebarStickyFollow />{children}</body></html>;
+  return <html lang="zh-CN" data-scroll-behavior="smooth" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var m=localStorage.getItem('soki-theme-mode')||'system';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'}catch(e){}})();` }} /></head><body><SidebarStickyFollow /><SiteMotion />{children}</body></html>;
 }

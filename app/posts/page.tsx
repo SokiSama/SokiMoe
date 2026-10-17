@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { CaretRight } from "@phosphor-icons/react";
+import { useState, type CSSProperties } from "react";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { PageCoverBanner } from "../components/PageCoverBanner";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { localPosts, type LocalPost } from "../data/posts";
+import homeStyles from "../components/HomePage.module.css";
 
 const postDateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -49,22 +50,16 @@ export default function PostsPage() {
 
       <main id="top" className="posts-index immersive-content">
         <h1 className="posts-index-sr-title">文章</h1>
-        <section id="posts-list-start" className="posts-index-list" aria-label="全部文章">
+        <section id="posts-list-start" className="posts-index-list" aria-label="全部文章" data-reveal-group>
           {pageItems.map((post) => {
             const category = getPostCategory(post);
 
             return (
               <article
-                className="posts-index-card posts-index-card--reference"
+                className="posts-index-card posts-index-card--reference posts-index-card--text"
                 key={post.slug}
               >
                 <a className="posts-index-card-link" href={`/posts/${post.slug}`} aria-label={`阅读：${post.title}`}>
-                  <div className="posts-index-cover" aria-hidden="true">
-                    <img
-                      src={post.cover || "/home-cover.webp"}
-                      alt=""
-                    />
-                  </div>
                   <div className="posts-index-copy">
                     <time className="posts-index-date-line" dateTime={post.date}>
                       {formatPostDate(post.date)}
@@ -84,12 +79,12 @@ export default function PostsPage() {
           })}
         </section>
 
-        <nav className="posts-pagination" aria-label="文章分页">
-          <button type="button" onClick={() => changePage(page - 1)} disabled={page === 1} aria-label="上一页">‹</button>
+        <nav className={homeStyles.pagination} aria-label="文章分页" style={{ "--home-accent": "#3b82f6", "--home-accent-soft": "#eaf3ff", "--home-text": "var(--text)", "--home-card": "var(--card)", "--home-line": "var(--line)" } as CSSProperties}>
+          <button type="button" className={homeStyles.paginationDirection} onClick={() => changePage(page - 1)} disabled={page === 1}><CaretLeft size={17} aria-hidden="true" />上一页</button>
           {Array.from({ length: pageCount }, (_, index) => index + 1).map((pageNumber) => (
             <button
               type="button"
-              className={pageNumber === page ? "active" : undefined}
+              className={pageNumber === page ? homeStyles.currentPage : undefined}
               aria-current={pageNumber === page ? "page" : undefined}
               onClick={() => changePage(pageNumber)}
               key={pageNumber}
@@ -97,7 +92,7 @@ export default function PostsPage() {
               {pageNumber}
             </button>
           ))}
-          <button type="button" onClick={() => changePage(page + 1)} disabled={page === pageCount} aria-label="下一页">›</button>
+          <button type="button" className={homeStyles.paginationDirection} onClick={() => changePage(page + 1)} disabled={page === pageCount}>下一页<CaretRight size={17} aria-hidden="true" /></button>
         </nav>
       </main>
 

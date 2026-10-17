@@ -1,7 +1,9 @@
-export type VrcPhoto = { src: string; alt: string; capturedAt?: string };
+import additions from "../../data/vrc-photo-additions.json";
+
+export type VrcPhoto = { src: string; alt: string; capturedAt?: string; thumbnail?: string; width?: number; height?: number };
 
 // Add capturedAt only when the original shooting date is known.
-export const vrcPhotos: readonly VrcPhoto[] = [
+const existingVrcPhotos: readonly VrcPhoto[] = [
   {
     src: "/images/vrc/cyber-world-01.webp",
     alt: "暖色室内三位 VRChat 朋友的合影",
@@ -47,3 +49,7 @@ export const vrcPhotos: readonly VrcPhoto[] = [
     alt: "暖色木屋中两位 VRChat 朋友的合影",
   },
 ] as const;
+
+export const vrcPhotos: readonly VrcPhoto[] = [...existingVrcPhotos, ...additions];
+
+export const photoThumbnail = (photo: VrcPhoto) => photo.thumbnail ?? photo.src.replace(/\.webp$/, "-thumb.webp");

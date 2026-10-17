@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- Friends provide avatars on arbitrary external hosts; keep direct lazy-loaded images. */
 "use client";
 
-import { RssSimple, Wind } from "@phosphor-icons/react";
+import { RssSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import styles from "./FriendsPage.module.css";
 
@@ -18,7 +18,6 @@ export function FriendCard({ friend, rssUrl }: { friend: Friend; rssUrl?: string
   return (
     <a className={styles.friendCard} href={friend.url} target="_blank" rel="noopener noreferrer">
       {!avatarFailed && <img className={styles.avatarBackdrop} src={friend.avatar} alt="" aria-hidden="true" referrerPolicy="no-referrer" loading="lazy" decoding="async" />}
-      <Wind className={styles.cardDecoration} size={42} aria-hidden="true" />
       {rssUrl && (
         <span className={styles.rss} title="支持 RSS 订阅" aria-label="支持 RSS 订阅">
           <RssSimple weight="bold" aria-hidden="true" />

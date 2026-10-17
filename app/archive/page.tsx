@@ -21,12 +21,12 @@ export default function ArchivePage() {
       <div className={`${homeStyles.home} ${styles.page}`} id="top">
         <JournalHeader active="archive" />
         <main className={styles.main}>
-          <header className={styles.intro}>
+          <header data-reveal className={styles.intro}>
             <span className={styles.eyebrow}>TIMELINE</span>
             <h1>文章归档</h1>
             <p>共 {posts.length} 篇文章</p>
           </header>
-          <div className={styles.years}>
+          <div className={styles.years} data-reveal-group>
             {years.map(([year, yearPosts]) => (
               <section className={styles.year} key={year} aria-labelledby={`archive-${year}`}>
                 <header className={styles.yearHeading}>

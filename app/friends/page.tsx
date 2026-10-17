@@ -40,7 +40,7 @@ export default function FriendsPage() {
     <div className={`${homeStyles.home} ${styles.page}`} id="top">
       <JournalHeader active="friends" />
       <main className={styles.main}>
-        <header className={styles.intro}>
+        <header data-reveal className={styles.intro}>
           <span>FRIENDS</span>
           <h1>友链</h1>
         </header>

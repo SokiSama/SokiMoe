@@ -10331,3 +10331,6 @@ html[data-theme="dark"] .friends-route {
   --secondary: #c88ea2;
   --secondary-soft: #35262d;
 }
+
+/* Text-only journal cards use the full card width. */
+.posts-index-route .posts-index-card--reference.posts-index-card--text .posts-index-copy { width: 100%; padding-right: 56px; }

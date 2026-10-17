@@ -1,0 +1,29 @@
+@keyframes soki-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes soki-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes soki-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes soki-dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+[data-motion-state="pending"] { opacity: 0; }
+[data-motion-state="visible"] { animation: soki-reveal .32s ease var(--reveal-delay, 0ms) backwards; }
+[data-motion-state="pending"]:focus-within { opacity: 1; }
+dialog[open] { animation: soki-dialog-in .2s cubic-bezier(.22, 1, .36, 1); }
+dialog[open]::backdrop { animation: soki-fade-in .2s ease; }
+::view-transition-old(root) { animation: soki-fade-out .2s ease-out; }
+::view-transition-new(root) { animation: soki-fade-in .2s ease-in; }
+html.theme-transitioning *, html.theme-transitioning *::before, html.theme-transitioning *::after { view-transition-name: none !important; }
+html.theme-transitioning::view-transition-group(root) { animation: none; }
+html.theme-transitioning::view-transition-old(root),
+html.theme-transitioning::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.theme-transitioning::view-transition-old(root) { z-index: 1; }
+html.theme-transitioning::view-transition-new(root) { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-motion-state] { opacity: 1; animation: none; transform: none; }
+  dialog[open], dialog[open]::backdrop,
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}

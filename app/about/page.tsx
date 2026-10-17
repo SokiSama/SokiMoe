@@ -33,15 +33,15 @@ export default function AboutPage() {
       <JournalHeader active="about" />
       <main className={styles.main}>
         <article className={styles.content}>
-          <header className={styles.intro} id="about-me" aria-labelledby="about-title">
+          <header data-reveal className={styles.intro} id="about-me" aria-labelledby="about-title">
             <Image className={styles.profileAvatar} src="/profile-avatar.webp" width={144} height={144} alt="Soki 的头像" priority />
             <div className={styles.profileInfo}>
               <h1 id="about-title">关于我</h1>
-              <p className={styles.location}><MapPin size={16} aria-hidden="true" /><span>柔风海湾　九号解决方案</span></p>
+              <p className={styles.location}><MapPin size={16} aria-hidden="true" /><span>柔风海湾 * 九号解决方案</span></p>
               <div className={styles.profileSocials} aria-label="Soki 的社交链接">{socials.map(({ name, href, icon: Icon }) => <a key={name} href={href} aria-label={name} title={name} target={href.startsWith("https:") ? "_blank" : undefined} rel={href.startsWith("https:") ? "noreferrer" : undefined}><Icon size={21} aria-hidden="true" /></a>)}</div>
             </div>
           </header>
-          <section className={`${styles.section} ${styles.biography}`} id="biography" aria-label="个人介绍">
+          <section data-reveal className={`${styles.section} ${styles.biography}`} id="biography" aria-label="个人介绍">
             <p>你好，我叫 Soki，也可以叫我 露比 或 砂糖。</p>
             <p>一个定居在重庆的西北人，2023 年有了属于自己的小窝。</p>
             <p>性格大概是 INFP-T 吧。现实中内向慢热，到了互联网上却意外地活泼，或许这才是我更自在的样子。</p>
@@ -63,10 +63,10 @@ export default function AboutPage() {
               <li>幻想有一墙喜欢的漫画与轻小说</li>
             </ul>
           </section>
-          <section className={styles.section} id="tools" aria-labelledby="tools-title">
+          <section data-reveal className={styles.section} id="tools" aria-labelledby="tools-title">
             <h2 id="tools-title">工具</h2>
             <p>创作、记录与开发。</p>
-            <div className={styles.toolGroups}>{toolGroups.map(group => <section className={styles.toolGroup} key={group.name} aria-label={group.name}>
+            <div className={styles.toolGroups} data-reveal-group>{toolGroups.map(group => <section className={styles.toolGroup} key={group.name} aria-label={group.name}>
               <h3>{group.name}</h3>
               <div className={styles.tools}>{group.tools.map(tool => <a className={styles.tool} href={tool.url} key={tool.name} target="_blank" rel="noreferrer">
                 <span className={styles.toolIcon}><Image src={`/icons/tools/${tool.icon}`} width={32} height={32} alt={`${tool.name} 图标`} unoptimized /></span>
@@ -74,7 +74,7 @@ export default function AboutPage() {
               </a>)}</div>
             </section>)}</div>
           </section>
-          <section className={styles.section} id="tech-stack" aria-labelledby="tech-stack-title">
+          <section data-reveal className={styles.section} id="tech-stack" aria-labelledby="tech-stack-title">
             <h2 id="tech-stack-title">技术栈</h2>
             <p>支撑这个网站的技术与服务。</p>
             <div className={styles.toolGroup}>
@@ -84,7 +84,7 @@ export default function AboutPage() {
               </a>)}</div>
             </div>
           </section>
-          <section className={styles.section} id="devices" aria-labelledby="devices-title">
+          <section data-reveal className={styles.section} id="devices" aria-labelledby="devices-title">
             <h2 id="devices-title">设备</h2>
             <div className={styles.toolGroup}>
               <h3>Devices</h3>
@@ -95,7 +95,7 @@ export default function AboutPage() {
             </div>
             <p className={styles.deviceNote}>我真的不会再乱换设备了.jpg</p>
           </section>
-          <section className={styles.section} id="website-history" aria-labelledby="history-title">
+          <section data-reveal className={styles.section} id="website-history" aria-labelledby="history-title">
             <h2 id="history-title">迭代</h2>
             <ol className={styles.history}>
               <li><time dateTime="2026-10-17">2026-10-17</time><p>集百家之长，主要采用 <a href="https://github.com/Lapis0x0/VermilionVoid" target="_blank" rel="noreferrer"><strong>VermilionVoid</strong></a> + <a href="https://github.com/cworld1/astro-theme-pure" target="_blank" rel="noreferrer">astro-theme-pure</a>。</p></li>

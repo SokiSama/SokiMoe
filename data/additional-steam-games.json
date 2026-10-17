@@ -1,0 +1,450 @@
+[
+  {
+    "id": "kinkoi",
+    "title": "金辉恋曲四重奏",
+    "originalTitle": "金辉恋曲四重奏",
+    "category": "视觉小说",
+    "steamAppId": 1277940
+  },
+  {
+    "id": "seifuku-kanojo",
+    "title": "制服女友",
+    "originalTitle": "制服女友",
+    "category": "视觉小说",
+    "steamAppId": 2673490
+  },
+  {
+    "id": "notch",
+    "title": "刻痕",
+    "originalTitle": "刻痕 Notch - The Innocent LunA: Eclipsed SinnerS",
+    "category": "视觉小说",
+    "steamAppId": 325120
+  },
+  {
+    "id": "leaflet-love-story",
+    "title": "LEAFLET Love Story",
+    "originalTitle": "Leaflet Love Story",
+    "category": "视觉小说",
+    "steamAppId": 895220
+  },
+  {
+    "id": "kinkoi-golden-time",
+    "title": "金辉恋曲四重奏 -Golden Time-",
+    "originalTitle": "金辉恋曲四重奏 -Golden Time-",
+    "category": "视觉小说",
+    "steamAppId": 1985260
+  },
+  {
+    "id": "nine-episode-1",
+    "title": "9-nine-九次九日九重色",
+    "originalTitle": "9-nine-九次九日九重色",
+    "category": "视觉小说",
+    "steamAppId": 976390
+  },
+  {
+    "id": "alias-carnival",
+    "title": "爱丽娅的明日盛典！",
+    "originalTitle": "爱丽娅的明日盛典！",
+    "category": "视觉小说",
+    "steamAppId": 1094530
+  },
+  {
+    "id": "alias-carnival-flowering-sky",
+    "title": "爱丽娅的明日盛典！Flowering Sky",
+    "originalTitle": "爱丽娅的明日盛典! Flowering Sky",
+    "category": "视觉小说",
+    "steamAppId": 2425410
+  },
+  {
+    "id": "maitetsu-last-run",
+    "title": "爱上火车 -Last Run!!-",
+    "originalTitle": "爱上火车-Last Run!!-",
+    "category": "视觉小说",
+    "steamAppId": 1434480
+  },
+  {
+    "id": "maitetsu-pure-station",
+    "title": "爱上火车 -Pure Station-",
+    "originalTitle": "爱上火车-Pure Station-",
+    "category": "视觉小说",
+    "steamAppId": 880950
+  },
+  {
+    "id": "memories-off-3",
+    "title": "变成回忆的你～秋之回忆～",
+    "originalTitle": "变成回忆的你～告别回忆～",
+    "category": "视觉小说",
+    "steamAppId": 743910
+  },
+  {
+    "id": "aokana",
+    "title": "苍之彼方的四重奏",
+    "originalTitle": "苍之彼方的四重奏",
+    "category": "视觉小说",
+    "steamAppId": 1044620
+  },
+  {
+    "id": "aokana-extra-1",
+    "title": "苍之彼方的四重奏 EXTRA1",
+    "originalTitle": "苍之彼方的四重奏 EXTRA1",
+    "category": "视觉小说",
+    "steamAppId": 1340130
+  },
+  {
+    "id": "aokana-extra-2",
+    "title": "苍之彼方的四重奏 EXTRA2",
+    "originalTitle": "苍之彼方的四重奏 EXTRA2",
+    "category": "视觉小说",
+    "steamAppId": 2206340
+  },
+  {
+    "id": "hamidashi-creative",
+    "title": "常轨脱离Creative",
+    "originalTitle": "常轨脱离Creative",
+    "category": "视觉小说",
+    "steamAppId": 1604380
+  },
+  {
+    "id": "windcap",
+    "title": "风岬",
+    "originalTitle": "风岬-The Everlasting lovestory at the Windcap",
+    "category": "视觉小说",
+    "steamAppId": 2414750
+  },
+  {
+    "id": "gaokao-love-100-days",
+    "title": "高考恋爱一百天",
+    "originalTitle": "高考恋爱一百天",
+    "category": "视觉小说",
+    "steamAppId": 347620
+  },
+  {
+    "id": "memories-off-1",
+    "title": "秋之回忆",
+    "originalTitle": "告别回忆",
+    "category": "视觉小说",
+    "steamAppId": 675610
+  },
+  {
+    "id": "memories-off-5",
+    "title": "秋之回忆5 中断的胶片",
+    "originalTitle": "告别回忆 #5 中断的胶片",
+    "category": "视觉小说",
+    "steamAppId": 2184570
+  },
+  {
+    "id": "memories-off-4",
+    "title": "秋之回忆4 从今以后",
+    "originalTitle": "告别回忆～从今以后～",
+    "category": "视觉小说",
+    "steamAppId": 960730
+  },
+  {
+    "id": "memories-off-7",
+    "title": "秋之回忆7 勾指起誓的记忆",
+    "originalTitle": "告别回忆 勾指起誓的记忆",
+    "category": "视觉小说",
+    "steamAppId": 2184590
+  },
+  {
+    "id": "memories-off-2",
+    "title": "秋之回忆2",
+    "originalTitle": "告别回忆2nd",
+    "category": "视觉小说",
+    "steamAppId": 679520
+  },
+  {
+    "id": "memories-off-6",
+    "title": "秋之回忆6 三角波澜",
+    "originalTitle": "告别回忆6 ～三角波澜～",
+    "category": "视觉小说",
+    "steamAppId": 2184580
+  },
+  {
+    "id": "snowdreams",
+    "title": "花落冬阳",
+    "originalTitle": "花落冬陽 Snowdreams -lost in winter-",
+    "category": "视觉小说",
+    "steamAppId": 987480
+  },
+  {
+    "id": "mystery-lover",
+    "title": "恋爱绮谭～不存在的夏天～",
+    "originalTitle": "恋爱绮谭~不存在的夏天~",
+    "category": "视觉小说",
+    "steamAppId": 1345740
+  },
+  {
+    "id": "love-election-chocolate",
+    "title": "恋爱与选举与巧克力",
+    "originalTitle": "恋爱与选举与巧克力",
+    "category": "视觉小说",
+    "steamAppId": 3027600
+  },
+  {
+    "id": "cross-maid",
+    "title": "流浪小猫与单身狗",
+    "originalTitle": "流浪小猫单身狗",
+    "category": "视觉小说",
+    "steamAppId": 1424870
+  },
+  {
+    "id": "meteor-world-actor",
+    "title": "流星世界演绎者：Badge & Dagger",
+    "originalTitle": "流星世界演绎者：Badge & Dagger",
+    "category": "视觉小说",
+    "steamAppId": 1819160
+  },
+  {
+    "id": "imouto-sanctuary",
+    "title": "妹的圣域",
+    "originalTitle": "妹的圣域",
+    "category": "视觉小说",
+    "steamAppId": 1977740
+  },
+  {
+    "id": "dream-ending",
+    "title": "梦末",
+    "originalTitle": "梦末",
+    "category": "视觉小说",
+    "steamAppId": 944020
+  },
+  {
+    "id": "josou-genesis",
+    "title": "女装创世记",
+    "originalTitle": "女装创世记",
+    "category": "视觉小说",
+    "steamAppId": 1585700
+  },
+  {
+    "id": "cross-princess",
+    "title": "女装少年与短发妹",
+    "originalTitle": "女装少年短发妹",
+    "category": "视觉小说",
+    "steamAppId": 1301620
+  },
+  {
+    "id": "puff-love-story",
+    "title": "泡芙爱情故事",
+    "originalTitle": "泡芙爱情故事",
+    "category": "视觉小说",
+    "steamAppId": 3389860
+  },
+  {
+    "id": "aonatsu-line",
+    "title": "青夏轨迹",
+    "originalTitle": "青夏轨迹",
+    "category": "视觉小说",
+    "steamAppId": 2185770
+  },
+  {
+    "id": "day-and-night",
+    "title": "日日夜夜",
+    "originalTitle": "日日夜夜",
+    "category": "视觉小说",
+    "steamAppId": 1347450
+  },
+  {
+    "id": "tiny-snow",
+    "title": "茸雪",
+    "originalTitle": "茸雪",
+    "category": "视觉小说",
+    "steamAppId": 1002560
+  },
+  {
+    "id": "camellia-train",
+    "title": "山茶列车",
+    "originalTitle": "山茶列车",
+    "category": "视觉小说",
+    "steamAppId": 1714660
+  },
+  {
+    "id": "shan-gui-2",
+    "title": "山桂贰",
+    "originalTitle": "山桂贰",
+    "category": "视觉小说",
+    "steamAppId": 952420
+  },
+  {
+    "id": "otome-theory",
+    "title": "少女理论以及周边 -École de Paris-",
+    "originalTitle": "少女理论以及周边 -École de Paris-",
+    "category": "视觉小说",
+    "steamAppId": 2567190
+  },
+  {
+    "id": "magician-country",
+    "title": "神之国的魔法使",
+    "originalTitle": "神之国的魔法使",
+    "category": "视觉小说",
+    "steamAppId": 1768880
+  },
+  {
+    "id": "season-of-12-colors",
+    "title": "十二色的季节",
+    "originalTitle": "十二色的季节",
+    "category": "视觉小说",
+    "steamAppId": 370280
+  },
+  {
+    "id": "food-girls",
+    "title": "食用系少女",
+    "originalTitle": "食用系少女 Food Girls",
+    "category": "视觉小说",
+    "steamAppId": 985080
+  },
+  {
+    "id": "food-girls-civil-war",
+    "title": "食用系少女：美食内战",
+    "originalTitle": "食用系少女：美食內戰 Food Girls：Civil War",
+    "category": "视觉小说",
+    "steamAppId": 1192910
+  },
+  {
+    "id": "epiphyllum-in-love",
+    "title": "昙花",
+    "originalTitle": "昙花",
+    "category": "视觉小说",
+    "steamAppId": 1161870
+  },
+  {
+    "id": "early-black-lily",
+    "title": "提早绽放的黑百合",
+    "originalTitle": "提早绽放的黑百合",
+    "category": "视觉小说",
+    "steamAppId": 1931940
+  },
+  {
+    "id": "starry-train",
+    "title": "星空列车与白的旅行",
+    "originalTitle": "星空列车与白的旅行",
+    "category": "视觉小说",
+    "steamAppId": 1567800
+  },
+  {
+    "id": "stella-of-the-end",
+    "title": "星之终途",
+    "originalTitle": "星之终途",
+    "category": "视觉小说",
+    "steamAppId": 2510770
+  },
+  {
+    "id": "clover-days",
+    "title": "幸运草的约定",
+    "originalTitle": "幸运草的约定",
+    "category": "视觉小说",
+    "steamAppId": 2430690
+  },
+  {
+    "id": "flower-in-the-snow",
+    "title": "雪中花",
+    "originalTitle": "雪中花",
+    "category": "视觉小说",
+    "steamAppId": 1486690
+  },
+  {
+    "id": "a-story-of-a-song",
+    "title": "寻迹",
+    "originalTitle": "寻迹 -A story of a song-",
+    "category": "视觉小说",
+    "steamAppId": 962940
+  },
+  {
+    "id": "final-fantasy-14",
+    "title": "最终幻想14 Online",
+    "originalTitle": "FINAL FANTASY XIV Online",
+    "category": "大型多人在线",
+    "steamAppId": 39210
+  },
+  {
+    "id": "counter-strike-2",
+    "title": "Counter-Strike 2",
+    "originalTitle": "Counter-Strike 2",
+    "category": "射击竞技",
+    "steamAppId": 730
+  },
+  {
+    "id": "vrchat",
+    "title": "VRChat",
+    "originalTitle": "VRChat",
+    "category": "社交互动",
+    "steamAppId": 438100
+  },
+  {
+    "id": "overwatch",
+    "title": "守望先锋",
+    "originalTitle": "《守望先锋®》",
+    "category": "射击竞技",
+    "steamAppId": 2357570
+  },
+  {
+    "id": "plants-vs-zombies-goty",
+    "title": "植物大战僵尸 年度版",
+    "originalTitle": "Plants vs. Zombies GOTY Edition",
+    "category": "策略塔防",
+    "steamAppId": 3590
+  },
+  {
+    "id": "civilization-6",
+    "title": "文明6",
+    "originalTitle": "Sid Meier’s Civilization® VI",
+    "category": "策略模拟",
+    "steamAppId": 289070
+  },
+  {
+    "id": "battlefield-1",
+    "title": "战地1",
+    "originalTitle": "Battlefield™ 1",
+    "category": "射击竞技",
+    "steamAppId": 1238840
+  },
+  {
+    "id": "wuthering-waves",
+    "title": "鸣潮",
+    "originalTitle": "Wuthering Waves",
+    "category": "角色扮演",
+    "steamAppId": 3513350
+  },
+  {
+    "id": "the-division",
+    "title": "汤姆克兰西：全境封锁",
+    "originalTitle": "Tom Clancy’s The Division™",
+    "category": "射击竞技",
+    "steamAppId": 365590
+  },
+  {
+    "id": "just-cause-2",
+    "title": "正当防卫2",
+    "originalTitle": "Just Cause 2",
+    "category": "动作冒险",
+    "steamAppId": 8190
+  },
+  {
+    "id": "neptunia-viir",
+    "title": "新次元游戏 海王星VIIR",
+    "originalTitle": "Megadimension Neptunia VIIR",
+    "category": "角色扮演",
+    "steamAppId": 774511
+  },
+  {
+    "id": "touhou-mystia-izakaya",
+    "title": "东方夜雀食堂",
+    "originalTitle": "东方夜雀食堂 - Touhou Mystia's Izakaya",
+    "category": "模拟经营",
+    "steamAppId": 1584090
+  },
+  {
+    "id": "borderlands-2",
+    "title": "无主之地2",
+    "originalTitle": "Borderlands 2",
+    "category": "射击竞技",
+    "steamAppId": 49520
+  },
+  {
+    "id": "black-ops-cold-war",
+    "title": "使命召唤：黑色行动 冷战",
+    "originalTitle": "Call of Duty®: Black Ops Cold War",
+    "category": "射击竞技",
+    "steamAppId": 1985810
+  }
+]
