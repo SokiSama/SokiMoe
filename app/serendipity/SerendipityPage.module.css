@@ -1,0 +1,43 @@
+.page.page { --home-bg: #fdfdfd; }
+:global(html[data-theme="dark"]) .page.page { --home-bg: #171719; }
+.main { position: relative; display: flex; flex-direction: column; min-height: calc(100svh - 71px); padding: 68px 0 28px; }
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.meta { text-align: center; }
+.eyebrow { margin: 0; color: var(--home-muted); font-family: Georgia, "Times New Roman", serif; font-size: 11px; font-style: italic; letter-spacing: .3em; line-height: 2; text-align: center; }
+.meta time { display: block; margin-top: 9px; color: var(--home-muted); font-family: ui-monospace, Consolas, monospace; font-size: 12px; letter-spacing: .14em; }
+.dots { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; max-width: calc(100% - 48px); margin: 14px auto 0; }
+.dots button { display: grid; place-items: center; width: 22px; height: 24px; padding: 0; border: 0; background: transparent; }
+.dots span { width: 4px; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--home-muted) 45%, transparent); transition: width .2s, background-color .2s; }
+.dots button[aria-current="true"] span { width: 17px; background: var(--home-accent); }
+.dots button:hover span { background: var(--home-accent); }
+.stage { position: relative; display: grid; flex: 1; place-items: center; width: 100%; padding: 36px 100px 30px; }
+.photo { width: min(1000px, 100%); margin: 0; animation: appear .25s ease-out; }
+.imageButton { position: relative; display: block; width: 100%; padding: 0; border: 0; background: transparent; line-height: 0; }
+.imageButton img { display: block; width: 100%; max-height: calc(100svh - 330px); height: auto; object-fit: contain; border-radius: 3px; }
+.expand { position: absolute; right: 12px; bottom: 12px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 7px; color: #fff; background: #15151566; opacity: 0; transition: opacity .2s; }
+.imageButton:is(:hover, :focus-visible) .expand { opacity: 1; }
+.sideNav { position: absolute; top: 50%; display: flex; flex-direction: column; align-items: center; gap: 12px; transform: translateY(-50%); border: 0; padding: 12px; color: var(--home-muted); background: transparent; }
+.sideNav span { writing-mode: vertical-rl; font-family: Georgia, "Songti SC", serif; font-size: 12px; letter-spacing: .3em; }
+.sidePrevious { left: 28px; }
+.sideNext { right: 28px; }
+.sideNav:hover:not(:disabled), .bottomNav button:hover:not(:disabled) { color: var(--home-accent); }
+.sideNav:disabled, .bottomNav button:disabled { opacity: .28; cursor: default; }
+.bottomNav { display: flex; justify-content: center; align-items: center; gap: 20px; padding-top: 12px; color: var(--home-muted); }
+.bottomNav button { display: inline-flex; align-items: center; gap: 11px; padding: 3px 0; border: 0; background: transparent; color: inherit; font-family: Georgia, "Songti SC", serif; font-size: 12px; letter-spacing: .12em; }
+.bottomNav kbd { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--home-line); border-radius: 3px; background: var(--home-soft); font-size: 11px; }
+.lightbox { position: fixed; inset: 0; width: min(1600px, calc(100% - 48px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; padding: 0; overflow: visible; border: 0; background: transparent; }
+.lightbox::backdrop { background: #101014e8; backdrop-filter: blur(5px); }
+.lightbox > img { display: block; max-width: 100%; width: auto; max-height: calc(100dvh - 64px); height: auto; margin: 0 auto; object-fit: contain; }
+.close { position: fixed; top: 12px; right: 16px; display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; color: #fff; background: #2228; }
+@keyframes appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 680px) {
+  .main { min-height: calc(100svh - 65px); padding-top: 48px; }
+  .eyebrow { font-size: 10px; letter-spacing: .2em; }
+  .dots button { width: 23px; }
+  .stage { padding: 28px 16px; }
+  .imageButton img { max-height: calc(100svh - 320px); }
+  .sideNav { display: none; }
+  .bottomNav { gap: 18px; padding-top: 0; }
+  .lightbox { width: calc(100% - 16px); }
+}
+@media (prefers-reduced-motion: reduce) { .photo { animation: none; } .dots span, .expand { transition: none; } }

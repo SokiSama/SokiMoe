@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CaretDown, Check, Copy } from "@phosphor-icons/react";
-import { SiteHeader } from "../components/SiteHeader";
-import { SiteFooter } from "../components/SiteFooter";
-import { PageCoverBanner } from "../components/PageCoverBanner";
+import { ArrowUp, CaretDown, Check, Copy, RssSimple } from "@phosphor-icons/react";
+import { JournalHeader } from "../components/JournalHeader";
 import { TwikooComments } from "../components/TwikooComments";
 import { FriendList } from "./FriendList";
-import { FriendCircleCard } from "./FriendCircleCard";
-import { TrainJumpCard } from "./TrainJumpCard";
 import friends from "../../data/friends.json";
+import homeStyles from "../components/HomePage.module.css";
+import styles from "./FriendsPage.module.css";
 
 const friendLinkText = `名称：Soki Sugar Life
 描述：月下彼岸花
@@ -39,83 +37,58 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="site immersive-route friends-route">
-      <SiteHeader active="friends" floating />
-      <PageCoverBanner
-        eyebrow="FRIENDS CONNECT! RE:DIVE"
-        title="相遇，是一场温柔的邂逅"
-        description="记录那些值得访问的小站。"
-        image="/friends-cover.jpg"
-        imagePosition="center 62%"
-      />
-      <main id="top" className="page-shell friends-page-shell immersive-content">
-        <div className="friends-main-grid">
-        <div className="content friends-content">
-        <section className="card friends-hero motion-rise">
-          <div className="friends-hero-copy">
-            <strong className="friends-eyebrow">Friends Connect! Re:Dive</strong>
-            <h1>相遇，是一场温柔的邂逅</h1>
-            <p>记录那些值得访问的小站</p>
-          </div>
-          <div className="friends-hero-art" aria-hidden="true"><img src="/friends-hero.png" alt="" /></div>
-        </section>
+    <div className={`${homeStyles.home} ${styles.page}`} id="top">
+      <JournalHeader active="friends" />
+      <main className={styles.main}>
+        <header className={styles.intro}>
+          <span>FRIENDS</span>
+          <h1>友链</h1>
+        </header>
         <FriendList friends={friends} />
-        </div>
-        <aside className="friends-profile-sidebar">
-          <div className="friends-profile-sticky">
-            <FriendCircleCard />
-            <TrainJumpCard friends={friends} />
-          </div>
-        </aside>
-        </div>
-        <section id="apply-links" className="site-link-section friends-apply-wide motion-rise">
-          <details className="site-link-panel card" open>
+        <section id="apply-links" className={styles.apply}>
+          <details className={styles.applyPanel} open>
             <summary>
-              <span className="terminal-window-title">
-                <i className="terminal-dot terminal-dot--red" />
-                <i className="terminal-dot terminal-dot--yellow" />
-                <i className="terminal-dot terminal-dot--green" />
-                <strong>友链申请</strong>
-              </span>
-              <span className="site-link-panel__actions">
+              <strong>想要交换友链？</strong>
+              <span className={styles.applyActions}>
                 <button
                   type="button"
-                  className="site-link-copy"
+                  className={styles.copyButton}
                   onClick={copyFriendLink}
                   aria-label="复制友链信息"
                 >
                   {linkCopied ? <Check weight="bold" /> : <Copy weight="duotone" />}
                   <span>{linkCopied ? "已复制" : "复制"}</span>
                 </button>
-                <CaretDown className="site-link-panel__caret" aria-hidden="true" />
+                <CaretDown className={styles.caret} aria-hidden="true" />
               </span>
             </summary>
-            <div className="site-link-panel__body">
-              <ul>
+            <div className={styles.applyBody}>
+              <p>欢迎在下方留言申请，这是本站的信息：</p>
+              <ul className={styles.siteInfo}>
                 <li><strong>名称：</strong><span>Soki Sugar Life</span></li>
                 <li><strong>描述：</strong><span>月下彼岸花</span></li>
                 <li><strong>链接：</strong><a href="https://www.soki.moe" target="_blank" rel="noreferrer">https://www.soki.moe</a></li>
                 <li><strong>图标：</strong><a href="https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg" target="_blank" rel="noreferrer">https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg</a></li>
               </ul>
-              <div className="site-link-requirements">
+              <div className={styles.requirements}>
                 <h3>友链要求：</h3>
                 <ul>
-                  <li>申请前请务必确保贵站有我站的友链，若后续检测到贵站移除本站链接，本站也将相应移除。</li>
-                  <li>本站基于主观审美偏好，优先结交 UI 风格简洁现代、调性相近的个人小站。</li>
-                  <li>拒绝排版混乱、自动播放音频、特效过载或阻塞加载等严重影响浏览体验的站点。</li>
-                  <li>若站点长时间无法访问，我会删除您的友链，恢复后可再次申请。</li>
-                  <li>确保站点无政治敏感/违法内容，无明显广告，无恶意脚本。</li>
-                  <li>确保站点全局启用 HTTPS，中国大陆可以正常访问。</li>
-                  <li>暂时不接受商业及非个人的网站的友链申请。</li>
+                  <li>尽量可在中国大陆正常访问。</li>
+                  <li>允许使用 AI 辅助写作，但不能全盘接管。</li>
+                  <li>文章数量 ≥ 5 篇，无商业化及广告内容。</li>
+                  <li>域名非免费（纯托管）域名，且域名注册时间超过三个月。</li>
                 </ul>
               </div>
             </div>
           </details>
         </section>
-        <TwikooComments path="/friends" className="friends-comments-wide" />
+        <TwikooComments path="/friends" className={styles.comments} />
       </main>
-      <SiteFooter />
-      <a className="back-top" href="#top" aria-label="回到顶部">↑</a>
+      <footer className={homeStyles.footer}>
+        <p>© 2025–{new Date().getFullYear()} Soki Sugar Life<span>·</span><a href="https://icp.gov.moe/?keyword=20263015" target="_blank" rel="noreferrer">萌ICP备20263015号</a></p>
+        <a href="/api/rss"><RssSimple size={15} />RSS 订阅</a>
+      </footer>
+      <a className={styles.backTop} href="#top" aria-label="回到顶部"><ArrowUp size={20} /></a>
     </div>
   );
 }

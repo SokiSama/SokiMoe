@@ -1,0 +1,42 @@
+.page.page {
+  --home-bg: #fdfdfd;
+  --home-card: #fdfdfd;
+  --archive-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  background: var(--home-bg);
+}
+.main { width: min(780px, calc(100% - 48px)); min-height: calc(100vh - 180px); margin: 0 auto; padding: 92px 0 76px; }
+.intro { margin-bottom: 44px; }
+.eyebrow { display: block; color: var(--home-accent); font-size: 14px; font-weight: 400; line-height: 20px; }
+.intro h1 { margin: 5px 0 6px; font-family: var(--archive-display); font-size: 35px; font-weight: 700; line-height: 1.4; letter-spacing: -.025em; }
+.intro > p { margin: 0; color: var(--home-muted); font-family: var(--archive-display); font-size: 16px; line-height: 1.7; }
+.years { display: grid; gap: 30px; }
+.yearHeading { display: flex; align-items: baseline; gap: 16px; }
+.yearHeading h2 { margin: 0; color: var(--home-text); font-size: 24px; font-weight: 600; line-height: 36px; font-variant-numeric: tabular-nums; }
+.yearHeading > span { flex: none; color: var(--home-muted); font-size: 14px; line-height: 24px; }
+.yearHeading > i { flex: 1; height: 1px; background: var(--home-line); }
+.list { list-style: none; border-left: 1px solid var(--home-line); margin: 18px 0 0; padding: 0; }
+.list li { margin: 0; padding: 0; }
+.list a { display: grid; grid-template-columns: 50px minmax(0, 1fr); align-items: baseline; gap: 24px; min-height: 46px; padding: 8px 0 8px 24px; }
+.list time { color: var(--home-muted); font-size: 14px; line-height: 28px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.list a > span { min-width: 0; color: var(--home-text); font-family: var(--archive-display); font-size: 18px; font-weight: 500; line-height: 1.6; overflow-wrap: anywhere; transition: color .18s; }
+.list a:hover > span { color: var(--home-accent); }
+.list a:focus-visible { border-radius: 3px; outline-offset: 2px; }
+
+@media (max-width: 680px) {
+  .main { width: calc(100% - 40px); padding: 48px 0 50px; }
+  .intro { margin-bottom: 34px; }
+  .intro h1 { font-size: 30px; }
+  .intro > p { font-size: 14px; }
+  .eyebrow { font-size: 12px; }
+  .yearHeading { gap: 12px; }
+  .yearHeading h2 { font-size: 22px; }
+  .yearHeading > span { font-size: 12px; }
+  .years { gap: 25px; }
+  .list { margin-top: 14px; }
+  .list a { grid-template-columns: 43px minmax(0, 1fr); gap: 14px; padding: 9px 0 9px 15px; }
+  .list time { font-size: 12px; line-height: 26px; }
+  .list a > span { font-size: 16px; line-height: 1.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .list a > span { transition: none; }
+}

@@ -1,0 +1,8 @@
+.control { display: inline-flex; flex: none; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--home-line); border-radius: 999px; background: var(--home-soft); }
+.control button { position: relative; display: grid; place-items: center; width: 34px; height: 27px; padding: 0; border: 0; border-radius: 999px; color: var(--home-muted); background: transparent; cursor: pointer; transition: background-color .18s, color .18s, box-shadow .18s; }
+.control button[aria-pressed="true"] { color: var(--home-text); background: var(--home-card); box-shadow: 0 2px 8px #00000012; }
+.control button:hover { color: var(--home-text); }
+.control button::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 12px); left: 50%; z-index: 1; transform: translate(-50%, -3px); padding: 5px 9px; border: 1px solid var(--home-line); border-radius: 8px; background: var(--home-card); color: var(--home-muted); box-shadow: 0 5px 18px #0000000d; font-size: 12px; line-height: 1.6; white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, transform .15s, visibility .15s; }
+.control button:is(:hover, :focus-visible)::after { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (max-width: 420px) { .control { gap: 0; padding: 2px; } .control button { width: 27px; height: 26px; } .control button svg { width: 17px; height: 17px; } }
+@media (prefers-reduced-motion: reduce) { .control button, .control button::after { transition: none; } }

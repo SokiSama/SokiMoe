@@ -1,111 +1,173 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
-  Briefcase,
-  Code,
-  DeviceMobile,
-  DeviceTablet,
-  Desktop,
-  GameController,
-  Headphones,
-  Translate,
-  TwitterLogo,
-  Watch,
+  ArrowRight, ArrowUp, CalendarBlank, CaretLeft, CaretRight,
+  EnvelopeSimple, Folder, GithubLogo, Hash,
+  List, MagnifyingGlass, MapPin, RssSimple, SteamLogo,
+  TelegramLogo, TwitterLogo, X,
 } from "@phosphor-icons/react";
-import { SiteHeader } from "./SiteHeader";
-import { SiteFooter } from "./SiteFooter";
-import { MusicPlayerCard } from "./MusicPlayerCard";
-import { HomeOnThisDay } from "./HomeOnThisDay";
-import { GitHubContributionsCard } from "./GitHubContributionsCard";
-import { CyberWorldCard } from "./CyberWorldCard";
+import type { LocalPost } from "../data/posts";
+import { coverAccent, type CoverAccent } from "../lib/coverAccent";
+import { ThemeModeControl } from "./ThemeModeControl";
+import styles from "./HomePage.module.css";
 
-const skills = [
-  { icon: Code, title: "AI Coding", text: "本网站基于 Codex 开发" },
-  { icon: Code, title: "Next.js & React", text: "所用到的技术栈" },
-  { icon: Desktop, title: "PC Gaming", text: "9800X3D 是对的" },
-  { icon: GameController, title: "Controller Gaming", text: "抱起手柄，南条一摊" },
-  { icon: Briefcase, title: "QA Engineer", text: "混口饭吃，随时被取代" },
-  { icon: Translate, title: "zh-CN & en-US", text: <em>日本語を勉強します</em> },
+export type HomePost = LocalPost & { wordCount: number | null; readingMinutes: number | null };
+
+const socials = [
+  { icon: TwitterLogo, name: "X / Twitter", href: "https://x.com/soki_ruby" },
+  { icon: TelegramLogo, name: "Telegram", href: "https://t.me/MatsuzaSatou" },
+  { icon: SteamLogo, name: "Steam", href: "https://steamcommunity.com/id/SokiSama/" },
+  { icon: GithubLogo, name: "GitHub", href: "https://github.com/SokiSama" },
+  { icon: EnvelopeSimple, name: "Email", href: "mailto:mashiroamane@outlook.com" },
+] as const;
+const socialLinks = socials.map(social => {
+  const url = new URL(social.href);
+  const username = url.protocol === "mailto:" ? url.pathname : `@${url.pathname.split("/").filter(Boolean).at(-1)}`;
+  return { ...social, username };
+});
+const navigation = [
+  { label: "首页", href: "/" }, { label: "拾光", href: "/serendipity" }, { label: "品鉴", href: "/collection" },
+  { label: "友链", href: "/friends" }, { label: "归档", href: "/archive" },
+  { label: "关于", href: "/about" },
 ];
+const pageSize = 6;
+const getCategory = (post: LocalPost) => post.category || (post.type === "travel" ? "旅行" : post.tags[0] || "技术");
 
-const devices = [
-  { icon: DeviceTablet, name: "iPad Pro 2024", text: "双层 OLED 就是爽" },
-  { icon: DeviceMobile, name: "iPhone 17 Pro", text: "一手掌握，港版还有 eSIM 爽用" },
-  { icon: Headphones, name: "AirPods Pro 2", text: "老搭档了，通勤与出门需要音乐陪伴" },
-  { icon: DeviceMobile, name: "Samsung S25 Ultra", text: "双持代表着，工作与生活要区分开" },
-  { icon: Watch, name: "Apple Watch S10", text: "看时间和记录数据" },
-  { icon: GameController, name: "不计其数的洋垃圾…", text: "折腾本身就是乐趣" },
-];
+export function HomePageClient({ posts }: { posts: HomePost[] }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [allCategories, setAllCategories] = useState(false);
+  const [allTags, setAllTags] = useState(false);
+  const [category, setCategory] = useState("");
+  const [tag, setTag] = useState("");
+  const [page, setPage] = useState(1);
+  const [coverAccents, setCoverAccents] = useState<Record<string, CoverAccent>>({});
 
-export function HomePageClient({ animeCard }: { animeCard: ReactNode }) {
+  useEffect(() => {
+    const closeMenu = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeMenu);
+    return () => {
+      window.removeEventListener("keydown", closeMenu);
+    };
+  }, []);
+
+  const categories = useMemo(() => {
+    const counts = new Map<string, number>();
+    posts.forEach(post => counts.set(getCategory(post), (counts.get(getCategory(post)) || 0) + 1));
+    return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"));
+  }, [posts]);
+  const tags = useMemo(() => {
+    const counts = new Map<string, number>();
+    posts.forEach(post => [...new Set(post.tags)].forEach(value => counts.set(value, (counts.get(value) || 0) + 1)));
+    return [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"));
+  }, [posts]);
+  const filteredPosts = useMemo(() => {
+    return posts.filter(post => (!category || getCategory(post) === category)
+      && (!tag || post.tags.includes(tag)))
+      .sort((a, b) => {
+        if (!category && !tag) {
+          if (a.slug === "start") return -1;
+          if (b.slug === "start") return 1;
+        }
+        return b.date.localeCompare(a.date);
+      });
+  }, [posts, category, tag]);
+  const pageCount = Math.max(1, Math.ceil(filteredPosts.length / pageSize));
+  const pagePosts = filteredPosts.slice((page - 1) * pageSize, page * pageSize);
+  const hasFilter = Boolean(category || tag);
+  const resetFilters = () => { setCategory(""); setTag(""); setPage(1); };
+  const changePage = (next: number) => {
+    setPage(next);
+    document.getElementById("home-feed")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <div className="site home-site">
-      <SiteHeader active="home" floating />
-
-      <section id="top" className="home-cover-stage" aria-label="Soki Sugar Life 首页封面">
-        <div className="home-cover-vignette" aria-hidden="true" />
-        <div className="home-profile-panel card">
-          <section className="home-profile-intro" aria-labelledby="home-profile-name">
-            <div className="home-profile-avatar-frame">
-              <img className="home-profile-avatar" src="/profile-avatar.webp" alt="Soki 的头像" />
-            </div>
-            <h1 id="home-profile-name">Soki</h1>
-            <div className="home-profile-copy">
-              <p>测试工程师，自研 Vibe Coding 中。</p>
-              <p>在重庆当社畜。</p>
-              <p>喜欢 ACG、旅行与虚拟世界。</p>
-              <p>欢迎交换友链。</p>
-            </div>
-            <div className="home-profile-socials" aria-label="个人主页链接">
-              <a href="https://github.com/SokiSama" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><img src="/icons/github.svg" alt="" /></a>
-              <a href="https://steamcommunity.com/id/SokiSama/" target="_blank" rel="noreferrer" title="Steam" aria-label="Steam"><img src="/icons/steam.svg" alt="" /></a>
-              <a href="https://t.me/MatsuzaSatou" target="_blank" rel="noreferrer" title="Telegram" aria-label="Telegram"><img src="/icons/telegram.svg" alt="" /></a>
-              <a href="https://x.com/soki_ruby" target="_blank" rel="noreferrer" title="Twitter" aria-label="Twitter"><TwitterLogo weight="fill" aria-hidden="true" /></a>
-              <a href="mailto:mashiroamane@outlook.com" title="发送邮件" aria-label="发送邮件"><img src="/icons/email.svg" alt="" /></a>
-            </div>
-          </section>
-          <GitHubContributionsCard />
+    <div className={styles.home} id="top">
+      <header className={styles.header}>
+        <div className={styles.headerInner}>
+          <Link className={styles.brand} href="/" aria-current="page">
+            <Image src="/profile-avatar.webp" width={32} height={32} alt="" />
+            <span>Soki Sugar Life</span>
+          </Link>
+          <nav className={`${styles.navigation} ${menuOpen ? styles.navigationOpen : ""}`} id="home-navigation" aria-label="主导航">
+            {navigation.map(({ label, href }) => <Link href={href} key={href} aria-current={href === "/" ? "page" : undefined} onClick={() => setMenuOpen(false)}>{label}</Link>)}
+          </nav>
+          <div className={styles.headerActions}>
+            <ThemeModeControl />
+            <button className={`${styles.iconButton} ${styles.menuButton}`} onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "关闭菜单" : "打开菜单"} aria-expanded={menuOpen} aria-controls="home-navigation">{menuOpen ? <X size={23} /> : <List size={23} />}</button>
+          </div>
         </div>
-      </section>
+      </header>
 
-      <div className="page-shell home-page-shell home-reimagined-shell">
-
-        <main id="profile" className="content home-feed home-about-sections">
-          <HomeOnThisDay />
-
-          <section className="card about-section about-inline-section">
-            <header className="about-section-heading">
-              <div><h2>技能</h2><p>技能树总会点在一些适合自己的地方</p></div>
-            </header>
-            <div className="about-skill-grid">
-              {skills.map(({ icon: Icon, title, text }) => (
-                <article key={title}><Icon size={30} weight="regular" /><div><h3>{title}</h3><p>{text}</p></div></article>
-              ))}
+      <main className={styles.main}>
+        <aside className={styles.sidebar} aria-label="个人资料与文章筛选">
+          <section className={`${styles.panel} ${styles.profile}`} aria-labelledby="home-name">
+            <Image className={styles.avatar} src="/profile-avatar.webp" width={100} height={100} alt="Soki 的头像" priority />
+            <h1 id="home-name">Soki</h1>
+            <span className={styles.profileLine} aria-hidden="true" />
+            <p>在重庆当社畜。<br />喜欢 ACG、旅行与虚拟世界。</p>
+            <div className={styles.socials} id="home-socials" aria-label="个人主页链接">
+              {socialLinks.map(({ icon: Icon, name, href, username }) => <a key={name} className={styles.socialLink} href={href} aria-label={`${name}：${username}`} title={`${name}：${username}`} target={href.startsWith("https:") ? "_blank" : undefined} rel={href.startsWith("https:") ? "noreferrer" : undefined}>
+                <Icon size={22} weight="regular" aria-hidden="true" />
+              </a>)}
             </div>
+            <div className={styles.profileStatus}><MapPin size={17} aria-hidden="true" /><span>柔风海湾　九号解决方案</span></div>
           </section>
 
-          <section className="card about-section about-inline-section">
-            <header className="about-section-heading">
-              <div><h2>设备</h2><p>我真的不会再乱换设备了.jpg</p></div>
-            </header>
-            <div className="about-device-grid">
-              {devices.map(({ icon: Icon, name, text }) => (
-                <article key={name}><Icon size={30} weight="regular" /><div><h3>{name}</h3><p>{text}</p></div></article>
-              ))}
+          <section className={`${styles.panel} ${styles.sideSection}`} aria-labelledby="home-categories">
+            <h2 id="home-categories">分类</h2>
+            <div className={styles.categoryList}>
+              <button className={!category && !tag ? styles.selectedCategory : ""} onClick={resetFilters} aria-pressed={!category && !tag}>全部<span>{posts.length}</span></button>
+              {(allCategories ? categories : categories.slice(0, 2)).map(([name, count]) => <button className={category === name ? styles.selectedCategory : ""} key={name} onClick={() => { setCategory(category === name ? "" : name); setTag(""); setPage(1); }} aria-pressed={category === name}>{name}<span>{count}</span></button>)}
             </div>
+            {categories.length > 2 && <button className={styles.moreButton} onClick={() => setAllCategories(!allCategories)} aria-expanded={allCategories}><span aria-hidden="true">···</span>{allCategories ? "收起" : "更多"}</button>}
           </section>
 
-          {animeCard}
-          <MusicPlayerCard variant="home" />
-          <CyberWorldCard />
-        </main>
+          <section className={`${styles.panel} ${styles.sideSection}`} aria-labelledby="home-tags">
+            <h2 id="home-tags">标签</h2>
+            <div className={styles.tagCloud}>
+              {(allTags ? tags : tags.slice(0, 12)).map(([name, count]) => <button className={tag === name ? styles.selectedTag : ""} key={name} onClick={() => { setTag(tag === name ? "" : name); setPage(1); }} aria-pressed={tag === name} title={`${count} 篇文章`}>{name}</button>)}
+            </div>
+            {tags.length > 12 && <button className={styles.moreButton} onClick={() => setAllTags(!allTags)} aria-expanded={allTags}>{allTags ? "收起" : "更多标签"}</button>}
+          </section>
 
-      </div>
+        </aside>
 
-      <SiteFooter />
-      <a className="back-top" href="#top" aria-label="回到顶部">↑</a>
+        <section className={styles.feed} id="home-feed" aria-label="文章列表">
+          {hasFilter && <div className={styles.filterStatus} role="status"><span>{category || "全部文章"}{tag ? ` / ${tag}` : ""}<small>共 {filteredPosts.length} 篇</small></span><button onClick={resetFilters}>清除筛选<X size={14} /></button></div>}
+          <div className={styles.postList}>
+            {pagePosts.map(post => {
+              return (
+                <article className={styles.postCard} key={post.slug} style={coverAccents[post.slug] ? { "--post-hue": coverAccents[post.slug].hue, "--post-saturation": `${coverAccents[post.slug].saturation}%` } as CSSProperties : undefined}>
+                  <Link className={styles.postLink} href={`/posts/${post.slug}`}>
+                    <div className={styles.postCover} aria-hidden="true"><Image src={post.cover || "/home-cover.webp"} alt="" fill sizes="(max-width: 680px) 70vw, (max-width: 1180px) 45vw, 570px" onLoad={event => { const accent = coverAccent(event.currentTarget); if (accent) setCoverAccents(previous => ({ ...previous, [post.slug]: accent })); }} /></div>
+                    <div className={styles.postText}>
+                      <h2>{post.title}</h2>
+                      <div className={styles.postMeta}>
+                        <span><CalendarBlank size={15} aria-hidden="true" /><time dateTime={post.date}>{post.date}</time></span>
+                        <span><Folder size={15} aria-hidden="true" />{getCategory(post)}</span>
+                        <span><Hash size={15} aria-hidden="true" />{post.tags[0] || "未标签"}</span>
+                      </div>
+                      <p className={styles.description}>{post.description}</p>
+                      {post.wordCount !== null && <div className={styles.reading}><span>{post.wordCount} 字</span><i aria-hidden="true" /><span>{post.readingMinutes} 分钟</span></div>}
+                    </div>
+                    <span className={styles.postArrow} aria-hidden="true"><CaretRight className={styles.defaultArrow} /><ArrowRight className={styles.hoverArrow} /></span>
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
+          {!pagePosts.length && <div className={`${styles.panel} ${styles.empty}`}><MagnifyingGlass size={32} /><h2>没有找到相关文章</h2><p>调整分类和标签，或清除筛选条件。</p><button onClick={resetFilters}>查看全部文章</button></div>}
+          {pageCount > 1 && <nav className={styles.pagination} aria-label="首页文章分页"><button onClick={() => changePage(page - 1)} disabled={page === 1} aria-label="上一页"><CaretLeft size={16} /></button>{Array.from({ length: pageCount }, (_, index) => index + 1).map(number => <button className={page === number ? styles.currentPage : ""} aria-current={page === number ? "page" : undefined} key={number} onClick={() => changePage(number)}>{number}</button>)}<button onClick={() => changePage(page + 1)} disabled={page === pageCount} aria-label="下一页"><CaretRight size={16} /></button></nav>}
+        </section>
+      </main>
 
+      <footer className={styles.footer}><p>© 2025–{new Date().getFullYear()} Soki Sugar Life<span>·</span><a href="https://icp.gov.moe/?keyword=20263015" target="_blank" rel="noreferrer">萌ICP备20263015号</a></p><a href="/api/rss"><RssSimple size={15} />RSS 订阅</a></footer>
+      <a className={styles.backTop} href="#top" aria-label="回到顶部"><ArrowUp size={18} /></a>
     </div>
   );
 }

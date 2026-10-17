@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { readAllAnimeCollections, type BangumiCollectionPage } from "../../../lib/bangumiCollection";
+import animeCovers from "../../../../data/anime-covers.json";
 
 export const dynamic = "force-dynamic";
+const localAnimeCovers: Record<string, string> = animeCovers;
 
-type Images = { large?: string; common?: string; medium?: string; small?: string; grid?: string };
-type CollectionEntry = {
-  type?: number;
-  ep_status?: number;
-  subject?: { id?: number; name?: string; name_cn?: string; eps?: number; images?: Images };
-};
-type CollectionResponse = { total?: number; data?: CollectionEntry[] };
 type Subject = {
   name?: string;
   name_cn?: string;
@@ -20,7 +16,6 @@ type Subject = {
 };
 
 const statusText = (type?: number) => ({ 1: "想看", 2: "看过", 3: "在看", 4: "搁置", 5: "抛弃" })[type ?? 0] ?? "未知";
-const coverUrl = (images?: Images) => images?.medium || images?.common || images?.large || images?.small || images?.grid;
 
 function valueText(value: unknown): string {
   if (typeof value === "string" || typeof value === "number") return String(value);
@@ -38,7 +33,7 @@ function production(infobox?: Subject["infobox"]) {
 }
 
 async function fetchJson<T>(url: string, headers: HeadersInit): Promise<T> {
-  const response = await fetch(url, { headers, next: { revalidate: 600 } });
+  const response = await fetch(url, { headers, next: { revalidate: 600 }, signal: AbortSignal.timeout(15000) });
   const text = await response.text();
   if (!response.ok) throw new Error(text.slice(0, 300) || `HTTP ${response.status}`);
   return JSON.parse(text) as T;
@@ -64,36 +59,39 @@ export async function GET(request: NextRequest) {
 
     const collectionsUrl = new URL(`https://api.bgm.tv/v0/users/${encodeURIComponent(user)}/collections`);
     collectionsUrl.searchParams.set("subject_type", "2");
-    collectionsUrl.searchParams.set("limit", "100");
-    collectionsUrl.searchParams.set("offset", "0");
-
-    const collections = await fetchJson<CollectionResponse>(collectionsUrl.toString(), headers);
-    const entries = collections.data ?? [];
+    collectionsUrl.searchParams.set("limit", "50");
+    const collections = await readAllAnimeCollections(async offset => {
+      collectionsUrl.searchParams.set("offset", String(offset));
+      return fetchJson<BangumiCollectionPage>(collectionsUrl.toString(), headers);
+    });
+    const entries = collections.entries;
     const subjects = await mapConcurrent(entries, 6, async (entry) => {
       const id = entry.subject?.id;
       if (!id) return null;
-      const detail = await fetchJson<Subject>(`https://api.bgm.tv/v0/subjects/${id}`, headers);
+      // A failed subject must not hide the rest of the user's collection.
+      const detail = await fetchJson<Subject>(`https://api.bgm.tv/v0/subjects/${id}`, headers).catch(() => null);
       const totalEpisodes = entry.subject?.eps ?? 0;
       const watchedEpisodes = entry.ep_status ?? 0;
       return {
         id,
-        title: entry.subject?.name_cn?.trim() || entry.subject?.name || detail.name_cn || detail.name || `#${id}`,
-        originalTitle: entry.subject?.name || detail.name || "",
-        cover: coverUrl(entry.subject?.images),
+        title: entry.subject?.name_cn?.trim() || entry.subject?.name || detail?.name_cn || detail?.name || `#${id}`,
+        originalTitle: entry.subject?.name || detail?.name || "",
+        cover: localAnimeCovers[id] || "/images/collection/cover-placeholder.svg",
         statusText: statusText(entry.type),
         watchedEpisodes,
         totalEpisodes,
         progressText: totalEpisodes ? `${watchedEpisodes}/${totalEpisodes}` : String(watchedEpisodes),
-        date: detail.date || "",
-        year: detail.date?.slice(0, 4) || "未知",
-        production: production(detail.infobox),
-        summary: detail.summary?.split(/\r?\n/).find(Boolean)?.slice(0, 88) || "",
-        score: detail.rating?.score || 0,
-        tags: (detail.tags ?? []).map((tag) => tag.name?.trim()).filter((tag): tag is string => Boolean(tag)).slice(0, 8),
+        date: detail?.date || "",
+        year: detail?.date?.slice(0, 4) || "未知",
+        production: production(detail?.infobox),
+        summary: (detail?.summary || entry.subject?.short_summary || "").trim(),
+        summaryUnavailable: detail === null,
+        score: detail?.rating?.score || 0,
+        tags: (detail?.tags ?? []).map((tag) => tag.name?.trim()).filter((tag): tag is string => Boolean(tag)).slice(0, 12),
       };
     });
 
-    return NextResponse.json({ success: true, data: { total: collections.total ?? entries.length, items: subjects.filter(Boolean) } }, {
+    return NextResponse.json({ success: true, data: { user, total: collections.total, items: subjects.filter(Boolean) } }, {
       headers: { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=3600" },
     });
   } catch (error) {

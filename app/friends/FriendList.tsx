@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FriendCard, type Friend } from "./FriendCard";
+import styles from "./FriendsPage.module.css";
 
 export function FriendList({ friends }: { friends: Friend[] }) {
   const [orderedFriends, setOrderedFriends] = useState(friends);
@@ -40,12 +41,8 @@ export function FriendList({ friends }: { friends: Friend[] }) {
   }, []);
 
   return (
-    <section id="friend-links" className="card friend-directory">
-      <div className="friends-list-head">
-        <h2>友人</h2>
-        <small className="friend-random-note">排序完全随机</small>
-      </div>
-      <div className="friend-grid motion-stagger">
+    <section id="friend-links" aria-label="友人小站">
+      <div className={styles.grid}>
         {orderedFriends.map((friend) => (
           <FriendCard friend={friend} rssUrl={feedUrls[friend.url]} key={friend.url} />
         ))}

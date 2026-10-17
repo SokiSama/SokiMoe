@@ -1,90 +1,58 @@
-import { SiteFooter } from "../components/SiteFooter";
-import { SiteHeader } from "../components/SiteHeader";
-import { PageCoverBanner } from "../components/PageCoverBanner";
-import { SiteCategoryCard, type SidebarCategory } from "../components/SiteSidebars";
+/* eslint-disable @next/next/no-css-tags -- Vendored CJK font stylesheets load only the required Unicode subsets. */
+import Link from "next/link";
+import { RssSimple } from "@phosphor-icons/react/dist/ssr";
+import { JournalHeader } from "../components/JournalHeader";
 import { localPosts } from "../data/posts";
-import { YearProgressStats } from "./YearProgressStats";
+import homeStyles from "../components/HomePage.module.css";
+import styles from "./ArchivePage.module.css";
 
 export default function ArchivePage() {
   const posts = [...localPosts].sort((a, b) => b.date.localeCompare(a.date));
-  const latestPosts = posts.slice(0, 4);
-  const categoryOrder = ["旅行", "教程", "记录", "心得", "分享"];
-  const categories: SidebarCategory[] = categoryOrder.map((name) => ({
-    name,
-    count: posts.filter((post) => post.tags.includes(name)).length,
-    href: "/#posts",
-  })).filter((category) => category.count > 0);
-  const years = Array.from(
-    posts.reduce((groups, post) => {
-      const year = post.date.slice(0, 4);
-      groups.set(year, [...(groups.get(year) ?? []), post]);
-      return groups;
-    }, new Map<string, typeof posts>()),
-  );
+  const years = Array.from(posts.reduce((groups, post) => {
+    const year = post.date.slice(0, 4);
+    groups.set(year, [...(groups.get(year) ?? []), post]);
+    return groups;
+  }, new Map<string, typeof posts>()));
 
   return (
-    <div className="site immersive-route archive-route">
-      <SiteHeader active="archive" floating />
-      <PageCoverBanner
-        eyebrow="ARCHIVES OF TIME"
-        title="归档，是时光的书签"
-        description={`${posts.length} 篇文章，沿着时间慢慢读。`}
-        image="/archive-cover-night.jpg"
-        imagePosition="center bottom"
-      />
-      <main id="top" className="archive-page immersive-content">
-        <div className="archive-center">
-          <section className="card archive-hero">
-            <div>
-              <span>Archives of time</span>
-              <h1>归档，是时光的书签</h1>
-              <p>{posts.length} 篇文章，沿着时间慢慢读。</p>
-              <i />
-            </div>
-            <img src="/archive-hero.png" alt="" aria-hidden="true" />
-          </section>
-          <div className="archive-years">
+    <>
+      <link rel="stylesheet" href="/fonts/harmonyos-sans-sc/Regular.css" precedence="default" />
+      <link rel="stylesheet" href="/fonts/harmonyos-sans-sc/Semibold.css" precedence="default" />
+      <div className={`${homeStyles.home} ${styles.page}`} id="top">
+        <JournalHeader active="archive" />
+        <main className={styles.main}>
+          <header className={styles.intro}>
+            <span className={styles.eyebrow}>TIMELINE</span>
+            <h1>文章归档</h1>
+            <p>共 {posts.length} 篇文章</p>
+          </header>
+          <div className={styles.years}>
             {years.map(([year, yearPosts]) => (
-              <section className="archive-year" key={year}>
-                <header><strong>{year}</strong><span>{yearPosts.length} 篇</span></header>
-                <div className="archive-list">
-                  {yearPosts.map((post) => (
-                    <a href={`/posts/${post.slug}`} key={post.slug}>
-                      <time dateTime={post.date}>{post.date.slice(5).replace("-", ".")}</time>
-                      {post.cover ? (
-                        <span className="archive-post-cover" aria-hidden="true">
-                          <img src={post.cover} alt="" />
-                        </span>
-                      ) : null}
-                      <span className="archive-post-title">{post.title}</span>
-                    </a>
+              <section className={styles.year} key={year} aria-labelledby={`archive-${year}`}>
+                <header className={styles.yearHeading}>
+                  <h2 id={`archive-${year}`}>{year}</h2>
+                  <span>{yearPosts.length} 篇</span>
+                  <i aria-hidden="true" />
+                </header>
+                <ol className={styles.list}>
+                  {yearPosts.map(post => (
+                    <li key={post.slug}>
+                      <Link href={`/posts/${post.slug}`}>
+                        <time dateTime={post.date}>{post.date.slice(5)}</time>
+                        <span>{post.title}</span>
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </section>
             ))}
           </div>
-        </div>
-
-        <aside className="archive-meta-sidebar">
-          <div className="archive-sidebar-sticky">
-            <YearProgressStats />
-            <SiteCategoryCard categories={categories} />
-            <section className="card side-card archive-recent-card">
-              <h3>最近文章</h3>
-              <div className="archive-recent-list">
-                {latestPosts.map((post) => (
-                  <a href={`/posts/${post.slug}`} key={post.slug}>
-                    <time dateTime={post.date}>{post.date}</time>
-                    <span>{post.title}</span>
-                  </a>
-                ))}
-              </div>
-            </section>
-          </div>
-        </aside>
-      </main>
-      <SiteFooter />
-      <a className="back-top" href="#top" aria-label="回到顶部">↑</a>
-    </div>
+        </main>
+        <footer className={homeStyles.footer}>
+          <p>© 2025–{new Date().getFullYear()} Soki Sugar Life<span>·</span><a href="https://icp.gov.moe/?keyword=20263015" target="_blank" rel="noreferrer">萌ICP备20263015号</a></p>
+          <a href="/api/rss"><RssSimple size={15} />RSS 订阅</a>
+        </footer>
+      </div>
+    </>
   );
 }

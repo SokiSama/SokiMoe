@@ -1,0 +1,82 @@
+.page.page { --home-bg: #fdfdfd; }
+.main { width: min(860px, calc(100% - 48px)); margin: 0 auto; padding: 64px 0 90px; }
+.content { min-width: 0; }
+.intro { display: grid; grid-template-columns: 144px minmax(0, 1fr); align-items: start; gap: 32px; scroll-margin-top: 110px; }
+.profileAvatar { display: block; width: 144px; height: 144px; object-fit: cover; border: 1px solid var(--home-line); border-radius: 14px; background: var(--home-card); box-shadow: 0 5px 13px #00000012; }
+.profileInfo { min-width: 0; }
+.intro h1 { position: relative; margin: 0 0 18px; padding-left: 16px; color: var(--home-text); font-size: 34px; font-weight: 600; line-height: 1.3; letter-spacing: -.025em; }
+.intro h1::before { content: ""; position: absolute; top: 5px; bottom: 5px; left: 0; width: 4px; border-radius: 3px; background: var(--home-accent); }
+.location { display: flex; align-items: center; gap: 7px; margin: 0; color: var(--home-muted); font-size: 13px; line-height: 1.8; }
+.location svg { flex: none; }
+.profileSocials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.profileSocials a { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; color: var(--home-muted); background: var(--home-soft); transition: color .18s, background-color .18s; }
+.profileSocials a:hover { color: var(--home-accent); background: var(--home-accent-soft); }
+.section { margin-top: 52px; scroll-margin-top: 130px; }
+.section h2 { margin: 0 0 24px; font-size: 24px; font-weight: 600; line-height: 1.4; letter-spacing: -.025em; }
+.section p { margin: 0 0 17px; color: var(--home-muted); font-size: 15px; line-height: 1.95; overflow-wrap: anywhere; }
+.section p:last-child { margin-bottom: 0; }
+.biography p { margin-bottom: 24px; color: var(--home-text); line-height: 2.1; }
+.biography .interestsTitle { margin-top: 28px; margin-bottom: 14px; }
+.hobbies { margin: 0; padding-left: 21px; color: var(--home-text); font-size: 15px; line-height: 1.9; list-style: disc; }
+.hobbies li { padding-left: 3px; margin: 9px 0; }
+.hobbies li::marker { color: var(--home-accent); }
+.hobbies a:hover { color: var(--home-accent); }
+.toolGroups { display: grid; gap: 20px; margin-top: 24px; }
+.toolGroup { padding: 23px; border: 1px solid color-mix(in srgb, var(--home-line) 70%, #b0b8c5); border-radius: 13px; background: var(--home-bg); }
+.toolGroup h3 { margin: 0 0 23px; color: var(--home-muted); font-size: 19px; font-weight: 400; line-height: 1.4; }
+.tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 28px; }
+.tool { display: flex; align-items: center; gap: 13px; min-width: 0; border-radius: 8px; }
+.toolIcon { display: grid; flex: none; place-items: center; width: 48px; height: 48px; border-radius: 10px; background: #e9eaec; }
+.toolIcon img { display: block; width: 31px; height: 31px; object-fit: contain; }
+.toolText { display: block; min-width: 0; }
+.toolText strong { display: block; color: var(--home-text); font-size: 16px; font-weight: 400; line-height: 1.5; transition: color .18s; }
+.toolText small { display: block; margin-top: 2px; color: var(--home-muted); font-size: 13px; line-height: 1.6; }
+.tool:hover strong { color: var(--home-accent); }
+.devices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 28px; padding: 0; margin: 0; list-style: none; }
+.devices li { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.deviceIcon { display: grid; flex: none; place-items: center; width: 48px; height: 48px; border-radius: 10px; background: #e9eaec; color: #4d5056; }
+.deviceIcon svg, .deviceIcon img { display: block; width: 29px; height: 29px; }
+.deviceIcon img { opacity: .7; }
+.section .deviceNote { margin-top: 18px; font-size: 13px; font-style: italic; }
+.history { margin: 0; padding: 0 0 0 24px; list-style: none; }
+.history li { position: relative; display: grid; grid-template-columns: 104px minmax(0, 1fr); column-gap: 16px; padding: 0 0 24px 12px; color: var(--home-muted); }
+.history li::before { content: ""; position: absolute; top: 12px; bottom: -12px; left: -16px; width: 2px; background: color-mix(in srgb, var(--home-muted) 24%, var(--home-bg)); }
+.history li::after { content: ""; position: absolute; top: 9px; left: -21px; width: 12px; height: 12px; border: 2px solid var(--home-muted); border-radius: 50%; background: var(--home-bg); }
+.history li:last-child { padding-bottom: 0; }
+.history li:last-child::before { display: none; }
+.history time { padding-top: 2px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; line-height: 1.95; white-space: nowrap; }
+.history p { margin: 0; font-size: 15px; line-height: 1.95; }
+.history a { color: var(--home-text); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; overflow-wrap: anywhere; }
+.history a:hover { color: var(--home-accent); }
+.history strong { font-weight: 600; }
+.backTop { position: fixed; right: 26px; bottom: 28px; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--home-line); border-radius: 50%; color: var(--home-muted); background: var(--home-card); box-shadow: 0 2px 9px #1b324310; }
+.backTop:hover { color: var(--home-accent); }
+@media (max-width: 1000px) { .tools { gap: 22px 20px; } .toolGroup { padding: 20px; } .toolText strong { font-size: 15px; } }
+@media (max-width: 800px) {
+  .main { width: calc(100% - 40px); padding: 36px 0 60px; }
+  .content { width: 100%; }
+  .intro h1 { font-size: 30px; }
+  .section { margin-top: 42px; scroll-margin-top: 132px; }
+}
+@media (max-width: 520px) {
+  .intro { grid-template-columns: 88px minmax(0, 1fr); gap: 20px; }
+  .profileAvatar { width: 88px; height: 88px; border-radius: 11px; }
+  .intro h1 { font-size: 28px; margin-bottom: 12px; padding-left: 12px; }
+  .intro h1::before { width: 3px; }
+  .location { align-items: flex-start; gap: 5px; font-size: 12px; }
+  .location svg { margin-top: 3px; }
+  .profileSocials { gap: 7px; margin-top: 14px; }
+  .profileSocials a { width: 30px; height: 30px; border-radius: 7px; }
+  .profileSocials svg { width: 19px; height: 19px; }
+  .section h2 { font-size: 23px; margin-bottom: 20px; }
+  .section p, .biography p, .hobbies { font-size: 14px; }
+  .toolGroup { padding: 20px; }
+  .toolGroup h3 { font-size: 18px; margin-bottom: 22px; }
+  .tools { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .toolText strong { font-size: 16px; }
+  .devices { grid-template-columns: minmax(0, 1fr); }
+  .history li { grid-template-columns: minmax(0, 1fr); row-gap: 5px; }
+  .history p { font-size: 14px; }
+  .backTop { right: 14px; bottom: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .profileSocials a, .toolText strong { transition: none; } }
